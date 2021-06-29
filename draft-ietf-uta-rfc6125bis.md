@@ -18,72 +18,37 @@ title: Representation and Verification of Domain-Based Application Service Ident
 abbrev: Service Identity
 area: Applications
 kw: Internet-Draft
-date: 2011-03
 author:
 - ins: P. Saint-Andre
   name: Peter Saint-Andre
-  org: Cisco
-  street: 1899 Wyknoop Street, Suite 600
-  city: Denver
-  region: CO
-  code: '80202'
+  org: Mozilla
   country: USA
-  phone: "+1-303-308-3282"
-  email: psaintan@cisco.com
+  email: stpeter@mozilla.com
 - ins: J. Hodges
   name: Jeff Hodges
-  org: PayPal
-  street: 2211 North First Street
-  city: San Jose
-  region: California
-  code: '95131'
+  org: Google
   country: US
-  email: Jeff.Hodges@PayPal.com
+  email: jdhodges@google.com
+- ins: R. Salz
+  name: Rich Salz
+  org: Akamai Technologies
+  country: US
+  email: rsalz@akamai.com
 normative:
   DNS-CONCEPTS: RFC1034
   DNS-SRV: RFC2782
   IDNA-DEFS: RFC5890
   IDNA-PROTO: RFC5891
-  KEYWORDS: RFC2119
   LDAP-DN: RFC4514
   PKIX: RFC5280
   SRVNAME: RFC4985
   URI: RFC3986
 informative:
   ABNF: RFC5234
-  HTTPSbytes:
-    target: https://media.blackhat.com/bh-ad-10/Hansen/Blackhat-AD-2010-Hansen-Sokol-HTTPS-Can-Byte-Me-slides.pdf
-    title: HTTPS Can Byte Me
-    author:
-    - ins: J. Sokol
-      name: Josh Sokol
-      org: SecTheory Ltd.
-    - ins: R. Hansen
-      name: Robert Hansen
-      org: SecTheory Ltd.
-    date: 2010-11
-    seriesinfo:
-      BlackHat: Abu Dhabi
-  Defeating-SSL:
-    target: http://www.blackhat.com/presentations/bh-dc-09/Marlinspike/BlackHat-DC-09-Marlinspike-Defeating-SSL.pdf
-    title: New Tricks for Defeating SSL in Practice
-    author:
-    - ins: M. Marlinspike
-      name: Moxie Marlinspike
-      org: ''
-    date: 2009-02
-    seriesinfo:
-      BlackHat: DC
   DNS-CASE: RFC4343
   DNSSEC: RFC4033
   DTLS: RFC4347
   EMAIL-SRV: RFC6186
-  EV-CERTS:
-    target: http://www.cabforum.org/Guidelines_v1_2.pdf
-    title: Guidelines For The Issuance And Management Of Extended Validation Certificates
-    author:
-    - org: CA/Browser Forum
-    date: 2009-10
   GIST: RFC5971
   HTTP: RFC2616
   HTTP-TLS: RFC2818
@@ -122,6 +87,38 @@ informative:
   SYSLOG-TLS: RFC5425
   TLS: RFC5246
   TLS-EXT: RFC6066
+  USINGTLS: RFC2595
+  XMPP: RFC6120
+  XMPP-OLD: RFC3920
+  HTTPSbytes:
+    target: https://media.blackhat.com/bh-ad-10/Hansen/Blackhat-AD-2010-Hansen-Sokol-HTTPS-Can-Byte-Me-slides.pdf
+    title: HTTPS Can Byte Me
+    author:
+    - ins: J. Sokol
+      name: Josh Sokol
+      org: SecTheory Ltd.
+    - ins: R. Hansen
+      name: Robert Hansen
+      org: SecTheory Ltd.
+    date: 2010-11
+    seriesinfo:
+      BlackHat: Abu Dhabi
+  Defeating-SSL:
+    target: http://www.blackhat.com/presentations/bh-dc-09/Marlinspike/BlackHat-DC-09-Marlinspike-Defeating-SSL.pdf
+    title: New Tricks for Defeating SSL in Practice
+    author:
+    - ins: M. Marlinspike
+      name: Moxie Marlinspike
+      org: ''
+    date: 2009-02
+    seriesinfo:
+      BlackHat: DC
+  EV-CERTS:
+    target: http://www.cabforum.org/Guidelines_v1_2.pdf
+    title: Guidelines For The Issuance And Management Of Extended Validation Certificates
+    author:
+    - org: CA/Browser Forum
+    date: 2009-10
   US-ASCII:
     title: Coded Character Set - 7-bit American Standard Code for Information Interchange
     author:
@@ -129,7 +126,6 @@ informative:
     date: 1986
     seriesinfo:
       ANSI: X3.4
-  USINGTLS: RFC2595
   WSC-UI:
     target: http://www.w3.org/TR/2010/WD-wsc-ui-20100309
     title: 'Web Security Context: User Interface Guidelines'
@@ -189,8 +185,6 @@ informative:
     seriesinfo:
       ITU-T: Recommendation X.690
       ISO: Standard 8825-1
-  XMPP: RFC6120
-  XMPP-OLD: RFC3920
 
 --- abstract
 
@@ -328,7 +322,7 @@ to coalesce on the following practices:
   (e.g., uniformResourceIdentifier and the otherName form SRVName).
 
 * Move away from the issuance of so-called wildcard certificates (e.g., a certificate
-  containing an identifier for "\*.example.com").
+  containing an identifier for `\*.example.com`).
 
 
 These suggestions are not entirely consistent with all practices that are
@@ -621,7 +615,7 @@ reference identifier:
 source domain:
 : The fully qualified DNS domain name
   that a client expects an application service to present in the certificate
-  (e.g., "www.example.com"), typically input by a human user, configured into
+  (e.g., `www.example.com`), typically input by a human user, configured into
   a
   client, or provided by reference such as in a hyperlink.  The combination
   of a
@@ -671,7 +665,6 @@ limited to, "attack", "authentication", "authorization",
 anchor", "trust chain", "validate", and "verify".
 
 {::boilerplate bcp14-tagged}
-<!-- Updated BCP14 boilerplate for you -->
 
 # Naming of Application Services {#names}
 
@@ -681,7 +674,7 @@ by a brief tutorial about subject naming in PKIX.
 ## Naming Application Services {#names-apps}
 
 This specification assumes that the name of an application service is
-based on a DNS domain name (e.g., "example.com") --- supplemented in
+based on a DNS domain name (e.g., `example.com`) --- supplemented in
 some circumstances by an application service type (e.g., "the IMAP
 server at example.com").
 
@@ -830,8 +823,8 @@ the following identifier types within subjectAltName entries:
 Existing certificates often use a CN-ID in the subject field to
 represent a fully qualified DNS domain name; for example, consider the
 following three subject names, where the attribute of type Common Name contains
-a string whose form matches that of a fully qualified DNS domain name ("im.example.org",
-"mail.example.net", and "www.example.com", respectively):
+a string whose form matches that of a fully qualified DNS domain name (`im.example.org`,
+`mail.example.net`, and `www.example.com`, respectively):
 
 ~~~~
      CN=im.example.org,O=Example Org,C=GB
@@ -982,8 +975,8 @@ document.
   service.
   A specification that reuses this one MUST specify which URI schemes
   are to be considered acceptable in URI-IDs contained in PKIX
-  certificates used for the application protocol (e.g., "sip" but not
-  "sips" or "tel" for SIP as described in {{SIP-SIPS}}, or perhaps
+  certificates used for the application protocol (e.g., `sip` but not
+  `sips` or `tel` for SIP as described in {{SIP-SIPS}}, or perhaps
   http and https for HTTP as might be described in a future
   specification).
 
@@ -1013,51 +1006,51 @@ document.
   of a presented identifier SHOULD NOT contain the wildcard character,
   whether as the complete left-most label within the identifier
   (following the description of labels and domain names in
-  {{DNS-CONCEPTS}}, e.g., "\*.example.com") or as a fragment thereof
+  {{DNS-CONCEPTS}}, e.g., `\*.example.com`) or as a fragment thereof
   (e.g., \*oo.example.com, f\*o.example.com, or fo\*.example.com). A
   more detailed discussion of so-called "wildcard certificates" is
   provided under {{security-wildcards}}.
 
 ## Examples {#represent-examples}
 
-Consider a simple website at "www.example.com", which is not
+Consider a simple website at `www.example.com`, which is not
 discoverable via DNS SRV lookups.
 Because HTTP does not specify the use of URIs in server certificates,
 a certificate for this service might include only a DNS-ID of
-"www.example.com".
-It might also include a CN-ID of "www.example.com" for backward
+`www.example.com`.
+It might also include a CN-ID of `www.example.com` for backward
 compatibility with deployed infrastructure.
 
 Consider an IMAP-accessible email server at the host
-"mail.example.net" servicing email addresses of the form
-"user@example.net" and discoverable via DNS SRV lookups on the
-application service name of "example.net".
+`mail.example.net` servicing email addresses of the form
+`user@example.net` and discoverable via DNS SRV lookups on the
+application service name of `example.net`.
 A certificate for this service might include SRV-IDs of
-"_imap.example.net" and "_imaps.example.net" (see {{EMAIL-SRV}}) along
-with DNS-IDs of "example.net" and "mail.example.net".
-It might also include CN-IDs of "example.net" and "mail.example.net"
+`_imap.example.net` and `_imaps.example.net` (see {{EMAIL-SRV}}) along
+with DNS-IDs of `example.net` and `mail.example.net`.
+It might also include CN-IDs of `example.net` and `mail.example.net`
 for backward compatibility with deployed infrastructure.
 
 Consider a SIP-accessible voice-over-IP (VoIP) server at the host
-"voice.example.edu" servicing SIP addresses of the form
-"user@voice.example.edu" and identified by a URI of
+`voice.example.edu` servicing SIP addresses of the form
+`user@voice.example.edu` and identified by a URI of
 \<sip:voice.example.edu>.
 A certificate for this service would include a URI-ID of
-"sip:voice.example.edu" (see {{SIP-CERTS}}) along with a DNS-ID of
-"voice.example.edu".
-It might also include a CN-ID of "voice.example.edu" for backward
+`sip:voice.example.edu` (see {{SIP-CERTS}}) along with a DNS-ID of
+`voice.example.edu`.
+It might also include a CN-ID of `voice.example.edu` for backward
 compatibility with deployed infrastructure.
 
 Consider an XMPP-compatible instant messaging (IM) server at the host
-"im.example.org" servicing IM addresses of the form
-"user@im.example.org" and discoverable via DNS SRV lookups on the
-"im.example.org" domain.
+`im.example.org` servicing IM addresses of the form
+`user@im.example.org` and discoverable via DNS SRV lookups on the
+`im.example.org` domain.
 A certificate for this service might include SRV-IDs of
-"_xmpp‑client.im.example.org" and
-"_xmpp‑server.im.example.org" (see {{XMPP}}), a DNS-ID of
-"im.example.org", and an XMPP-specific "XmppAddr" of "im.example.org"
+`_xmpp-client.im.example.org` and
+`_xmpp-server.im.example.org` (see {{XMPP}}), a DNS-ID of
+`im.example.org`, and an XMPP-specific `XmppAddr` of `im.example.org`
 (see {{XMPP}}).
-It might also include a CN-ID of "im.example.org" for backward
+It might also include a CN-ID of `im.example.org` for backward
 compatibility with deployed infrastructure.
 
 # Requesting Server Certificates {#request}
@@ -1093,8 +1086,8 @@ identifying each different application service type.
 This guideline does not apply to application service type "bundles"
 that are used to identify manifold distinct access methods to the same
 underlying application (e.g., an email application with access methods
-denoted by the application service types of "imap", "imaps", "pop3",
-"pop3s", and "submission" as described in {{EMAIL-SRV}}).
+denoted by the application service types of `imap`, `imaps`, `pop3`,
+`pop3s`, and `submission` as described in {{EMAIL-SRV}}).
 
 # Verifying Service Identity {#verify}
 
@@ -1169,8 +1162,8 @@ entity in a phishing attack), then the client might end up
 communicating with an unexpected application service.
 
 > Example: Given an input URI of \<sips:alice@example.net>, a client
-> would derive the application service type "sip" from the "scheme"
-> and parse the domain name "example.net" from the "host" component
+> would derive the application service type `sip` from the "scheme"
+> and parse the domain name `example.net` from the "host" component
 > (or its equivalent).
 
 Each reference identifier in the list SHOULD be based on the source
@@ -1245,29 +1238,29 @@ in accordance with the following rules:
 
 ### Examples {#verify-reference-examples}
 
-A web browser that is connecting via HTTPS to the website at "www.example.com"
-might have two reference identifiers: a DNS-ID of "www.example.com" and,
-as a fallback, a CN-ID of "www.example.com".
+A web browser that is connecting via HTTPS to the website at `www.example.com`
+might have two reference identifiers: a DNS-ID of `www.example.com` and,
+as a fallback, a CN-ID of `www.example.com`.
 
 A mail user agent that is connecting via IMAPS to the email
-service at "example.net" (resolved as "mail.example.net") might have five
-reference identifiers: an SRV-ID of "_imaps.example.net" (see {{EMAIL-SRV}}),
-DNS-IDs of "example.net" and "mail.example.net", and, as a fallback, CN-IDs
-of "example.net" and "mail.example.net". (A legacy email user agent would
+service at `example.net` (resolved as `mail.example.net`) might have five
+reference identifiers: an SRV-ID of `_imaps.example.net` (see {{EMAIL-SRV}}),
+DNS-IDs of `example.net` and `mail.example.net`, and, as a fallback, CN-IDs
+of `example.net` and `mail.example.net`. (A legacy email user agent would
 not support {{EMAIL-SRV}} and therefore would probably be explicitly configured to
-connect to "mail.example.net", whereas an SRV-aware user agent would derive
-"example.net" from an email address of the form "user@example.net" but might
-also accept "mail.example.net" as the DNS domain name portion of reference
+connect to `mail.example.net`, whereas an SRV-aware user agent would derive
+`example.net` from an email address of the form `user@example.net` but might
+also accept `mail.example.net` as the DNS domain name portion of reference
 identifiers for the service.)
 
 A voice-over-IP (VoIP) user agent that is connecting via SIP to the voice
-service at "voice.example.edu" might have only one reference identifier:
-a URI-ID of "sip:voice.example.edu" (see {{SIP-CERTS}}).
+service at `voice.example.edu` might have only one reference identifier:
+a URI-ID of `sip:voice.example.edu` (see {{SIP-CERTS}}).
 
 An instant messaging (IM) client that is connecting via XMPP to the IM
-service at "im.example.org" might have three reference identifiers: an
-SRV-ID of "_xmpp-client.im.example.org" (see {{XMPP}}), a DNS-ID of
-"im.example.org", and an XMPP-specific "XmppAddr" of "im.example.org"
+service at `im.example.org` might have three reference identifiers: an
+SRV-ID of `_xmpp-client.im.example.org` (see {{XMPP}}), a DNS-ID of
+`im.example.org`, and an XMPP-specific `XmppAddr` of `im.example.org`
 (see {{XMPP}}).
 
 ## Preparing to Seek a Match {#verify-seek}
@@ -1298,8 +1291,8 @@ as follows:
 
 * A reference identifier of type DNS-ID does not include an
   application service type portion and thus can be used directly as the DNS
-  domain name for comparison purposes.  As an example, a DNS-ID of "www.example.com"
-  would result in a DNS domain name portion of "www.example.com".
+  domain name for comparison purposes.  As an example, a DNS-ID of `www.example.com`
+  would result in a DNS domain name portion of `www.example.com`.
 
 * A reference identifier of type CN-ID also does not include an
   application service type portion and thus can be used directly as the DNS
@@ -1310,28 +1303,28 @@ as follows:
 
 * For a reference identifier of type SRV-ID, the DNS domain name
   portion is the Name and the application service type portion is the Service.
-  As an example, an SRV-ID of "_imaps.example.net" would be split into a DNS
-  domain name portion of "example.net" and an application service type portion
-  of "imaps" (mapping to an application protocol of IMAP as explained in {{EMAIL-SRV}}).
+  As an example, an SRV-ID of `_imaps.example.net` would be split into a DNS
+  domain name portion of `example.net` and an application service type portion
+  of `imaps` (mapping to an application protocol of IMAP as explained in {{EMAIL-SRV}}).
 
 * For a reference identifier of type URI-ID, the DNS domain name
-  portion is the "reg‑name" part of the "host" component (or its
+  portion is the "reg-name" part of the "host" component (or its
   equivalent) and the application service type portion is the
   application service type associated with the scheme name matching
   the {{ABNF}} "scheme" rule from {{URI}} (not including the ':'
   separator).
-  As previously mentioned, this document specifies that a URI‑ID
+  As previously mentioned, this document specifies that a URI-ID
   always contains a "host" component (or its equivalent) containing a
-  "reg‑name".
-  (Matching only the "reg‑name" rule from {{URI}} limits verification
-  to DNS domain names, thereby differentiating a URI‑ID from a
+  "reg-name".
+  (Matching only the "reg-name" rule from {{URI}} limits verification
+  to DNS domain names, thereby differentiating a URI-ID from a
   uniformResourceIdentifier entry that contains an IP address or a
   mere host name, or that does not contain a "host" component at all.)
-  Furthermore, note that extraction of the "reg‑name" might
+  Furthermore, note that extraction of the "reg-name" might
   necessitate normalization of the URI (as explained in {{URI}}).
-  As an example, a URI‑ID of "sip:voice.example.edu" would be split
-  into a DNS domain name portion of "voice.example.edu" and an
-  application service type of "sip" (associated with an application
+  As an example, a URI-ID of `sip:voice.example.edu` would be split
+  into a DNS domain name portion of `voice.example.edu` and an
+  application service type of `sip` (associated with an application
   protocol of SIP as explained in {{SIP-CERTS}}).
 
 Detailed comparison rules for matching the DNS domain name portion
@@ -1351,7 +1344,7 @@ Furthermore, to meet the needs of clients that support presented
 identifiers containing the wildcard character '\*', we define a
 supplemental rule for so-called "wildcard certificates".
 Finally, we also specify the circumstances under which it is
-acceptable to check the "CN-ID" identifier type.
+acceptable to check the CN-ID identifier type.
 
 ### Checking of Traditional Domain Names {#verify-domain-trad}
 
@@ -1359,8 +1352,8 @@ If the DNS domain name portion of a reference identifier is a
 "traditional domain name", then matching of the reference identifier
 against the presented identifier is performed by comparing the set of
 domain name labels using a case-insensitive ASCII comparison, as
-clarified by {{DNS-CASE}} (e.g., "WWW.Example.Com" would be
-lower-cased to "www.example.com" for comparison purposes).
+clarified by {{DNS-CASE}} (e.g., `WWW.Example.Com` would be
+lower-cased to `www.example.com` for comparison purposes).
 Each label MUST match in order for the names to be considered to
 match, except as supplemented by the rule about checking of wildcard
 labels ({{verify-domain-wildcards}}).
@@ -1443,28 +1436,28 @@ Implementation Note: An identifier of type SRV-ID or URI-ID provides an
 application service type portion to be checked, but that portion is combined
 only with the DNS domain name portion of the SRV-ID or URI-ID itself.  For
 example, if a client's list of reference identifiers includes an SRV-ID of
-"_xmpp-client.im.example.org" and a DNS-ID of "apps.example.net", the client
+`_xmpp-client.im.example.org` and a DNS-ID of `apps.example.net`, the client
 would check (a) the combination of an application service type of
-"xmpp-client" and a DNS domain name of "im.example.org" and (b) a DNS domain
-name of "apps.example.net".  However, the client would not check (c) the
-combination of an application service type of "xmpp-client" and a DNS domain
-name of "apps.example.net" because it does not have an SRV-ID of
-"_xmpp-client.apps.example.net" in its list of reference identifiers.
+`xmpp-client` and a DNS domain name of `im.example.org` and (b) a DNS domain
+name of `apps.example.net`.  However, the client would not check (c) the
+combination of an application service type of `xmpp-client` and a DNS domain
+name of `apps.example.net` because it does not have an SRV-ID of
+`_xmpp-client.apps.example.net` in its list of reference identifiers.
 
 ### SRV-ID {#verify-app-srv}
 
-The application service name portion of an SRV-ID (e.g., "imaps") MUST
+The application service name portion of an SRV-ID (e.g., `imaps`) MUST
 be matched in a case-insensitive manner, in accordance with
 {{DNS-SRV}}.
-Note that the "_" character is prepended to the service identifier in
+Note that the `_` character is prepended to the service identifier in
 DNS SRV records and in SRV-IDs (per {{SRVNAME}}), and thus does not
 need to be included in any comparison.
 
 ### URI-ID {#verify-app-uri}
 
-The scheme name portion of a URI-ID (e.g., "sip") MUST be matched in a
+The scheme name portion of a URI-ID (e.g., `sip`) MUST be matched in a
 case-insensitive manner, in accordance with {{URI}}.
-Note that the ":" character is a separator between the scheme name
+Note that the `:` character is a separator between the scheme name
 and the rest of the URI, and thus does not need to be included in any
 comparison.
 
@@ -1542,8 +1535,8 @@ to be "pinned" to a DNS domain name when a user has explicitly chosen to
 associate a service's certificate with that DNS domain name despite the fact
 that the certificate contains some other DNS domain name (e.g., the user
 has
-explicitly approved "apps.example.net" as a domain associated with a source
-domain of "example.com").  The cached name association MUST take account
+explicitly approved `apps.example.net` as a domain associated with a source
+domain of `example.com`).  The cached name association MUST take account
 of
 both the certificate presented and the context in which it was accepted or
 configured (where the "context" includes the chain of certificates from the
@@ -1631,7 +1624,7 @@ of the domain names into a single certificate.
 
 A more recent approach, formally specified in {{TLS-EXT}}, is for the
 client to use the TLS "Server Name Indication" (SNI) extension when
-sending the client_hello message, stipulating the DNS domain name it
+sending the client\_hello message, stipulating the DNS domain name it
 desires or expects of the service.
 The service can then return the appropriate certificate in its
 Certificate message, and that certificate can represent a single DNS
@@ -1679,7 +1672,7 @@ The text regarding certificate issuance is as follows:
 In a PKIX certificate to be presented by an XMPP server (i.e., a "server
 certificate"), the certificate MUST include one or more XMPP addresses (i.e.,
 domainparts) associated with XMPP services hosted at the server.  The rules
-and guidelines defined in [this specification] apply to XMPP server certificates,
+and guidelines defined in this specification apply to XMPP server certificates,
 with the following XMPP-specific considerations:
 
 * Support for the DNS-ID identifier type {{PKIX}} is REQUIRED in XMPP
@@ -1693,9 +1686,9 @@ with the following XMPP-specific considerations:
 * Support for the SRV-ID identifier type {{SRVNAME}} is REQUIRED for
   XMPP client and server software implementations (for verification
   purposes XMPP client implementations need to support only the
-  "_xmpp-client" application service type, whereas XMPP server
-  implementations need to support both the "_xmpp-client" and
-  "_xmpp-server" application service types).
+  `_xmpp-client` application service type, whereas XMPP server
+  implementations need to support both the `_xmpp-client` and
+  `_xmpp-server` application service types).
   Certification authorities that issue XMPP-specific certificates
   SHOULD support the SRV-ID identifier type.
   XMPP service providers SHOULD include the SRV-ID identifier type in
@@ -1717,7 +1710,7 @@ The text regarding certificate verification is as follows:
 
 ######
 
-For server certificates, the rules and guidelines defined in [this specification]
+For server certificates, the rules and guidelines defined in this specification
 apply, with the proviso that the XmppAddr identifier is allowed as a reference
 identifier.
 
@@ -1749,9 +1742,7 @@ informative section gathers together prior art by including the exact
 text from various RFCs (the only modifications are changes to the
 names of several references to maintain coherence with the main body
 of this document, and the elision of irrelevant text as marked by the
-characters "[...]").
-<!--  [rfced] We don't fully understand why the term "Art" is used here (and in
-the section title)? Perhaps "Recommendations" would be a better term?   -->
+characters "`...`").
 
 ## IMAP, POP3, and ACAP (1999) {#prior-imap}
 
@@ -1780,7 +1771,7 @@ is performed according to these rules:
 
 * Matching is case-insensitive.
 
-* A "\*" wildcard character MAY be used as the left-most name component in
+* A `\*` wildcard character MAY be used as the left-most name component in
   the certificate.  For example, \*.example.com would match a.example.com,
   foo.example.com, etc. but would not match example.com.
 
@@ -1886,7 +1877,7 @@ Matching is performed according to these rules:
 
 * Matching is case-insensitive.
 
-* The "\*" wildcard character is allowed.  If present, it applies only to the
+* The `\*` wildcard character is allowed.  If present, it applies only to the
   left-most name component.
 
 
@@ -2027,7 +2018,7 @@ application service identity verification in SMTP:
 
 4.1 Processing After the STARTTLS Command
 
-[...]
+`...`
 
 The decision of whether or not to believe the authenticity of the other party
 in a TLS negotiation is a local matter.  However, some general rules for
@@ -2040,7 +2031,7 @@ the decisions are:
   thought it was connecting to.
 
 
-[...]
+`...`
 
 ######
 
@@ -2052,7 +2043,7 @@ application service identity verification in SMTP:
 {: start="14"}
 1. Additional Requirements When Using SASL PLAIN over TLS
 
-[...]
+`...`
 
 After a successful {{TLS}} negotiation, the client MUST check its
 understanding of the server hostname against the server's identity as
@@ -2073,7 +2064,7 @@ Matching is performed according to the following rules:
 
 > Matching is case-insensitive.
 
-> A "\*" wildcard character MAY be used as the leftmost name component in the
+> A `\*` wildcard character MAY be used as the leftmost name component in the
 > certificate.  For example, \*.example.com would match a.example.com, foo.example.com,
 > etc., but would not match example.com.
 
@@ -2120,7 +2111,7 @@ In Case #1, the validating peer MUST do one of two things:
 1. Verify the peer certificate according to the rules of {{PKIX}}.
   The certificate SHOULD then be checked against the expected identity
   of the peer following the rules described in {{HTTP-TLS}}, except
-  that a subjectAltName extension of type "xmpp" MUST be used as the
+  that a subjectAltName extension of type `xmpp` MUST be used as the
   identity if present.
   If one of these checks fails, user-oriented clients MUST either
   notify the user (clients MAY give the user the opportunity to
@@ -2157,7 +2148,7 @@ application service identity verification in NNTP:
 {: start="5"}
 1. Security Considerations
 
-[...]
+`...`
 
 During the TLS negotiation, the client MUST check its understanding of the
 server hostname against the server's identity as presented in the server
@@ -2167,7 +2158,7 @@ is performed according to these rules:
 
 
 * The client MUST use the server hostname it used to open the
-  connection (or the hostname specified in TLS "server_name" extension
+  connection (or the hostname specified in TLS "server\_name" extension
   {{TLS}}) as the value to compare against the server name as
   expressed in the server certificate.
   The client MUST NOT use any form of the server hostname derived from
@@ -2180,7 +2171,7 @@ is performed according to these rules:
 
 * Matching is case-insensitive.
 
-* A "\*" wildcard character MAY be used as the left-most name
+* A "\*\" wildcard character MAY be used as the left-most name
   component in the certificate.
   For example, \*.example.com would match a.example.com,
   foo.example.com, etc., but would not match example.com.
@@ -2243,7 +2234,7 @@ Matching is performed according to the rules below (following the example
 of {{NNTP-TLS}}):
 
 * The client MUST use the server hostname it used to open the
-  connection (or the hostname specified in the TLS "server_name"
+  connection (or the hostname specified in the TLS "server\_name"
   extension {{TLS}}) as the value to compare against the server name
   as expressed in the server certificate.
   The client MUST NOT use any form of the server hostname derived from
@@ -2255,7 +2246,7 @@ of {{NNTP-TLS}}):
 
 * Matching is case-insensitive.
 
-* A "\*" wildcard character MAY be used as the leftmost name component
+* A `\*` wildcard character MAY be used as the leftmost name component
   in the certificate.
   For example, \*.example.com would match a.example.com,
   foo.example.com, etc., but would not match example.com.
@@ -2361,15 +2352,15 @@ domain identities:
 
 > Implementations MUST match the values in their entirety:
 
-> * Implementations MUST NOT match suffixes.  For example, "foo.example.com"
->   does not match "example.com".
-> * Implementations MUST NOT match any form of wildcard, such as a leading "."
->   or "\*." with any other DNS label or sequence of labels.  For example, "\*.example.com"
->   matches only "\*.example.com" but not "foo.example.com".   Similarly, ".example.com"
->   matches only ".example.com", and does not match "foo.example.com."
+> * Implementations MUST NOT match suffixes.  For example, `foo.example.com`
+>   does not match `example.com`.
+> * Implementations MUST NOT match any form of wildcard, such as a leading `.`
+>   or `\*.` with any other DNS label or sequence of labels.  For example, `\*.example.com`
+>   matches only `\*.example.com` but not `foo.example.com`.   Similarly, `.example.com`
+>   matches only `.example.com`, and does not match `foo.example.com.`
 
 > > > {{HTTP-TLS}} allows the dNSName component to contain a wildcard;
-> > > e.g., "DNS:\*.example.com".
+> > > e.g., `DNS:\*.example.com`.
 > > > {{PKIX}}, while not disallowing this explicitly, leaves the
 > > > interpretation of wildcards to the individual specification.
 > > > {{SIP}} does not provide any guidelines on the presence of
@@ -2437,13 +2428,13 @@ namespace MUST be checked against each subjectAltName extension of type dNSName
 present in the certificate.  If no such extension is present, then the identity
 MUST be compared to the (most specific) Common Name in the Subject field
 of the certificate.  When matching DNS names against dNSName or Common Name
-fields, matching is case- insensitive.  Also, a "\*" wildcard character MAY
+fields, matching is case- insensitive.  Also, a `\*` wildcard character MAY
 be used as the left- most name component in the certificate or identity in
 the APD.  For example, \*.example.com in the APD would match certificates
 for a.example.com, foo.example.com, \*.example.com, etc., but would not match
 example.com.  Similarly, a certificate for \*.example.com would be valid
-for APD identities of a.example.com, foo.example.com, \*.example.com, etc.,
-but not example.com.
+for APD identities of `a.example.com`, `foo.example.com`, `\*.example.com`, etc.,
+but not `example.com`.
 
 Additionally, a node MUST verify the binding between the identity of the
 peer to which it connects and the public key presented by that peer.  Nodes
@@ -2453,16 +2444,13 @@ that achieve equivalent levels of verification (such as comparing the server
 certificate against a local store of already-verified certificates and identity
 bindings).
 
-For TLS authentication with pre-shared keys, the identity in the psk_identity_hint
-(for the server identity, i.e. the Responding node) or psk_identity (for
+For TLS authentication with pre-shared keys, the identity in the psk\_identity\_hint
+(for the server identity, i.e. the Responding node) or psk\_identity (for
 the client identity, i.e. the Querying node) MUST be compared to the identities
 in the APD.
 
 ######
 
-
-
-<!-- Moved these sections here as per RFC 7322 -->
 
 # Contributors {#contributors}
 {: numbered='false'}
