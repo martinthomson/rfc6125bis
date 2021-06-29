@@ -593,10 +593,10 @@ TLS server:
 
 Most security-related terms in this document are to be understood in
 the sense defined in {{SECTERMS}}; such terms include, but are not
-limited to, "attack", "authentication", "authorization",
-"certification authority", "certification path", "certificate",
-"credential", "identity", "self-signed certificate", "trust", "trust
-anchor", "trust chain", "validate", and "verify".
+limited to, "attack," "authentication," "authorization,"
+"certification authority," "certification path," "certificate,"
+"credential," "identity," "self-signed certificate," "trust," "trust
+anchor," "trust chain," "validate," and "verify".
 
 {::boilerplate bcp14-tagged}
 
@@ -685,7 +685,7 @@ forms:
 
 
 
-1. A "traditional domain name", i.e., a fully qualified DNS domain
+1. A "traditional domain name," i.e., a fully qualified DNS domain
   name or "FQDN" (see {{DNS-CONCEPTS}}) all of whose labels are "LDH
   labels" as described in {{IDNA-DEFS}}.
   Informally, such labels are constrained to {{US-ASCII}} letters,
@@ -695,7 +695,7 @@ forms:
   above-referenced specifications for details), but they are not
   relevant to this specification.
 
-2. An "internationalized domain name", i.e., a DNS domain name that
+2. An "internationalized domain name," i.e., a DNS domain name that
   conforms to the overall form of a domain name (informally,
   dot-separated letter-digit-hyphen labels) but includes at least one
   label containing appropriately encoded Unicode code points outside
@@ -818,8 +818,8 @@ implementations).
 Furthermore, various specifications refer to the order of RDNs in DNs
 or certificate subject fields using terminology that is implicitly
 related to an information hierarchy (which may or may not actually
-exist), such as "most specific" vs. "least specific", "left-most"
-vs. "right-most", "first" vs. "last", or "most significant" vs. "least
+exist), such as "most specific" vs. "least specific," "left-most"
+vs. "right-most," "first" vs. "last," or "most significant" vs. "least
 significant" (see, for example, {{LDAP-DN}}).
 
 To reduce confusion, in this specification we avoid such terms and
@@ -1283,7 +1283,7 @@ acceptable to check the CN-ID identifier type.
 ### Checking of Traditional Domain Names {#verify-domain-trad}
 
 If the DNS domain name portion of a reference identifier is a
-"traditional domain name", then matching of the reference identifier
+"traditional domain name," then matching of the reference identifier
 against the presented identifier is performed by comparing the set of
 domain name labels using a case-insensitive ASCII comparison, as
 clarified by {{DNS-CASE}} (e.g., `WWW.Example.Com` would be
