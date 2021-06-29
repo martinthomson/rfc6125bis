@@ -53,7 +53,6 @@ informative:
   HTTP: RFC2616
   HTTP-TLS: RFC2818
   IPSEC: RFC4301
-  LDAP-SCHEMA: RFC4519
   NAPTR: RFC3403
   OCSP: RFC2560
   OPENPGP: RFC4880
@@ -152,16 +151,6 @@ informative:
     seriesinfo:
       ITU-T: Recommendation X.509
       ISO: Standard 9594-6
-  X.690:
-    title: 'Information Technology - ASN.1 encoding rules: Specification of Basic
-      Encoding Rules (BER), Canonical Encoding Rules (CER) and Distinguished Encoding
-      Rules (DER)'
-    author:
-    - org: International Telecommunications Union
-    date: 2008-08
-    seriesinfo:
-      ITU-T: Recommendation X.690
-      ISO: Standard 8825-1
 
 --- abstract
 
@@ -485,11 +474,6 @@ identifier type:
   and convenience, we define the following identifier types of interest, which
   are based on those found in the PKIX specification {{PKIX}} and various PKIX extensions.
 
-  * CN-ID = a Relative Distinguished Name (RDN) in the certificate subject field
-    that contains one and only one attribute-type-and-value pair of type Common
-    Name (CN), where the value matches the overall form of a domain name (informally,
-    dot-separated letter-digit-hyphen labels); see {{PKIX}} and also {{LDAP-SCHEMA}}
-
   * DNS-ID = a subjectAltName entry of type dNSName; see {{PKIX}}
 
   * SRV-ID = a subjectAltName entry of type otherName whose name form is SRVName;
@@ -629,8 +613,6 @@ an IMAP service).  This dimension matters most for certificate issuance.
 
 Therefore, we can categorize the identifier types of interest as follows:
 
-* A CN-ID is direct and unrestricted.
-
 * A DNS-ID is direct and unrestricted.
 
 * An SRV-ID can be either direct or (more typically) indirect, and is restricted.
@@ -643,8 +625,6 @@ We summarize this taxonomy in the following table.
 ~~~~
   +-----------+-----------+---------------+
   |           |  Direct   |  Restricted   |
-  +-----------+-----------+---------------+
-  |  CN-ID    |  Yes      |  No           |
   +-----------+-----------+---------------+
   |  DNS-ID   |  Yes      |  No           |
   +-----------+-----------+---------------+
@@ -743,7 +723,7 @@ The subjectAltName extension itself is a sequence of typed entries,
 where each type is a distinct kind of identifier.
 
 For our purposes, an application service can be identified by a name
-or names carried in the subject field (i.e., a CN-ID) and/or in one of
+or names carried in one or more of
 the following identifier types within subjectAltName entries:
 
 * DNS-ID
@@ -752,89 +732,16 @@ the following identifier types within subjectAltName entries:
 
 * URI-ID
 
-Existing certificates often use a CN-ID in the subject field to
-represent a fully qualified DNS domain name; for example, consider the
-following three subject names, where the attribute of type Common Name contains
-a string whose form matches that of a fully qualified DNS domain name (`im.example.org`,
-`mail.example.net`, and `www.example.com`, respectively):
+The Common Name RDN should not be used to identify a service. Reasons
+for this include:
 
-~~~~
-     CN=im.example.org,O=Example Org,C=GB
+* It is not strongly typed and therefore suffers from ambiguities
+  in interpretation.
 
-     C=CA,O=Example Internetworking,CN=mail.example.net
+* It can appear more than once in the Subject Name.
 
-     O=Examples-R-Us,CN=www.example.com,C=US
-~~~~
-
-However, the Common Name is not strongly typed because a Common Name
-might contain a human-friendly string for the service, rather than a string
-whose form matches that of a fully qualified DNS domain name (a certificate
-with such a single Common Name will typically have at least one subjectAltName
-entry containing the fully qualified DNS domain name):
-
-~~~~
-     CN=A Free Chat Service,O=Example Org,C=GB
-~~~~
-
-Or, a certificate's subject might contain both a CN-ID as well as another
-common name attribute containing a human-friendly string:
-
-~~~~
-     CN=A Free Chat Service,CN=im.example.org,O=Example Org,C=GB
-~~~~
-
-In general, this specification recommends and prefers use of subjectAltName
-entries (DNS-ID, SRV-ID, URI-ID, etc.) over use of the subject field (CN-ID)
-where possible, as more completely described in the following sections.
-However, specifications that reuse this one can legitimately encourage continued
-support for the CN-ID identifier type if they have good reasons to do so,
-such as backward compatibility with deployed infrastructure (see, for example, {{EV-CERTS}}).
-
-### Implementation Notes {#names-pkix-notes}
-
-Confusion sometimes arises from different renderings or encodings of the
-hierarchical information contained in a certificate.
-
-Certificates are binary objects and are encoded using the
-Distinguished Encoding Rules (DER) specified in {{X.690}}.
-However, some implementations generate displayable (a.k.a. printable)
-renderings of the certificate issuer, subject field, and
-subjectAltName extension, and these renderings convert the DER-encoded
-sequences into a "string representation" before being displayed.
-Because a certificate subject field (of type Name {{X.509}}, the same
-as for a Distinguished Name (DN) {{X.501}}) is an ordered sequence,
-order is typically preserved in subject string representations,
-although the two most prevalent subject (and DN) string
-representations differ in employing left-to-right vs. right-to-left
-ordering.
-However, because a Relative Distinguished Name (RDN) is an unordered
-group of attribute-type-and-value pairs, the string representation of
-an RDN can differ from the canonical DER encoding (and the order of
-attribute-type-and-value pairs can differ in the RDN string
-representations or display orders provided by various
-implementations).
-Furthermore, various specifications refer to the order of RDNs in DNs
-or certificate subject fields using terminology that is implicitly
-related to an information hierarchy (which may or may not actually
-exist), such as "most specific" vs. "least specific", "left-most"
-vs. "right-most", "first" vs. "last", or "most significant" vs. "least
-significant" (see, for example, {{LDAP-DN}}).
-
-To reduce confusion, in this specification we avoid such terms and
-instead use the terms provided under {{terminology}}; in particular,
-we do not use the term "(most specific) Common Name field in the
-subject field" from {{HTTP-TLS}} and instead state that a CN-ID is a
-Relative Distinguished Name (RDN) in the certificate subject
-containing one and only one attribute-type-and-value pair of type
-Common Name (thus removing the possibility that an RDN might contain
-multiple AVAs (Attribute Value Assertions) of type CN, one of which
-could be considered "most specific").
-
-Finally, although theoretically some consider the order of RDNs within
-a subject field to have meaning, in practice that rule is often not
-observed.
-An AVA of type CN is considered to be valid at any position within the
-subject field.
+Likewise, other RDN's within the Subject Name SHOULD NOT be used to
+identify a service.
 
 # Designing Application Protocols {#design}
 
@@ -859,10 +766,11 @@ in this document.
   identify application services, but do not rely on representation of
   those URIs in PKIX certificates by means of URI-IDs.)
 
-* Does your technology need to use DNS domain names in the Common Name
-  of certificates for the sake of backward compatibility?
-  If so, consider recommending support for the CN-ID identifier type
-  as a fallback.
+* Does your technology need to allow the wildcard character in DNS
+  domain names?
+  If so, consider recommending support for wildcard certificates, and
+  specify exactly where the wildcard character is allowed to occur
+  (e.g., only the complete left-most label of a DNS domain name).
 
 Sample text is provided under {{text}}.
 
@@ -913,22 +821,18 @@ document.
   applicable to all application technologies and therefore are out of
   scope for this specification.
 
-5. Even though many deployed clients still check for the CN-ID within
-  the certificate subject field, certification authorities are
-  encouraged to migrate away from issuing certificates that represent
-  the server's fully qualified DNS domain name in a CN-ID.
-  Therefore, the certificate SHOULD NOT include a CN-ID unless the
-  certification authority issues the certificate in accordance with a
-  specification that reuses this one and that explicitly encourages
-  continued support for the CN-ID identifier type in the context of a
-  given application technology.
+5. The certificate MAY contain more than one DNS-ID, SRV-ID, or URI-ID
+  as further explained under {{security-multi}}.
 
-6. The certificate MAY contain more than one DNS-ID, SRV-ID, or URI-ID
-  but SHOULD NOT contain more than one CN-ID, as further explained
-  under {{security-multi}}.
-
-7. The wildcard character `*` should only be used if it follows the
-   rules specified in {{verify-domain-wildcards}}.
+6. Unless a specification that reuses this one allows continued
+  support for the wildcard character `*`, the DNS domain name portion
+  of a presented identifier SHOULD NOT contain the wildcard character,
+  whether as the complete left-most label within the identifier
+  (following the description of labels and domain names in
+  {{DNS-CONCEPTS}}, e.g., `*.example.com`) or as a fragment thereof
+  (e.g., `*oo.example.com`, `f*o.example.com`, or `fo*.example.com`). A
+  more detailed discussion of so-called "wildcard certificates" is
+  provided under {{security-wildcards}}.
 
 ## Examples {#represent-examples}
 
@@ -937,8 +841,6 @@ discoverable via DNS SRV lookups.
 Because HTTP does not specify the use of URIs in server certificates,
 a certificate for this service might include only a DNS-ID of
 `www.example.com`.
-It might also include a CN-ID of `www.example.com` for backward
-compatibility with deployed infrastructure.
 
 Consider an IMAP-accessible email server at the host
 `mail.example.net` servicing email addresses of the form
@@ -947,8 +849,6 @@ application service name of `example.net`.
 A certificate for this service might include SRV-IDs of
 `_imap.example.net` and `_imaps.example.net` (see {{EMAIL-SRV}}) along
 with DNS-IDs of `example.net` and `mail.example.net`.
-It might also include CN-IDs of `example.net` and `mail.example.net`
-for backward compatibility with deployed infrastructure.
 
 Consider a SIP-accessible voice-over-IP (VoIP) server at the host
 `voice.example.edu` servicing SIP addresses of the form
@@ -957,8 +857,6 @@ Consider a SIP-accessible voice-over-IP (VoIP) server at the host
 A certificate for this service would include a URI-ID of
 `sip:voice.example.edu` (see {{SIP-CERTS}}) along with a DNS-ID of
 `voice.example.edu`.
-It might also include a CN-ID of `voice.example.edu` for backward
-compatibility with deployed infrastructure.
 
 Consider an XMPP-compatible instant messaging (IM) server at the host
 `im.example.org` servicing IM addresses of the form
@@ -969,8 +867,6 @@ A certificate for this service might include SRV-IDs of
 `_xmpp-server.im.example.org` (see {{XMPP}}), a DNS-ID of
 `im.example.org`, and an XMPP-specific `XmppAddr` of `im.example.org`
 (see {{XMPP}}).
-It might also include a CN-ID of `im.example.org` for backward
-compatibility with deployed infrastructure.
 
 # Requesting Server Certificates {#request}
 
@@ -1123,49 +1019,34 @@ in accordance with the following rules:
   specifies the use of URIs in server certificates), then the list
   SHOULD include a URI-ID.
 
-* The list MAY include a CN-ID, mainly for the sake of backward
-  compatibility with deployed infrastructure.
-
-  Which identifier types a client includes in its list of reference
-  identifiers is a matter of local policy.
-  For example, in certain deployment environments, a client that is
-  built to connect only to a particular kind of service (e.g., only IM
-  services) might be configured to accept as valid only certificates
-  that include an SRV-ID for that application service type; in this
-  case, the client would include only SRV-IDs matching the application
-  service type in its list of reference identifiers (not, for example,
-  DNS-IDs).
-  By contrast, a more lenient client (even one built to connect only
-  to a particular kind of service) might include both SRV-IDs and
-  DNS-IDs in its list of reference identifiers.
-
-> Implementation Note: It is highly likely that implementers of client software
-> will need to support CN-IDs for the foreseeable future, because certificates
-> containing CN-IDs are so widely deployed.  Implementers are advised to monitor
-> the state of the art with regard to certificate issuance policies and migrate
-> away from support CN-IDs in the future if possible.
+Which identifier types a client includes in its list of reference
+identifiers is a matter of local policy.
+For example, in certain deployment environments, a client that is
+built to connect only to a particular kind of service (e.g., only IM
+services) might be configured to accept as valid only certificates
+that include an SRV-ID for that application service type; in this
+case, the client would include only SRV-IDs matching the application
+service type in its list of reference identifiers (not, for example,
+DNS-IDs).
+By contrast, a more lenient client (even one built to connect only
+to a particular kind of service) might include both SRV-IDs and
+DNS-IDs in its list of reference identifiers.
 
 > Implementation Note: The client does not need to construct the foregoing
 > identifiers in the actual formats found in a certificate (e.g., as ASN.1
 > types); it only needs to construct the functional equivalent of such identifiers
 > for matching purposes.
 
-> Security Warning: A client MUST NOT construct a reference identifier corresponding
-> to Relative Distinguished Names (RDNs) other than those of type Common Name
-> and MUST NOT check for RDNs other than those of type Common Name in the presented
-> identifiers.
-
 ### Examples {#verify-reference-examples}
 
 A web browser that is connecting via HTTPS to the website at `www.example.com`
-might have two reference identifiers: a DNS-ID of `www.example.com` and,
-as a fallback, a CN-ID of `www.example.com`.
+would have a single reference identifier: a DNS-ID of `www.example.com`.
 
 A mail user agent that is connecting via IMAPS to the email
-service at `example.net` (resolved as `mail.example.net`) might have five
+service at `example.net` (resolved as `mail.example.net`) might have three
 reference identifiers: an SRV-ID of `_imaps.example.net` (see {{EMAIL-SRV}}),
-DNS-IDs of `example.net` and `mail.example.net`, and, as a fallback, CN-IDs
-of `example.net` and `mail.example.net`. (A legacy email user agent would
+and DNS-IDs of `example.net` and `mail.example.net`.
+(A legacy email user agent would
 not support {{EMAIL-SRV}} and therefore would probably be explicitly configured to
 connect to `mail.example.net`, whereas an SRV-aware user agent would derive
 `example.net` from an email address of the form `user@example.net` but might
@@ -1199,10 +1080,6 @@ which point the client SHOULD stop the search.
 > for matching multiple reference identifiers are a matter for
 > implementation or future specification.
 
-> Security Warning: A client MUST NOT seek a match for a reference identifier
-> of CN-ID if the presented identifiers include a DNS-ID, SRV-ID, URI-ID, or
-> any application-specific identifier types supported by the client.
-
 Before applying the comparison rules provided in the following
 sections, the client might need to split the reference identifier into
 its DNS domain name portion and its application service type portion,
@@ -1212,13 +1089,6 @@ as follows:
   application service type portion and thus can be used directly as the DNS
   domain name for comparison purposes.  As an example, a DNS-ID of `www.example.com`
   would result in a DNS domain name portion of `www.example.com`.
-
-* A reference identifier of type CN-ID also does not include an
-  application service type portion and thus can be used directly as the DNS
-  domain name for comparison purposes.  As previously mentioned, this document
-  specifies that a CN-ID always contains a string whose form matches that of
-  a DNS domain name (thus differentiating a CN-ID from a Common Name containing
-  a human-friendly name).
 
 * For a reference identifier of type SRV-ID, the DNS domain name
   portion is the Name and the application service type portion is the Service.
@@ -1259,8 +1129,9 @@ application service type as described under {{verify-app}}).
 The rules differ depending on whether the domain to be checked is a
 "traditional domain name" or an "internationalized domain name" (as
 defined under {{names-dns}}).
-Finally, we also specify the circumstances under which it is
-acceptable to check the CN-ID identifier type.
+Furthermore, to meet the needs of clients that support presented
+identifiers containing the wildcard character `*`, we define a
+supplemental rule for so-called "wildcard certificates".
 
 ### Checking of Traditional Domain Names {#verify-domain-trad}
 
@@ -1311,27 +1182,6 @@ does not follow the following rules:
 
 4. The wildcard character is embedded in an A-label or U-label
    {{IDNA-DEFS}} of an internationalized domain name {{IDNA-PROTO}}.
-
-The first three rules may be summarized as "the wildcard character can
-only be the first character in the left-most label."
-
-
-### Checking of Common Names {#verify-domain-cn}
-
-As noted, a client MUST NOT seek a match for a reference identifier of
-CN-ID if the presented identifiers include a DNS-ID, SRV-ID, URI-ID,
-or any application-specific identifier types supported by the client.
-
-Therefore, if and only if the presented identifiers do not include a
-DNS-ID, SRV-ID, URI-ID, or any application-specific identifier types
-supported by the client, then the client MAY as a last resort check
-for a string whose form matches that of a fully qualified DNS domain
-name in a Common Name field of the subject field (i.e., a CN-ID).
-If the client chooses to compare a reference identifier of type CN-ID
-against that string, it MUST follow the comparison rules for the DNS
-domain name portion of an identifier of type DNS-ID, SRV-ID, or
-URI-ID, as described under {{verify-domain-trad}},
-{{verify-domain-idn}}, and {{verify-domain-wildcards}}.
 
 ## Matching the Application Service Type Portion {#verify-app}
 
@@ -1501,24 +1351,7 @@ domain name.
 
 To accommodate the workaround that was needed before the development
 of the SNI extension, this specification allows multiple DNS-IDs,
-SRV-IDs, or URI-IDs in a certificate; however, it explicitly
-discourages multiple CN-IDs.
-Although it would be preferable to forbid multiple CN-IDs entirely,
-there are several reasons at this time why this specification states
-that they SHOULD NOT (instead of MUST NOT) be included:
-
-* At least one significant technology community of interest explicitly allows
-  multiple CN-IDs {{EV-CERTS}}.
-
-* At least one significant certification authority is known to issue certificates
-  containing multiple CN-IDs.
-
-* Many service providers often deem inclusion of multiple CN-IDs
-  necessary in virtual hosting environments because at least one widely deployed
-  operating system does not yet support the SNI extension.
-
-It is hoped that the recommendation regarding multiple CN-IDs can be further
-tightened in the future.
+SRV-IDs, or URI-IDs in a certificate.
 
 --- back
 
