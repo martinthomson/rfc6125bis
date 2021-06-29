@@ -49,44 +49,23 @@ informative:
   DNSSEC: RFC4033
   DTLS: RFC4347
   EMAIL-SRV: RFC6186
-  GIST: RFC5971
   HTTP: RFC2616
   HTTP-TLS: RFC2818
-  IMAP: RFC3501
   IPSEC: RFC4301
-  LDAP: RFC4511
-  LDAP-AUTH: RFC4513
   LDAP-SCHEMA: RFC4519
-  LDAP-TLS: RFC2830
   NAPTR: RFC3403
-  NETCONF: RFC4741
-  NETCONF-SSH: RFC4742
-  NETCONF-TLS: RFC5539
-  NNTP: RFC3977
-  NNTP-TLS: RFC4642
   OCSP: RFC2560
   OPENPGP: RFC4880
-  POP3: RFC1939
   PRIVATE: RFC1918
   S-NAPTR: RFC3958
   SECTERMS: RFC4949
   SIP: RFC3261
   SIP-CERTS: RFC5922
   SIP-SIPS: RFC5630
-  SMTP: RFC5321
-  SMTP-AUTH: RFC4954
-  SMTP-TLS: RFC3207
-  SNMP: RFC3411
-  SNMP-TLS: RFC5953
-  SYSLOG: RFC5424
-  SYSLOG-DTLS: RFC6012
-  SYSLOG-TLS: RFC5425
   TLS: RFC5246
   TLS-EXT: RFC6066
-  USINGTLS: RFC2595
   VERIFY: RFC6125
   XMPP: RFC6120
-  XMPP-OLD: RFC3920
   HTTPSbytes:
     target: https://media.blackhat.com/bh-ad-10/Hansen/Blackhat-AD-2010-Hansen-Sokol-HTTPS-Can-Byte-Me-slides.pdf
     title: HTTPS Can Byte Me
@@ -297,6 +276,12 @@ the relevant technology communities agree to do so.
 To orient the reader, this section provides an informational overview of
 the recommendations contained in this document.
 
+The previous version of this specification, {{VERIFY}},
+surveyed the current practice from
+many IETF standards and tried to generalize best practices.
+This document takes the lessons learned in the past decade and codifies
+them as best practices.
+
 For the primary audience of application protocol designers, this document
 provides recommended procedures for the representation and verification of
 application service identity within PKIX certificates used in the context
@@ -306,68 +291,19 @@ For the secondary audiences, in essence this document encourages certification
 authorities, application service providers, and application client developers
 to coalesce on the following practices:
 
-
-
-* Move away from including and checking strings that look like domain names
+* Stop including and checking strings that look like domain names
   in the subject's Common Name.
 
-* Move toward including and checking DNS domain names via the subjectAlternativeName
+* Check DNS domain names via the subjectAlternativeName
   extension designed for that purpose: dNSName.
 
 * Move toward including and checking even more specific
   subjectAlternativeName extensions where appropriate for using the protocol
   (e.g., uniformResourceIdentifier and the otherName form SRVName).
 
-* Move away from the issuance of so-called wildcard certificates (e.g., a certificate
+* Constrain and simplify the validation of so-called wildcard certificates
+  (e.g., a certificate
   containing an identifier for `*.example.com`).
-
-
-These suggestions are not entirely consistent with all practices that are
-currently followed by certification authorities, client developers, and service
-providers.  However, they reflect the best aspects of current practices and
-are expected to become more widely adopted in the coming years.
-
-
-## Generalization from Current Technologies {#generalization}
-
-This document attempts to generalize best practices from the many application
-technologies that currently use PKIX certificates with TLS.  Such technologies
-include, but are not limited to:
-
-
-
-* The Internet Message Access Protocol {{IMAP}} and the Post Office
-  Protocol {{POP3}}; see also {{USINGTLS}}
-
-* The Hypertext Transfer Protocol {{HTTP}}; see also {{HTTP-TLS}}
-
-* The Lightweight Directory Access Protocol {{LDAP}}; see also
-  {{LDAP-AUTH}} and its predecessor {{LDAP-TLS}}
-
-* The Simple Mail Transfer Protocol {{SMTP}}; see also {{SMTP-AUTH}}
-  and {{SMTP-TLS}}
-
-* The Extensible Messaging and Presence Protocol {{XMPP}}; see also
-  {{XMPP-OLD}}
-
-* The Network News Transfer Protocol {{NNTP}}; see also {{NNTP-TLS}}
-
-* The NETCONF Configuration Protocol {{NETCONF}}; see also
-  {{NETCONF-SSH}} and {{NETCONF-TLS}}
-
-* The Syslog Protocol {{SYSLOG}}; see also {{SYSLOG-TLS}} and
-  {{SYSLOG-DTLS}}
-
-* The Session Initiation Protocol {{SIP}}; see also {{SIP-CERTS}}
-
-* The Simple Network Management Protocol {{SNMP}}; see also
-  {{SNMP-TLS}}
-
-* The General Internet Signalling Transport {{GIST}}
-
-
-However, as noted, this document does not supersede the rules for verifying
-service identity provided in specifications for those application protocols.
 
 
 ## Scope {#scope}
