@@ -88,6 +88,7 @@ informative:
   TLS: RFC5246
   TLS-EXT: RFC6066
   USINGTLS: RFC2595
+  VERIFY: RFC6125
   XMPP: RFC6120
   XMPP-OLD: RFC3920
   HTTPSbytes:
@@ -627,7 +628,7 @@ subjectAltName entry:
 
 subjectAltName extension:
 : A standard PKIX certificate extension {{PKIX}} enabling identifiers
-  of various types to be bound to the certificate subject --- in
+  of various types to be bound to the certificate subject -- in
   addition to, or in place of, identifiers that may be embedded within
   or provided as a certificate's subject field.
 
@@ -674,7 +675,7 @@ by a brief tutorial about subject naming in PKIX.
 ## Naming Application Services {#names-apps}
 
 This specification assumes that the name of an application service is
-based on a DNS domain name (e.g., `example.com`) --- supplemented in
+based on a DNS domain name (e.g., `example.com`) -- supplemented in
 some circumstances by an application service type (e.g., "the IMAP
 server at example.com").
 
@@ -2449,34 +2450,8 @@ For TLS authentication with pre-shared keys, the identity in the psk\_identity\_
 the client identity, i.e. the Querying node) MUST be compared to the identities
 in the APD.
 
-######
-
-
-# Contributors {#contributors}
-{: numbered='false'}
-
-The following individuals made important contributions to the text of this
-document: Shumon Huque, RL 'Bob' Morgan, and Kurt Zeilenga.
-
-
 # Acknowledgements {#acknowledgements}
 {: numbered='false'}
 
-The editors and contributors wish to thank the following individuals for
-their feedback and suggestions: Bernard Aboba, Richard Barnes, Uri Blumenthal,
-Nelson Bolyard, Kaspar Brand, Anthony Bryan, Scott Cantor, Wan-Teh Chang,
-Bil Corry, Dave Cridland, Dave Crocker, Cyrus Daboo, Charles Gardiner, Philip
-Guenther, Phillip Hallam-Baker, Bruno Harbulot, Wes Hardaker, David Harrington,
-Paul Hoffman, Love Hornquist Astrand, Henry Hotz, Russ Housley, Jeffrey Hutzelman,
-Cullen Jennings, Simon Josefsson, Geoff Keating, John Klensin, Scott Lawrence,
-Matt McCutchen, Alexey Melnikov, Subramanian Moonesamy, Eddy Nigg, Ludwig
-Nussel, Joe Orton, Tom Petch, Yngve N. Pettersen, Tim Polk, Robert Relyea,
-Eric Rescorla, Pete Resnick, Martin Rex, Joe Salowey, Stefan Santesson, Jim
-Schaad, Rob Stradling, Michael Stroeder, Andrew Sullivan, Peter Sylvester,
-Martin Thomson, Paul Tiemann, Sean Turner, Nicolas Williams, Dan Wing, Dan
-Winship, and Stefan Winter.
-
-Thanks also to Barry Leiba and Ben Campbell for their reviews on behalf of
-the Security Directorate and the General Area Review Team, respectively.
-
-The responsible Area Director was Alexey Melnikov.
+We gratefully acknowledge everyone who contributed to the previous
+version of this document, {{VERIFY}}.
