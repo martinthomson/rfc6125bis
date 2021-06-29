@@ -303,9 +303,8 @@ to coalesce on the following practices:
   subjectAlternativeName extensions where appropriate for using the protocol
   (e.g., uniformResourceIdentifier and the otherName form SRVName).
 
-* Constrain and simplify the validation of so-called wildcard certificates
-  (e.g., a certificate
-  containing an identifier for `*.example.com`).
+* Constrain and simplify the validation of wildcard certificates
+  (e.g., a certificate containing an identifier for `*.example.com`).
 
 
 ## Scope {#scope}
@@ -395,9 +394,7 @@ The following topics are out of scope for this specification:
 * Certification authority policies, such as:
 
   * What types or "classes" of certificates to issue and whether to apply different
-    policies for them (e.g., allow the wildcard character in certificates issued
-    to individuals who have provided proof of identity but do not allow the wildcard
-    character in "Extended Validation" certificates {{EV-CERTS}}).
+    policies for them.
 
   * Whether to issue certificates based on IP addresses (or
     some other form, such as relative domain names) in addition to fully qualified
@@ -867,12 +864,6 @@ in this document.
   If so, consider recommending support for the CN-ID identifier type
   as a fallback.
 
-* Does your technology need to allow the wildcard character in DNS
-  domain names?
-  If so, consider recommending support for wildcard certificates, and
-  specify exactly where the wildcard character is allowed to occur
-  (e.g., only the complete left-most label of a DNS domain name).
-
 Sample text is provided under {{text}}.
 
 # Representing Server Identity {#represent}
@@ -936,15 +927,8 @@ document.
   but SHOULD NOT contain more than one CN-ID, as further explained
   under {{security-multi}}.
 
-7. Unless a specification that reuses this one allows continued
-  support for the wildcard character `*`, the DNS domain name portion
-  of a presented identifier SHOULD NOT contain the wildcard character,
-  whether as the complete left-most label within the identifier
-  (following the description of labels and domain names in
-  {{DNS-CONCEPTS}}, e.g., `*.example.com`) or as a fragment thereof
-  (e.g., `*oo.example.com`, `f*o.example.com`, or `fo*.example.com`). A
-  more detailed discussion of so-called "wildcard certificates" is
-  provided under {{security-wildcards}}.
+7. The wildcard character `*` should only be used if it follows the
+   rules specified in {{verify-domain-wildcards}}.
 
 ## Examples {#represent-examples}
 
@@ -1275,9 +1259,6 @@ application service type as described under {{verify-app}}).
 The rules differ depending on whether the domain to be checked is a
 "traditional domain name" or an "internationalized domain name" (as
 defined under {{names-dns}}).
-Furthermore, to meet the needs of clients that support presented
-identifiers containing the wildcard character `*`, we define a
-supplemental rule for so-called "wildcard certificates".
 Finally, we also specify the circumstances under which it is
 acceptable to check the CN-ID identifier type.
 
@@ -1312,31 +1293,27 @@ names).
 A client employing this specification's rules MAY match the
 reference identifier against a presented identifier whose DNS domain name
 portion contains the wildcard character `*` as part or all of a label
-(following the description of labels and domain names in {{DNS-CONCEPTS}}).
+(following the description of labels and domain names in {{DNS-CONCEPTS}}),
+provided the requirements listed below are met.
 
 For information regarding the security characteristics of wildcard certificates,
 see {{security-wildcards}}.
 
-If a client matches the reference identifier against a presented identifier
-whose DNS domain name portion contains the wildcard character `*`, the following
-rules apply:
+A client MUST NOT use the wildcard identifier if the reference identifier
+does not follow the following rules:
 
+1. There is more than one wildcard character.
 
+2. The wildcard appears other than in the left-most label (e.g., do not
+   match `bar.*.example.net`).
 
-1. The client MUST NOT attempt to match a presented identifier in which the
-  wildcard character appears in other than the left-most label (e.g., do not
-  match `bar.*.example.net`).
+3. The wildcard is not the first character (e.g., do not match `w*.example.com`)
 
-2. The client MUST NOT attempt to match a presented identifier if there are
-  other characters before the wildcard character.
+4. The wildcard character is embedded in an A-label or U-label
+   {{IDNA-DEFS}} of an internationalized domain name {{IDNA-PROTO}}.
 
-3. The client MUST NOT attempt to match a wildcard character against more than
-  one label (e.g., `*.example.net` does not match 1api.foo.example.net`)
-
-4. The client MUST NOT treat the label as having a wildcard if
-  it is embedded with an
-  A-label or U-label {{IDNA-DEFS}} of an internationalized domain name {{IDNA-PROTO}}.
-
+The first three rules may be summarized as "the wildcard character can
+only be the first character in the left-most label."
 
 
 ### Checking of Common Names {#verify-domain-cn}
@@ -1483,61 +1460,18 @@ relevant information provided by the user or associated by the client).
 ## Wildcard Certificates {#security-wildcards}
 
 This document states that the wildcard character `*` SHOULD NOT be
-included in presented identifiers but MAY be checked by application clients
-(mainly for the sake of backward compatibility with deployed infrastructure).
-As a result, the rules provided in this document are more restrictive than
-the rules for many existing application technologies.
-Several security considerations justify tightening the rules:
+included in presented identifiers but SHOULD be checked by application clients
+if the requirements specified in {{verify-domain-wildcards}} are met.
 
+Wildcard certificates automatically vouch for any and all host names
+within their domain. This can be convenient for administrators but
+also poses the risk of vouching for rogue or buggy hosts. See for
+example {{Defeating-SSL}} (beginning at slide 91) and {{HTTPSbytes}}
+(slides 38-40).
 
-
-* Wildcard certificates automatically vouch for any and all host names
-  within their domain. This can be convenient for administrators but
-  also poses the risk of vouching for rogue or buggy hosts. See for
-  example {{Defeating-SSL}} (beginning at slide 91) and {{HTTPSbytes}}
-  (slides 38-40).
-
-* Specifications for existing application technologies are not clear or consistent
-  about the allowable location of the wildcard character, such as whether it
-  can be:
-
-  * only the complete left-most label (e.g., `*.example.com`)
-
-  * some fragment of the left-most label (e.g.,
-    `fo*.example.com`, `f*o.example.com`, or `*oo.example.com`)
-
-  * all or part of a label other than the left-most label (e.g., `www.*.example.com`
-    or `www.foo*.example.com`)
-
-  * all or part of a label that identifies a so-called "public suffix" (e.g.,
-    `*.co.uk` or `*.com`)
-
-  * included more than once in a given label (e.g., `f*b*r.example.com`
-
-  * included as all or part of more than one label (e.g., `*.*.example.com`)
-
-  These ambiguities might introduce exploitable differences in identity checking
-  behavior among client implementations and necessitate overly complex and
-  inefficient identity checking algorithms.
-
-* There is no specification that defines how the wildcard character
-  may be embedded within the A-labels or U-labels {{IDNA-DEFS}} of an
-  internationalized domain name [IDNA-PROTO]; as a result,
-  implementations are strongly discouraged from including or
-  attempting to check for the wildcard character embedded within the
-  A-labels or U-labels of an internationalized domain name (e.g.,
-  `xn--kcry6tjko*.example.org`).
-  Note, however, that a presented domain name identifier MAY contain
-  the wildcard character as long as that character occupies the entire
-  left-most label position, where all of the remaining labels are
-  valid NR-LDH labels, A-labels, or U-labels (e.g.,
-  `*.xn--kcry6tjko.example.org`).
-
-Notwithstanding the foregoing security considerations, specifications that
-reuse this one can legitimately encourage continued support for the wildcard
-character if they have good reasons to do so, such as backward compatibility
-with deployed infrastructure (see, for example, {{EV-CERTS}}).
-
+Protection against a wildcard that identifies a
+so-called "public suffix" (e.g., `*.co.uk` or `*.com`)
+is beyond the scope of this document.
 
 ## Internationalized Domain Names {#security-idn}
 
