@@ -319,7 +319,7 @@ to coalesce on the following practices:
   (e.g., uniformResourceIdentifier and the otherName form SRVName).
 
 * Move away from the issuance of so-called wildcard certificates (e.g., a certificate
-  containing an identifier for `\*.example.com`).
+  containing an identifier for `*.example.com`).
 
 
 These suggestions are not entirely consistent with all practices that are
@@ -999,12 +999,12 @@ document.
   under {{security-multi}}.
 
 7. Unless a specification that reuses this one allows continued
-  support for the wildcard character '\*', the DNS domain name portion
+  support for the wildcard character `*`, the DNS domain name portion
   of a presented identifier SHOULD NOT contain the wildcard character,
   whether as the complete left-most label within the identifier
   (following the description of labels and domain names in
-  {{DNS-CONCEPTS}}, e.g., `\*.example.com`) or as a fragment thereof
-  (e.g., \*oo.example.com, f\*o.example.com, or fo\*.example.com). A
+  {{DNS-CONCEPTS}}, e.g., `*.example.com`) or as a fragment thereof
+  (e.g., `*oo.example.com`, `f*o.example.com`, or `fo*.example.com`). A
   more detailed discussion of so-called "wildcard certificates" is
   provided under {{security-wildcards}}.
 
@@ -1338,7 +1338,7 @@ The rules differ depending on whether the domain to be checked is a
 "traditional domain name" or an "internationalized domain name" (as
 defined under {{names-dns}}).
 Furthermore, to meet the needs of clients that support presented
-identifiers containing the wildcard character '\*', we define a
+identifiers containing the wildcard character `*`, we define a
 supplemental rule for so-called "wildcard certificates".
 Finally, we also specify the circumstances under which it is
 acceptable to check the CN-ID identifier type.
@@ -1373,27 +1373,27 @@ names).
 
 A client employing this specification's rules MAY match the
 reference identifier against a presented identifier whose DNS domain name
-portion contains the wildcard character '\*' as part or all of a label
+portion contains the wildcard character `*` as part or all of a label
 (following the description of labels and domain names in {{DNS-CONCEPTS}}).
 
 For information regarding the security characteristics of wildcard certificates,
 see {{security-wildcards}}.
 
 If a client matches the reference identifier against a presented identifier
-whose DNS domain name portion contains the wildcard character '\*', the following
+whose DNS domain name portion contains the wildcard character `*`, the following
 rules apply:
 
 
 
 1. The client MUST NOT attempt to match a presented identifier in which the
   wildcard character appears in other than the left-most label (e.g., do not
-  match bar.\*.example.net).
+  match `bar.*.example.net`).
 
 2. The client MUST NOT attempt to match a presented identifier if there are
   other characters before the wildcard character.
 
 3. The client MUST NOT attempt to match a wildcard character against more than
-  one label (e.g., \*.example.net does not match api.foo.example.net)
+  one label (e.g., `*.example.net` does not match 1api.foo.example.net`)
 
 4. The client MUST NOT treat the label as having a wildcard if
   it is embedded with an
@@ -1544,7 +1544,7 @@ relevant information provided by the user or associated by the client).
 
 ## Wildcard Certificates {#security-wildcards}
 
-This document states that the wildcard character '\*' SHOULD NOT be
+This document states that the wildcard character `*` SHOULD NOT be
 included in presented identifiers but MAY be checked by application clients
 (mainly for the sake of backward compatibility with deployed infrastructure).
 As a result, the rules provided in this document are more restrictive than
@@ -1563,20 +1563,20 @@ Several security considerations justify tightening the rules:
   about the allowable location of the wildcard character, such as whether it
   can be:
 
-  * only the complete left-most label (e.g., \*.example.com)
+  * only the complete left-most label (e.g., `*.example.com`)
 
   * some fragment of the left-most label (e.g.,
-    fo\*.example.com, f\*o.example.com, or \*oo.example.com)
+    `fo*.example.com`, `f*o.example.com`, or `*oo.example.com`)
 
-  * all or part of a label other than the left-most label (e.g., www.\*.example.com
-    or www.foo\*.example.com)
+  * all or part of a label other than the left-most label (e.g., `www.*.example.com`
+    or `www.foo*.example.com`)
 
   * all or part of a label that identifies a so-called "public suffix" (e.g.,
-    \*.co.uk or \*.com)
+    `*.co.uk` or `*.com`)
 
-  * included more than once in a given label (e.g., f\*b\*r.example.com
+  * included more than once in a given label (e.g., `f*b*r.example.com`
 
-  * included as all or part of more than one label (e.g., \*.\*.example.com)
+  * included as all or part of more than one label (e.g., `*.*.example.com`)
 
   These ambiguities might introduce exploitable differences in identity checking
   behavior among client implementations and necessitate overly complex and
@@ -1698,7 +1698,7 @@ with the following XMPP-specific considerations:
   providers.
 
 * DNS domain names in server certificates MAY contain the wildcard
-  character '\*' as the complete left-most label within the
+  character `*` as the complete left-most label within the
   identifier.
 
 ######
