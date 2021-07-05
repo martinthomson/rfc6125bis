@@ -167,8 +167,9 @@ informative:
 
 
 Many application technologies enable secure communication between two entities
-by means of Internet Public Key Infrastructure Using X.509 (PKIX) certificates
-in the context of Transport Layer Security (TLS).  This document specifies
+by means of Transport Layer Security (TLS) with
+Internet Public Key Infrastructure Using X.509 (PKIX) certificates.
+This document specifies
 procedures for representing and verifying the identity of application services
 in such interactions.
 
