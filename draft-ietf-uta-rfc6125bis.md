@@ -154,7 +154,6 @@ informative:
 
 --- abstract
 
-
 Many application technologies enable secure communication between two entities
 by means of Transport Layer Security (TLS) with
 Internet Public Key Infrastructure Using X.509 (PKIX) certificates.
@@ -196,7 +195,6 @@ of PKIX-based authentication, this document specifies recommended procedures
 for representing and verifying application service identity in certificates
 intended for use in application protocols employing TLS.
 
-
 ## Audience {#audience}
 
 The primary audience for this document consists of application protocol designers,
@@ -208,7 +206,6 @@ in this document when defining certificate issuance policies, generating
 certificate signing requests, or writing software algorithms for identity
 matching.
 
-
 ## How to Read This Document {#reading}
 
 This document is longer than the authors would have liked because it was
@@ -216,8 +213,6 @@ necessary to carefully define terminology, explain the underlying concepts,
 define the scope, and specify recommended behavior for both certification
 authorities and application software implementations.  The following sections
 are of special interest to various audiences:
-
-
 
 * Protocol designers might want to first read the checklist in {{design}}.
 
@@ -230,13 +225,11 @@ are of special interest to various audiences:
 * Software implementers might want to first read the recommendations for verification
   of server identity in {{verify}}.
 
-
 The sections on terminology ({{terminology}}), naming of application
 services ({{names}}), document scope ({{scope}}), and the like provide
 useful background information regarding the recommendations
 and guidelines that are contained in the above-referenced sections, but are
 not absolutely necessary for a first reading of this document.
-
 
 ## Applicability {#applicability}
 
@@ -260,7 +253,6 @@ the procedures described here can be referenced by future
 specifications,
 including updates to specifications for existing application protocols if
 the relevant technology communities agree to do so.
-
 
 ## Overview of Recommendations {#overview}
 
@@ -295,7 +287,6 @@ to coalesce on the following practices:
 * Constrain and simplify the validation of wildcard certificates
   (e.g., a certificate containing an identifier for `*.example.com`).
 
-
 ## Scope {#scope}
 
 ### In Scope {#in-scope}
@@ -306,12 +297,9 @@ Sockets Layer (SSL) technology), and only to PKIX-based systems.  As a result,
 the scenarios described in the following section are out of scope for this
 specification (although they might be addressed by future specifications).
 
-
 ### Out of Scope {#out-of-scope}
 
 The following topics are out of scope for this specification:
-
-
 
 * Client or end-user identities.
 
@@ -397,7 +385,6 @@ The following topics are out of scope for this specification:
 
   * How to certify or validate other kinds of information that might be included
     in a certificate (e.g., organization name).
-
 
 * Resolution of DNS domain names.
 
@@ -619,7 +606,6 @@ Therefore, we can categorize the identifier types of interest as follows:
 
 * A URI-ID is direct and restricted.
 
-
 We summarize this taxonomy in the following table.
 
 ~~~~
@@ -654,14 +640,11 @@ service providers, and CAs actively using or supporting that technology (one
 such community, the CA/Browser Forum, has codified such a baseline for "Extended
 Validation Certificates" in {{EV-CERTS}}).
 
-
 ## DNS Domain Names {#names-dns}
 
 For the purposes of this specification, the name of an application service
 is (or is based on) a DNS domain name that conforms to one of the following
 forms:
-
-
 
 1. A "traditional domain name", i.e., a fully qualified DNS domain
   name or "FQDN" (see {{DNS-CONCEPTS}}) all of whose labels are "LDH
@@ -1120,7 +1103,6 @@ Detailed comparison rules for matching the DNS domain name portion
 and application service type portion of the reference identifier are provided
 in the following sections.
 
-
 ## Matching the DNS Domain Name Portion {#verify-domain}
 
 The client MUST match the DNS domain name portion of a reference
@@ -1234,7 +1216,6 @@ then the service identity check has succeeded.  In this case, the client
 MUST use the matched reference identifier as the validated identity of the
 application service.
 
-
 ### Case #2: No Match Found, Pinned Certificate {#verify-outcome-pin}
 
 If the client does not find a presented identifier matching any of the
@@ -1262,8 +1243,6 @@ terminate the communication attempt with a bad certificate error; this behavior
 is preferable because it prevents users from inadvertently bypassing security
 protections in hostile situations.
 
-
-
 > Security Warning: Some interactive clients give advanced users the option
 > of proceeding with acceptance despite the identity mismatch, thereby "pinning"
 > the certificate to one of the reference identifiers in the list constructed
@@ -1276,17 +1255,11 @@ protections in hostile situations.
 > and only then allowing the user to pin the certificate (on a temporary or
 > permanent basis, at the user's option).
 
-
-
-
 Otherwise, if the client is an automated application not directly controlled
 by a human user, then it SHOULD terminate the communication attempt with
 a bad certificate error and log the error appropriately.  An automated application
 MAY provide a configuration setting that disables this behavior, but MUST
 enable the behavior by default.
-
-
-
 
 # Security Considerations {#security}
 
@@ -1305,7 +1278,6 @@ configured (where the "context" includes the chain of certificates from the
 presented certificate to the trust anchor, the source domain, the application
 service type, the service's derived domain and port number, and any other
 relevant information provided by the user or associated by the client).
-
 
 ## Wildcard Certificates {#security-wildcards}
 
@@ -1328,7 +1300,6 @@ is beyond the scope of this document.
 Allowing internationalized domain names can lead to the inclusion of visually
 similar (so-called "confusable") characters in certificates; for discussion,
 see for example {{IDNA-DEFS}}.
-
 
 ## Multiple Identifiers {#security-multi}
 
@@ -1418,8 +1389,6 @@ identifier.
 
 The identities to be checked are set as follows:
 
-
-
 * The initiating entity sets its reference identifier to the 'to' address it
   communicates in the initial stream header; i.e., this is the identity it
   expects the receiving entity to provide in a PKIX certificate.
@@ -1427,7 +1396,6 @@ The identities to be checked are set as follows:
 * The receiving entity sets its reference identifier to the 'from' address
   communicated by the initiating entity in the initial stream header; i.e.,
   this is the identity that the initiating entity is trying to assert.
-
 
 ######
 
