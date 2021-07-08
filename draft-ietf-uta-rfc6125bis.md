@@ -733,12 +733,6 @@ in this document.
   identify application services, but do not rely on representation of
   those URIs in PKIX certificates by means of URI-IDs.)
 
-* Does your technology need to allow the wildcard character in DNS
-  domain names?
-  If so, consider recommending support for wildcard certificates, and
-  specify exactly where the wildcard character is allowed to occur
-  (e.g., only the complete left-most label of a DNS domain name).
-
 Sample text is provided under {{text}}.
 
 # Representing Server Identity {#represent}
@@ -790,16 +784,6 @@ document.
 
 5. The certificate MAY contain more than one DNS-ID, SRV-ID, or URI-ID
   as further explained under {{security-multi}}.
-
-6. Unless a specification that reuses this one allows continued
-  support for the wildcard character `*`, the DNS domain name portion
-  of a presented identifier SHOULD NOT contain the wildcard character,
-  whether as the complete left-most label within the identifier
-  (following the description of labels and domain names in
-  {{DNS-CONCEPTS}}, e.g., `*.example.com`) or as a fragment thereof
-  (e.g., `*oo.example.com`, `f*o.example.com`, or `fo*.example.com`). A
-  more detailed discussion of so-called "wildcard certificates" is
-  provided under {{security-wildcards}}.
 
 ## Examples {#represent-examples}
 
@@ -1127,27 +1111,22 @@ names).
 
 ### Checking of Wildcard Certificates {#verify-domain-wildcards}
 
-A client employing this specification's rules MAY match the
+A client MAY match the
 reference identifier against a presented identifier whose DNS domain name
-portion contains the wildcard character `*` as part or all of a label
+portion contains the wildcard character `*` in a label
 (following the description of labels and domain names in {{DNS-CONCEPTS}}),
-provided the requirements listed below are met.
+provided these requirements are met:
+
+1. There is only one wildcard character.
+
+2. The wildcard character appears only as the content of the
+   left-most label.
+
+3. The wildcard character is not embedded in an A-label or U-label
+   {{IDNA-DEFS}} of an internationalized domain name {{IDNA-PROTO}}.
 
 For information regarding the security characteristics of wildcard certificates,
 see {{security-wildcards}}.
-
-A client MUST NOT use the wildcard identifier if the reference identifier
-does not follow the following rules:
-
-1. There is more than one wildcard character.
-
-2. The wildcard appears other than in the left-most label (e.g., do not
-   match `bar.*.example.net`).
-
-3. The wildcard is not the first character (e.g., do not match `w*.example.com`)
-
-4. The wildcard character is embedded in an A-label or U-label
-   {{IDNA-DEFS}} of an internationalized domain name {{IDNA-PROTO}}.
 
 ## Matching the Application Service Type Portion {#verify-app}
 
@@ -1265,11 +1244,9 @@ relevant information provided by the user or associated by the client).
 
 ## Wildcard Certificates {#security-wildcards}
 
-This document states that the wildcard character `*` SHOULD NOT be
-included in presented identifiers but SHOULD be checked by application clients
-if the requirements specified in {{verify-domain-wildcards}} are met.
-
-Wildcard certificates automatically vouch for any and all host names
+Wildcard certificates, those that have an identifier with
+`*` as the left-most DNS label,
+automatically vouch for any and all host names
 within their domain. This can be convenient for administrators but
 also poses the risk of vouching for rogue or buggy hosts. See for
 example {{Defeating-SSL}} (beginning at slide 91) and {{HTTPSbytes}}
