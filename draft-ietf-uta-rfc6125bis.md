@@ -600,23 +600,9 @@ Therefore, we can categorize the identifier types of interest as follows:
 
 * A DNS-ID is direct and unrestricted.
 
-* An SRV-ID can be either direct or (more typically) indirect, and is restricted.
+* An SRV-ID is typically indirect but can be direct, and is restricted.
 
 * A URI-ID is direct and restricted.
-
-We summarize this taxonomy in the following table.
-
-~~~~
-  +-----------+-----------+---------------+
-  |           |  Direct   |  Restricted   |
-  +-----------+-----------+---------------+
-  |  DNS-ID   |  Yes      |  No           |
-  +-----------+-----------+---------------+
-  |  SRV-ID   |  Either   |  Yes          |
-  +-----------+-----------+---------------+
-  |  URI-ID   |  Yes      |  Yes          |
-  +-----------+-----------+---------------+
-~~~~
 
 When implementing software, deploying services, and issuing certificates
 for secure PKIX-based authentication, it is important to keep these distinctions
