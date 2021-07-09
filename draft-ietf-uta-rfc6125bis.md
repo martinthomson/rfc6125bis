@@ -48,13 +48,13 @@ informative:
   ABNF: RFC5234
   DNS-CASE: RFC4343
   DNSSEC: RFC4033
-  DTLS: RFC4347
+  DTLS: RFC6347
   EMAIL-SRV: RFC6186
-  HTTP: RFC2616
+  HTTP: RFC7230
   HTTP-TLS: RFC2818
   IPSEC: RFC4301
   NAPTR: RFC3403
-  OCSP: RFC2560
+  OCSP: RFC6960
   OPENPGP: RFC4880
   PRIVATE: RFC1918
   S-NAPTR: RFC3958
@@ -62,8 +62,7 @@ informative:
   SIP: RFC3261
   SIP-CERTS: RFC5922
   SIP-SIPS: RFC5630
-  TLS: RFC5246
-  TLS-EXT: RFC6066
+  TLS: RFC8446
   VERIFY: RFC6125
   XMPP: RFC6120
   HTTPSbytes:
@@ -292,8 +291,8 @@ to coalesce on the following practices:
 ### In Scope {#in-scope}
 
 This document applies only to service identities associated with
-fully qualified DNS domain names, only to TLS and DTLS (or the older Secure
-Sockets Layer (SSL) technology), and only to PKIX-based systems.  As a result,
+fully qualified DNS domain names, only to TLS and DTLS,
+and only to PKIX-based systems.  As a result,
 the scenarios described in the following section are out of scope for this
 specification (although they might be addressed by future specifications).
 
@@ -340,8 +339,7 @@ The following topics are out of scope for this specification:
   (e.g., organizational attributes, geographical attributes, company
   logos, and the like).
 
-* Security protocols other than {{TLS}}, {{DTLS}}, or the older Secure
-  Sockets Layer (SSL) technology.
+* Security protocols other than {{TLS}} or {{DTLS}}.
 
   Although other secure, lower-layer protocols exist and even employ
   PKIX certificates at times (e.g., IPsec {{IPSEC}}), their use cases
@@ -1305,20 +1303,9 @@ see for example {{IDNA-DEFS}}.
 
 A given application service might be addressed by multiple DNS domain names
 for a variety of reasons, and a given deployment might service multiple domains
-(e.g., in so-called "virtual hosting" environments).  In the default TLS
-handshake exchange, the client is not able to indicate the DNS domain name
-with which it wants to communicate, and the TLS server returns only one certificate
-for itself.  Absent an extension to TLS, a typical workaround used to facilitate
-mapping an application service to multiple DNS domain names is to embed all
-of the domain names into a single certificate.
-
-A more recent approach, formally specified in {{TLS-EXT}}, is for the
-client to use the TLS "Server Name Indication" (SNI) extension when
-sending the client\_hello message, stipulating the DNS domain name it
-desires or expects of the service.
-The service can then return the appropriate certificate in its
-Certificate message, and that certificate can represent a single DNS
-domain name.
+or protocols.
+The client SHOULD use the TLS Server Name Identification (SNI) extension
+as discussed in {{TLS, Section 4.4.2.2}}.
 
 To accommodate the workaround that was needed before the development
 of the SNI extension, this specification allows multiple DNS-IDs,
