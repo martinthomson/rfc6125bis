@@ -431,7 +431,7 @@ application service type:
 attribute-type-and-value pair:
 : A colloquial name for the ASN.1-based construction comprising a Relative
   Distinguished Name (RDN), which itself is a building-block component of Distinguished
-  Names. See Section 2 of {{LDAP-DN}}.
+  Names. See {{LDAP-DN, Section 2}}.
 
 automated client:
 : A software agent or device that is not directly controlled by a human user.
@@ -537,7 +537,7 @@ subjectAltName extension:
 subject field:
 : The subject field of a PKIX certificate identifies the entity
   associated with the public key stored in the subject public key
-  field (see Section 4.1.2.6 of {{PKIX}}).
+  field (see {{PKIX, Section 4.1.2.6}}).
 
 subject name:
 : In an overall sense, a subject's name(s) can be represented by or in
@@ -545,7 +545,7 @@ subject name:
   {{PKIX}} for details).
   More specifically, the term often refers to the name of a PKIX
   certificate's subject, encoded as the X.501 type Name and conveyed
-  in a certificate's subject field (see Section 4.1.2.6 of {{PKIX}}).
+  in a certificate's subject field (see {{PKIX, Section 4.1.2.6}}).
 
 TLS client:
 : An entity that assumes the role of a client in a Transport Layer
@@ -696,12 +696,12 @@ entities, but such certificates are not necessarily part of a global
 directory information base.
 Specifically, the subject field of a PKIX certificate is an X.501 type
 Name that "identifies the entity associated with the public key stored
-in the subject public key field" (see Section 4.1.2.6 of {{PKIX}}).
+in the subject public key field" (see {{PKIX, Section 4.1.2.6}}).
 However, it is perfectly acceptable for the subject field to be empty,
 as long as the certificate contains a subject alternative name
 ("subjectAltName") extension that includes at least one subjectAltName
 entry, because the subjectAltName extension allows various identities
-to be bound to the subject (see Section 4.2.1.6 of {{PKIX}}).
+to be bound to the subject (see {{PKIX, Section 4.1.2.6}}).
 The subjectAltName extension itself is a sequence of typed entries,
 where each type is a distinct kind of identifier.
 
