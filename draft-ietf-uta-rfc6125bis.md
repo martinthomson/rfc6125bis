@@ -38,6 +38,7 @@ author:
 normative:
   DNS-CONCEPTS: RFC1034
   DNS-SRV: RFC2782
+  DNS-WILDCARDS: RFC4592
   IDNA-DEFS: RFC5890
   IDNA-PROTO: RFC5891
   LDAP-DN: RFC4514
@@ -1081,7 +1082,7 @@ The rules differ depending on whether the domain to be checked is a
 defined under {{names-dns}}).
 Furthermore, to meet the needs of clients that support presented
 identifiers containing the wildcard character `*`, we define a
-supplemental rule for so-called "wildcard certificates".
+supplemental rule for such "wildcard certificates".
 
 ### Checking of Traditional Domain Names {#verify-domain-trad}
 
@@ -1124,6 +1125,12 @@ provided these requirements are met:
 
 3. The wildcard character is not embedded in an A-label or U-label
    {{IDNA-DEFS}} of an internationalized domain name {{IDNA-PROTO}}.
+
+A wildcard in a presented identifier can only match exactly one label in
+a reference identifier. Note that this is not the same as DNS wildcard
+matching, where the `*` label always matches at least one whole
+label and sometimes more. See {{DNS-CONCEPTS, Section 4.3.3}}
+and {{DNS-WILDCARDS}}.
 
 For information regarding the security characteristics of wildcard certificates,
 see {{security-wildcards}}.
@@ -1246,8 +1253,9 @@ relevant information provided by the user or associated by the client).
 
 Wildcard certificates, those that have an identifier with
 `*` as the left-most DNS label,
-automatically vouch for any and all host names
-within their domain. This can be convenient for administrators but
+automatically vouch for any single-label host names
+within their domain, but not multiple levels.
+This can be convenient for administrators but
 also poses the risk of vouching for rogue or buggy hosts. See for
 example {{Defeating-SSL}} (beginning at slide 91) and {{HTTPSbytes}}
 (slides 38-40).
