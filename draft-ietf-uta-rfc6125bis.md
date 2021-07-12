@@ -1081,7 +1081,7 @@ The rules differ depending on whether the domain to be checked is a
 "traditional domain name" or an "internationalized domain name" (as
 defined under {{names-dns}}).
 Furthermore, to meet the needs of clients that support presented
-identifiers containing the wildcard character `*`, we define a
+identifiers containing the wildcard character "\*", we define a
 supplemental rule for such "wildcard certificates".
 
 ### Checking of Traditional Domain Names {#verify-domain-trad}
@@ -1114,7 +1114,7 @@ names).
 
 A client MAY match the
 reference identifier against a presented identifier whose DNS domain name
-portion contains the wildcard character `*` in a label
+portion contains the wildcard character "\*" in a label
 (following the description of labels and domain names in {{DNS-CONCEPTS}}),
 provided these requirements are met:
 
@@ -1128,7 +1128,7 @@ provided these requirements are met:
 
 A wildcard in a presented identifier can only match exactly one label in
 a reference identifier. Note that this is not the same as DNS wildcard
-matching, where the `*` label always matches at least one whole
+matching, where the "\*" label always matches at least one whole
 label and sometimes more. See {{DNS-CONCEPTS, Section 4.3.3}}
 and {{DNS-WILDCARDS}}.
 
@@ -1252,7 +1252,7 @@ relevant information provided by the user or associated by the client).
 ## Wildcard Certificates {#security-wildcards}
 
 Wildcard certificates, those that have an identifier with
-`*` as the left-most DNS label,
+"\*" as the left-most DNS label,
 automatically vouch for any single-label host names
 within their domain, but not multiple levels.
 This can be convenient for administrators but
@@ -1332,7 +1332,7 @@ with the following XMPP-specific considerations:
   providers.
 
 * DNS domain names in server certificates MAY contain the wildcard
-  character `*` as the complete left-most label within the
+  character "\*" as the complete left-most label within the
   identifier.
 
 ######
