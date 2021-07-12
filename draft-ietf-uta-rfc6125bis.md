@@ -1254,7 +1254,7 @@ relevant information provided by the user or associated by the client).
 Wildcard certificates, those that have an identifier with
 "\*" as the left-most DNS label,
 automatically vouch for any single-label host names
-within their domain, but not multiple levels.
+within their domain, but not multiple levels of domains.
 This can be convenient for administrators but
 also poses the risk of vouching for rogue or buggy hosts. See for
 example {{Defeating-SSL}} (beginning at slide 91) and {{HTTPSbytes}}
