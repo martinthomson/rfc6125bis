@@ -374,11 +374,6 @@ application service type:
   Identifier
   scheme {{URI}} or a DNS SRV Service {{DNS-SRV}}.
 
-attribute-type-and-value pair:
-: A colloquial name for the ASN.1-based construction comprising a Relative
-  Distinguished Name (RDN), which itself is a building-block component of Distinguished
-  Names. See {{LDAP-DN, Section 2}}.
-
 automated client:
 : A software agent or device that is not directly controlled by a human user.
 
@@ -460,6 +455,11 @@ reference identifier:
 : An identifier, constructed from a source domain and optionally an
   application service type, used by the client for matching purposes
   when examining presented identifiers.
+
+Relative Distinguished Name (RDN):
+: The ASN.1-based construction comprising a Relative Distinguished Name
+  (RDN), which itself is a building-block component of Distinguished
+  Names. See {{LDAP-DN, Section 2}}.
 
 source domain:
 : The fully qualified DNS domain name
