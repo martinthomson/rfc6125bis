@@ -206,6 +206,26 @@ in this document when defining certificate issuance policies, generating
 certificate signing requests, or writing software algorithms for identity
 matching.
 
+## Changes since RFC 6125
+
+This document revises and obsoletes {{VERIFY}} based
+on the decade of experience and changes since it was first published.
+The major changes, in no particular order, include:
+
+- All references have been updated to the current latest version.
+
+- The TLS SNI extension is no longer new, it is commonplace.
+
+- The only legal place for a certificate wildcard name is as the left-most
+  component in a domain  name.
+
+- It is no longer allowed to use the commonName RDN, known as `CN-ID`,
+  to represent the server identity; only the subjectAltNames extension
+  is used.
+
+- References to the X.500 directory, the survey of prior art, and the
+  sample text in Appendix A have been removed.
+
 ## How to Read This Document {#reading}
 
 This document is longer than the authors would have liked because it was
