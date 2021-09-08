@@ -616,24 +616,24 @@ This section provides guidelines for designers of application protocols,
 in the form of a checklist to follow when reusing the recommendations provided
 in this document.
 
-* Does your technology use DNS SRV records to resolve the DNS domain
-  names of application services?
-  If so, consider recommending or requiring support for the SRV-ID
-  identifier type in PKIX certificates issued and used in your
-  technology community.
-  (Note that many existing application technologies use DNS SRV
+* If your technology does not use DNS SRV records to resolve the DNS domain
+  names of application services then consider stating that SRV-ID as defined
+  in this document is not supported.
+  Note that many existing application technologies use DNS SRV
   records to resolve the DNS domain names of application services, but
   do not rely on representations of those records in PKIX certificates
-  by means of SRV-IDs as defined in {{SRVNAME}}.)
+  by means of SRV-IDs as defined in {{SRVNAME}}.
 
-* Does your technology use URIs to identify application services?
-  If so, consider recommending or requiring support for the URI-ID
-  identifier type.
-  (Note that many existing application technologies use URIs to
+* If your technology does not use use URIs to identify application services,
+  then consider stating that URI-ID as defined in this document is not
+  supported.
+  Note that many existing application technologies use URIs to
   identify application services, but do not rely on representation of
-  those URIs in PKIX certificates by means of URI-IDs.)
+  those URIs in PKIX certificates by means of URI-IDs.
 
-Sample text is provided under {{text}}.
+* If your technology disallows the wildcard character in DNS domain names,
+  then state the wildcard certificates as defined in this document are not
+  supported.
 
 # Representing Server Identity {#represent}
 
@@ -1182,79 +1182,6 @@ of the SNI extension, this specification allows multiple DNS-IDs,
 SRV-IDs, or URI-IDs in a certificate.
 
 --- back
-
-# Sample Text {#text}
-
-At the time of this writing, two application technologies reuse the
-recommendations in this specification: email {{EMAIL-SRV}} and XMPP
-{{XMPP}}.
-Here we include the text from {{XMPP}} to illustrate the thought
-process that might be followed by protocol designers for other
-application technologies.
-Specifically, because XMPP uses DNS SRV records for resolution of the
-DNS domain names for application services, the XMPP specification
-recommends the use of SRV-IDs.
-
-The text regarding certificate issuance is as follows:
-
-######
-
-In a PKIX certificate to be presented by an XMPP server (i.e., a "server
-certificate"), the certificate MUST include one or more XMPP addresses (i.e.,
-domainparts) associated with XMPP services hosted at the server.  The rules
-and guidelines defined in this specification apply to XMPP server certificates,
-with the following XMPP-specific considerations:
-
-* Support for the DNS-ID identifier type {{PKIX}} is REQUIRED in XMPP
-  client and server software implementations.
-  Certification
-  authorities that issue XMPP-specific certificates MUST support the DNS-ID
-  identifier type.
-  XMPP service providers SHOULD include the DNS-ID identifier type in
-  certificate requests.
-
-* Support for the SRV-ID identifier type {{SRVNAME}} is REQUIRED for
-  XMPP client and server software implementations (for verification
-  purposes XMPP client implementations need to support only the
-  `_xmpp-client` application service type, whereas XMPP server
-  implementations need to support both the `_xmpp-client` and
-  `_xmpp-server` application service types).
-  Certification authorities that issue XMPP-specific certificates
-  SHOULD support the SRV-ID identifier type.
-  XMPP service providers SHOULD include the SRV-ID identifier type in
-  certificate requests.
-
-* Support for the XmppAddr identifier type is encouraged in XMPP
-  client and server software implementations for the sake of
-  backward-compatibility, but is no longer encouraged in certificates
-  issued by certification authorities or requested by XMPP service
-  providers.
-
-* DNS domain names in server certificates MAY contain the wildcard
-  character "\*" as the complete left-most label within the
-  identifier.
-
-######
-
-The text regarding certificate verification is as follows:
-
-######
-
-For server certificates, the rules and guidelines defined in this specification
-apply, with the proviso that the XmppAddr identifier is allowed as a reference
-identifier.
-
-The identities to be checked are set as follows:
-
-* The initiating entity sets its reference identifier to the 'to' address it
-  communicates in the initial stream header; i.e., this is the identity it
-  expects the receiving entity to provide in a PKIX certificate.
-
-* The receiving entity sets its reference identifier to the 'from' address
-  communicated by the initiating entity in the initial stream header; i.e.,
-  this is the identity that the initiating entity is trying to assert.
-
-######
 
 # Acknowledgements {#acknowledgements}
 {: numbered='false'}
