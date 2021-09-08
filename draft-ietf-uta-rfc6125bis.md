@@ -827,10 +827,9 @@ corrupt (e.g., a user has clicked a link provided by a malicious
 entity in a phishing attack), then the client might end up
 communicating with an unexpected application service.
 
-> Example: Given an input URI of \<sips:alice@example.net>, a client
-> would derive the application service type `sip` from the "scheme"
-> and parse the domain name `example.net` from the "host" component
-> (or its equivalent).
+For example, given an input URI of \<sips:alice@example.net>, a client
+would derive the application service type `sip` from the scheme
+and parse the domain name `example.net` from the host component.
 
 Each reference identifier in the list SHOULD be based on the source
 domain and SHOULD NOT be based on a derived domain (e.g., a host name
@@ -883,11 +882,6 @@ By contrast, a more lenient client (even one built to connect only
 to a particular kind of service) might include both SRV-IDs and
 DNS-IDs in its list of reference identifiers.
 
-> Implementation Note: The client does not need to construct the foregoing
-> identifiers in the actual formats found in a certificate (e.g., as ASN.1
-> types); it only needs to construct the functional equivalent of such identifiers
-> for matching purposes.
-
 ### Examples {#verify-reference-examples}
 
 A web browser that is connecting via HTTPS to the website at `www.example.com`
@@ -923,13 +917,6 @@ for the purpose of finding a match.  The search fails if the client exhausts
 its list of reference identifiers without finding a match.  The search succeeds
 if any presented identifier matches one of the reference identifiers, at
 which point the client SHOULD stop the search.
-
-> Implementation Note: A client might be configured to perform
-> multiple searches, i.e., to match more than one reference
-> identifier.
-> Although such behavior is not forbidden by this specification, rules
-> for matching multiple reference identifiers are a matter for
-> implementation or future specification.
 
 Before applying the comparison rules provided in the following
 sections, the client might need to split the reference identifier into
@@ -1112,17 +1099,14 @@ terminate the communication attempt with a bad certificate error; this behavior
 is preferable because it prevents users from inadvertently bypassing security
 protections in hostile situations.
 
-> Security Warning: Some interactive clients give advanced users the option
-> of proceeding with acceptance despite the identity mismatch, thereby "pinning"
-> the certificate to one of the reference identifiers in the list constructed
-> by the client for this communication attempt.  Although this behavior can
-> be appropriate in certain specialized circumstances, in general it ought
-> to be exposed only to advanced users.  Even then it needs to be handled with
-> extreme caution, for example by first encouraging even an advanced user to
-> terminate the communication attempt and, if the advanced user chooses to
-> proceed anyway, by forcing the user to view the entire certification path
-> and only then allowing the user to pin the certificate (on a temporary or
-> permanent basis, at the user's option).
+Some interactive clients give advanced users the option
+of proceeding with acceptance despite the identity mismatch.
+Although this behavior can be appropriate in certain specialized
+circumstances, it needs to be handled with
+extreme caution, for example by first encouraging even an advanced user to
+terminate the communication attempt and, if the advanced user chooses to
+proceed anyway, by forcing the user to view the entire certification path
+before proceeding.
 
 Otherwise, if the client is an automated application not directly controlled
 by a human user, then it SHOULD terminate the communication attempt with
