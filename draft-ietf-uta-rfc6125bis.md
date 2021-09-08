@@ -57,7 +57,6 @@ informative:
   NAPTR: RFC3403
   OCSP: RFC6960
   OPENPGP: RFC4880
-  PRIVATE: RFC1918
   S-NAPTR: RFC3958
   SECTERMS: RFC4949
   SIP: RFC3261
@@ -115,42 +114,6 @@ informative:
     date: '2010-03-9'
     seriesinfo:
       World Wide Web Consortium LastCall: WD-wsc-ui-20100309
-  X.500:
-    title: 'Information Technology - Open Systems Interconnection - The Directory:
-      Overview of concepts, models and services'
-    author:
-    - org: International Telecommunications Union
-    date: 2005-08
-    seriesinfo:
-      ITU-T: Recommendation X.500
-      ISO: Standard 9594-1
-  X.501:
-    title: 'Information Technology - Open Systems Interconnection - The Directory:
-      Models'
-    author:
-    - org: International Telecommunications Union
-    date: 2005-08
-    seriesinfo:
-      ITU-T: Recommendation X.501
-      ISO: Standard 9594-2
-  X.509:
-    title: 'Information Technology - Open Systems Interconnection - The Directory:
-      Public-key and attribute certificate frameworks'
-    author:
-    - org: International Telecommunications Union
-    date: 2005-08
-    seriesinfo:
-      ITU-T: Recommendation X.509
-      ISO: Standard 9594-8
-  X.520:
-    title: 'Information Technology - Open Systems Interconnection - The Directory:
-      Selected attribute types'
-    author:
-    - org: International Telecommunications Union
-    date: 2005-08
-    seriesinfo:
-      ITU-T: Recommendation X.509
-      ISO: Standard 9594-6
 
 --- abstract
 
@@ -313,32 +276,16 @@ The following topics are out of scope for this specification:
 
 * Identifiers other than fully qualified DNS domain names.
 
-  Some certification authorities issue server certificates based on IP addresses,
-  but preliminary evidence indicates that such certificates are a very small
-  percentage (less than 1%) of issued certificates.  Furthermore, IP addresses
-  are not necessarily reliable identifiers for application services because
-  of the existence of private internets {{PRIVATE}}, host mobility,
-  multiple interfaces on a given host, Network Address Translators
-  (NATs) resulting in different addresses for a host from different locations
-  on the network, the practice of grouping many hosts together behind a single
-  IP address, etc.  Most fundamentally, most users find DNS domain names much
-  easier to work with than IP addresses, which is why the domain name system
-  was designed in the first place.  We prefer to define best practices for
-  the much more common use case and not to complicate the rules in
-  this specification.
-
-  Furthermore, we focus here on application service identities, not
+  For example, this specification does not discuss IP addresses or
+  other attributes within a certificate beyond the subjectAltName
+  extension. The focus of this document is on
+  application service identities, not
   specific resources located at such services.
   Therefore this document discusses Uniform Resource Identifiers
   {{URI}} only as a way to communicate a DNS domain name (via the URI
   "host" component or its equivalent), not as a way to communicate
   other aspects of a service such as a specific resource (via the URI
   "path" component) or parameters (via the URI "query" component).
-
-  We also do not discuss attributes unrelated to DNS domain names,
-  such as those defined in {{X.520}} and other such specifications
-  (e.g., organizational attributes, geographical attributes, company
-  logos, and the like).
 
 * Security protocols other than {{TLS}} or {{DTLS}}.
 
@@ -427,11 +374,6 @@ application service type:
   Identifier
   scheme {{URI}} or a DNS SRV Service {{DNS-SRV}}.
 
-attribute-type-and-value pair:
-: A colloquial name for the ASN.1-based construction comprising a Relative
-  Distinguished Name (RDN), which itself is a building-block component of Distinguished
-  Names. See {{LDAP-DN, Section 2}}.
-
 automated client:
 : A software agent or device that is not directly controlled by a human user.
 
@@ -514,6 +456,11 @@ reference identifier:
   application service type, used by the client for matching purposes
   when examining presented identifiers.
 
+Relative Distinguished Name (RDN):
+: The ASN.1-based construction comprising a Relative Distinguished Name
+  (RDN), which itself is a building-block component of Distinguished
+  Names. See {{LDAP-DN, Section 2}}.
+
 source domain:
 : The fully qualified DNS domain name
   that a client expects an application service to present in the certificate
@@ -529,21 +476,11 @@ subjectAltName entry:
 
 subjectAltName extension:
 : A standard PKIX certificate extension {{PKIX}} enabling identifiers
-  of various types to be bound to the certificate subject -- in
-  addition to, or in place of, identifiers that may be embedded within
-  or provided as a certificate's subject field.
-
-subject field:
-: The subject field of a PKIX certificate identifies the entity
-  associated with the public key stored in the subject public key
-  field (see {{PKIX, Section 4.1.2.6}}).
+  of various types to be bound to the certificate subject.
 
 subject name:
-: In an overall sense, a subject's name(s) can be represented by or in
-  the subject field, the subjectAltName extension, or both (see
-  {{PKIX}} for details).
-  More specifically, the term often refers to the name of a PKIX
-  certificate's subject, encoded as the X.501 type Name and conveyed
+: In this specification, the term refers to the name of a PKIX
+  certificate's subject, encoded
   in a certificate's subject field (see {{PKIX, Section 4.1.2.6}}).
 
 TLS client:
@@ -652,44 +589,6 @@ forms:
 
 ## Subject Naming in PKIX Certificates {#names-pkix}
 
-In theory, the Internet Public Key Infrastructure using X.509 {{PKIX}}
-employs the global directory service model defined in {{X.500}} and
-{{X.501}}.
-Under that model, information is held in a directory information base
-(DIB) and entries in the DIB are organized in a hierarchy called the
-directory information tree (DIT).
-An object or alias entry in that hierarchy consists of a set of
-attributes (each of which has a defined type and one or more values)
-and is uniquely identified by a Distinguished Name (DN).
-The DN of an entry is constructed by combining the Relative
-Distinguished Names of its superior entries in the tree (all the way
-down to the root of the DIT) with one or more specially nominated
-attributes of the entry itself (which together comprise the Relative
-Distinguished Name (RDN) of the entry, so-called because it is
-relative to the Distinguished Names of the superior entries in the
-tree).
-The entry closest to the root is sometimes referred to as the "most
-significant" entry, and the entry farthest from the root is sometimes
-referred to as the "least significant" entry.
-An RDN is a set (i.e., an unordered group) of attribute-type-and-value
-pairs (see also {{LDAP-DN}}), each of which asserts some attribute
-about the entry.
-
-In practice, the certificates used in {{X.509}} and {{PKIX}} borrow
-key concepts from X.500 and X.501 (e.g., DNs and RDNs) to identify
-entities, but such certificates are not necessarily part of a global
-directory information base.
-Specifically, the subject field of a PKIX certificate is an X.501 type
-Name that "identifies the entity associated with the public key stored
-in the subject public key field" (see {{PKIX, Section 4.1.2.6}}).
-However, it is perfectly acceptable for the subject field to be empty,
-as long as the certificate contains a subject alternative name
-("subjectAltName") extension that includes at least one subjectAltName
-entry, because the subjectAltName extension allows various identities
-to be bound to the subject (see {{PKIX, Section 4.1.2.6}}).
-The subjectAltName extension itself is a sequence of typed entries,
-where each type is a distinct kind of identifier.
-
 For our purposes, an application service can be identified by a name
 or names carried in one or more of
 the following identifier types within subjectAltName entries:
@@ -700,7 +599,7 @@ the following identifier types within subjectAltName entries:
 
 * URI-ID
 
-The Common Name RDN should not be used to identify a service. Reasons
+The Common Name RDN MUST NOT be used to identify a service. Reasons
 for this include:
 
 * It is not strongly typed and therefore suffers from ambiguities
@@ -708,7 +607,7 @@ for this include:
 
 * It can appear more than once in the Subject Name.
 
-Likewise, other RDN's within the Subject Name SHOULD NOT be used to
+For similar reasons, other RDN's within the Subject Name MUST NOT be used to
 identify a service.
 
 # Designing Application Protocols {#design}
