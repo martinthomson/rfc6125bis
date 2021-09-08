@@ -437,19 +437,6 @@ interactive client:
   (Other specifications related to security and application protocols, such
   as {{WSC-UI}}, often refer to this entity as a "user agent".)
 
-pinning:
-: The act of establishing a cached name association between the application
-  service's certificate and one of the client's reference identifiers, despite
-  the fact that none of the presented identifiers matches the given reference
-  identifier.  Pinning is accomplished by allowing a human user to positively
-  accept the mismatch during an attempt to communicate with the application
-  service.  Once a cached name association is established, the
-  certificate is said to be pinned to the reference identifier and in
-  future communication attempts the client simply verifies that the
-  service's presented certificate matches the pinned certificate, as
-  described under {{verify-outcome-pin}}.
-  (A similar definition of "pinning" is provided in {{WSC-UI}}.)
-
 PKIX:
 : PKIX is a short name for the Internet Public Key Infrastructure using X.509
   defined in RFC 5280 [PKIX], which comprises a profile of the X.509v3 certificate
@@ -859,16 +846,6 @@ This rule is important because only a match between the user inputs
 and a presented identifier enables the client to be sure that the
 certificate can legitimately be used to secure the client's
 communication with the server.
-There is only one scenario in which it is acceptable for an
-interactive client to override the recommendation in this rule and
-therefore communicate with a domain name other than the source domain:
-because a human user has "pinned" the application service's
-certificate to the alternative domain name as further discussed under
-{{verify-outcome-fallback}} and {{security-pinning}}.
-In this case, the inputs used by the client to construct its list of
-reference identifiers might include more than one fully qualified DNS
-domain name, i.e., both (a) the source domain and (b) the alternative
-domain contained in the pinned certificate.
 
 Using the combination of fully qualified DNS domain name(s) and
 application service type, the client constructs a list of reference identifiers
@@ -1081,37 +1058,29 @@ Note that the `:` character is a separator between the scheme name
 and the rest of the URI, and thus does not need to be included in any
 comparison.
 
-## Outcome {#verify-outcome}
+## Outcome
 
 The outcome of the matching procedure is one of the following cases.
 
-### Case #1: Match Found {#verify-outcome-matched}
+### Success: Match Found
 
 If the client has found a presented identifier that matches a reference identifier,
 then the service identity check has succeeded.  In this case, the client
 MUST use the matched reference identifier as the validated identity of the
 application service.
 
-### Case #2: No Match Found, Pinned Certificate {#verify-outcome-pin}
+### Failure: No Match Found
 
 If the client does not find a presented identifier matching any of the
-reference identifiers but the client has previously pinned the
-application service's certificate to one of the reference identifiers
-in the list it constructed for this communication attempt (as
-"pinning" is explained under {{terminology}}), and the presented
-certificate matches the pinned certificate (including the context as
-described under {{security-pinning}}), then the service identity check
-has succeeded.
+reference identifiers then the client MUST
+proceed as described as follows.
 
-### Case #3: No Match Found, No Pinned Certificate {#verify-outcome-nopin}
-
-If the client does not find a presented identifier matching any of the
-reference identifiers and the client has not previously pinned the
-certificate to one of the reference identifiers in the list it
-constructed for this communication attempt, then the client MUST
-proceed as described under {{verify-outcome-fallback}}.
-
-### Fallback {#verify-outcome-fallback}
+If the client is an automated application not directly controlled
+by a human user, then it SHOULD terminate the communication attempt with
+a bad certificate error and log the error appropriately.
+An automated application
+MAY provide a configuration setting that disables this behavior, but it
+MUST enable the behavior by default.
 
 If the client is an interactive client that is directly controlled by a human
 user, then it SHOULD inform the user of the identity mismatch and automatically
@@ -1128,29 +1097,7 @@ terminate the communication attempt and, if the advanced user chooses to
 proceed anyway, by forcing the user to view the entire certification path
 before proceeding.
 
-Otherwise, if the client is an automated application not directly controlled
-by a human user, then it SHOULD terminate the communication attempt with
-a bad certificate error and log the error appropriately.  An automated application
-MAY provide a configuration setting that disables this behavior, but MUST
-enable the behavior by default.
-
 # Security Considerations {#security}
-
-## Pinned Certificates {#security-pinning}
-
-As defined under {{terminology}}, a certificate is said
-to be "pinned" to a DNS domain name when a user has explicitly chosen to
-associate a service's certificate with that DNS domain name despite the fact
-that the certificate contains some other DNS domain name (e.g., the user
-has
-explicitly approved `apps.example.net` as a domain associated with a source
-domain of `example.com`).  The cached name association MUST take account
-of
-both the certificate presented and the context in which it was accepted or
-configured (where the "context" includes the chain of certificates from the
-presented certificate to the trust anchor, the source domain, the application
-service type, the service's derived domain and port number, and any other
-relevant information provided by the user or associated by the client).
 
 ## Wildcard Certificates {#security-wildcards}
 
