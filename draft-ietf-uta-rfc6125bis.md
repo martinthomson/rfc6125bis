@@ -1081,24 +1081,31 @@ proceed as described as follows.
 If the client is an automated application not directly controlled
 by a human user, then it SHOULD terminate the communication attempt with
 a bad certificate error and log the error appropriately.
-An automated application
-MAY provide a configuration setting that disables this behavior, but it
-MUST enable the behavior by default.
+The application
+MAY provide a configuration setting to disable this behavior, but it
+MUST enable it by default.
 
 If the client is an interactive client that is directly controlled by a human
 user, then it SHOULD inform the user of the identity mismatch and automatically
-terminate the communication attempt with a bad certificate error; this behavior
-is preferable because it prevents users from inadvertently bypassing security
+terminate the communication attempt with a bad certificate error in order
+to prevent users from inadvertently bypassing security
 protections in hostile situations.
 
-Some interactive clients give advanced users the option
+Some interactive clients MAY give advanced users the option
 of proceeding with acceptance despite the identity mismatch.
 Although this behavior can be appropriate in certain specialized
 circumstances, it needs to be handled with
 extreme caution, for example by first encouraging even an advanced user to
-terminate the communication attempt and, if the advanced user chooses to
+terminate the communication attempt and, if they choose to
 proceed anyway, by forcing the user to view the entire certification path
 before proceeding.
+
+The application MAY also present the user with the ability to accept
+the presented certificate as valid for subsequent connections.
+Such ad-hoc "pinning" SHOULD NOT restrict future connections to just
+the pinned certificate. Local policy that statically enforces a given
+certificate for a given peer is best made available only as prior
+configuration, rather than a just-in-time override for a failed connection.
 
 # Security Considerations {#security}
 
