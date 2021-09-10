@@ -189,7 +189,7 @@ The major changes, in no particular order, include:
 - References to the X.500 directory, the survey of prior art, and the
   sample text in Appendix A have been removed.
 
-- Detailed idiscussion of pinning (configuring use of a certificate that
+- Detailed discussion of pinning (configuring use of a certificate that
   doesn't match the criteria in this document) has been removed.
 
 ## How to Read This Document {#reading}
