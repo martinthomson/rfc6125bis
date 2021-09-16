@@ -47,17 +47,16 @@ normative:
   URI: RFC3986
 informative:
   ABNF: RFC5234
+  ACME: RFC8555
   DNS-CASE: RFC4343
   DNSSEC: RFC4033
   DTLS: RFC6347
   EMAIL-SRV: RFC6186
   HTTP: RFC7230
   HTTP-TLS: RFC2818
-  IPSEC: RFC4301
   NAPTR: RFC3403
-  OCSP: RFC6960
-  OPENPGP: RFC4880
-  S-NAPTR: RFC3958
+  NTS: RFC8915
+  QUIC: RFC9001
   SECTERMS: RFC4949
   SIP: RFC3261
   SIP-CERTS: RFC5922
@@ -130,44 +129,34 @@ in such interactions.
 
 ## Motivation {#motivation}
 
-The visible face of the Internet largely consists of services that employ
-a client-server architecture in which an interactive or automated client
-communicates with an application service in order to retrieve or upload information,
-communicate with other entities, or access a broader network of services.
-When a client communicates with an application service using Transport Layer
-Security {{TLS}} or Datagram Transport Layer Security {{DTLS}}, it
-references some notion of the server's identity (e.g., "the website
-at example.com") while attempting to establish secure communication.  Likewise,
-during TLS negotiation, the server presents its notion of the service's identity
-in the form of a public-key certificate that was issued by a certification
-authority (CA) in the context of the Internet Public Key Infrastructure using
-X.509 {{PKIX}}.  Informally, we can think of these identities as the client's "reference
-identity" and the server's "presented identity" (these rough ideas are defined
-more precisely later in this document through the concept of particular identifiers).
-In general, a client needs to verify that the server's presented identity
-matches its reference identity so it can authenticate the communication.
+The visible face of the Internet largely consists of services that employ a
+client-server architecture in which an interactive or automated client
+communicates with an application service.  When a client communicates with an
+application service using Transport Layer Security {{TLS}} or Datagram
+Transport Layer Security {{DTLS}}, it has some notion of the server's
+identity (e.g., "the website at example.com") while attempting to establish
+secure communication.  Likewise, during TLS negotiation, the server presents
+its notion of the service's identity in the form of a public-key certificate
+that was issued by a certification authority (CA) in the context of the
+Internet Public Key Infrastructure using X.509 {{PKIX}}.  Informally, we can
+think of these identities as the client's "reference identity" and the
+server's "presented identity" (more formal definitions are given later).  A
+client needs to verify that the server's presented identity matches its
+reference identity so it can authenticate the communication.
 
-Many application technologies adhere to the pattern just outlined.  Such
-protocols have traditionally specified their own rules for representing and
-verifying application service identity.  Unfortunately, this divergence of
-approaches has caused some confusion among certification authorities, application
-developers, and protocol designers.
-
-Therefore, to codify secure procedures for the implementation and deployment
-of PKIX-based authentication, this document specifies recommended procedures
-for representing and verifying application service identity in certificates
-intended for use in application protocols employing TLS.
+This document defines procedures for how clients do this verification.
+It therefore implicitly defines requirements on other parties, such as
+the CA's that issue certificates, the service administrators requesting
+them, and the protocol designers defining how things are named.
 
 ## Audience {#audience}
 
-The primary audience for this document consists of application protocol designers,
-who can reference this document instead of defining their own rules for the
-representation and verification of application service identity.  Secondarily,
-the audience consists of certification authorities, service providers, and
-client developers from technology communities that might reuse the recommendations
-in this document when defining certificate issuance policies, generating
-certificate signing requests, or writing software algorithms for identity
-matching.
+The primary audience for this document consists of application protocol
+designers.  Secondarily, the audience consists of certification authorities,
+service providers, and client developers from technology communities that
+might reuse the recommendations in this document when defining certificate
+issuance policies, generating certificate signing requests, or writing
+software algorithms for identity matching.
 
 ## Changes since RFC 6125
 
@@ -196,9 +185,8 @@ The major changes, in no particular order, include:
 
 This document is longer than the authors would have liked because it was
 necessary to carefully define terminology, explain the underlying concepts,
-define the scope, and specify recommended behavior for both certification
-authorities and application software implementations.  The following sections
-are of special interest to various audiences:
+define the scope, and specify behavior for all involved parties.  The
+following sections are of special interest to various audiences:
 
 * Protocol designers might want to first read the checklist in {{design}}.
 
@@ -208,8 +196,8 @@ are of special interest to various audiences:
 * Service providers might want to first read the recommendations for requesting
   of server certificates in {{request}}.
 
-* Software implementers might want to first read the recommendations for verification
-  of server identity in {{verify}}.
+* Software implementers might want to first read the recommendations for
+  verification of server identity in {{verify}}.
 
 The sections on terminology ({{terminology}}), naming of application
 services ({{names}}), document scope ({{scope}}), and the like provide
@@ -219,154 +207,111 @@ not absolutely necessary for a first reading of this document.
 
 ## Applicability {#applicability}
 
-This document does not supersede the rules for certificate issuance or validation
-provided in {{PKIX}}.  Therefore, {{PKIX}} is authoritative on any
-point that might also be discussed in this document.
-Furthermore, {{PKIX}} also governs any certificate-related topic on which this document is silent,
-including but not limited to certificate syntax, certificate extensions such
-as name constraints and extended key usage, and handling of certification
-paths.
+This document does not supersede the rules for certificate issuance or
+validation specified by {{PKIX}}.  That document also governs any
+certificate-related topic on which this document is silent.  This includes
+certificate syntax, certificate extensions such as name constraints or
+extended key usage, and handling of certification paths.
 
-This document addresses only name forms in the leaf "end entity" server certificate,
-not any name forms in the chain of certificates used to validate the server
-certificate.  Therefore, in order to ensure proper authentication, application
-clients need to verify the entire certification path per {{PKIX}}.
-
-This document also does not supersede the rules for verifying service identity
-provided in specifications for existing application protocols published prior
-to this document.  However,
-the procedures described here can be referenced by future
-specifications,
-including updates to specifications for existing application protocols if
-the relevant technology communities agree to do so.
+This document addresses only name forms in the leaf "end entity" server
+certificate.  It does not address the name forms in the chain of certificates
+used to validate a cetrificate, let alone creating or checking the validity
+of such a chain.  In order to ensure proper authentication, applications need
+to verify the entire certification path as per {{PKIX}}.
 
 ## Overview of Recommendations {#overview}
 
-To orient the reader, this section provides an informational overview of
-the recommendations contained in this document.
+To orient the reader, this section provides an informational overview of the
+recommendations contained in this document.
 
-The previous version of this specification, {{VERIFY}},
-surveyed the current practice from
-many IETF standards and tried to generalize best practices.
-This document takes the lessons learned in the past decade and codifies
-them as best practices.
+The previous version of this specification, {{VERIFY}}, surveyed the current
+practice from many IETF standards and tried to generalize best practices.
+This document takes the lessons learned in the past decade and codifies them
+into a standard. The rules are brief:
 
-For the primary audience of application protocol designers, this document
-provides recommended procedures for the representation and verification of
-application service identity within PKIX certificates used in the context
-of TLS.
-
-For the secondary audiences, in essence this document encourages certification
-authorities, application service providers, and application client developers
-to coalesce on the following practices:
-
-* Stop including and checking strings that look like domain names
-  in the subject's Common Name.
-
-* Check DNS domain names via the subjectAlternativeName
+* Only check DNS domain names via the subjectAlternativeName
   extension designed for that purpose: dNSName.
 
 * Move toward including and checking even more specific
-  subjectAlternativeName extensions where appropriate for using the protocol
-  (e.g., uniformResourceIdentifier and the otherName form SRVName).
+  subjectAlternativeName extensions where appropriate such as
+  uniformResourceIdentifier and the otherName form SRVName.
 
-* Constrain and simplify the validation of wildcard certificates
-  (e.g., a certificate containing an identifier for `*.example.com`).
+* Constrain wildcard certificates so that the wildcard can only
+  be the left-most component of a domain name.
+
+* Do not include or check strings that look like domain names
+  in the subject's Common Name.
 
 ## Scope {#scope}
 
 ### In Scope {#in-scope}
 
-This document applies only to service identities associated with
-fully qualified DNS domain names, only to TLS and DTLS,
-and only to PKIX-based systems.  As a result,
-the scenarios described in the following section are out of scope for this
-specification (although they might be addressed by future specifications).
+This document applies only to service identities associated with fully
+qualified DNS domain names, only to TLS and DTLS, and only to PKIX-based
+systems.
+
+TLS uses the words client and server, where the client is the entity
+that initiates the connection.  In many cases, this models common practice,
+such as a browser connecting to a Web origin.  Sometimes, however, the two
+parties can be more properly considered as peers, and often the initiating
+client will also have a certificate that the server must verify, known as
+mutual authentication.  In that environment, the rules specified here SHOULD
+also be applied.  For the sake of clarity, however, we will continue to use
+to use the terms client and server in this document.
+
+At the time of this writing, other protocols such as {{QUIC}} and
+Network Time Security (NTS, {{NTS}}) use TLS as a service to do the
+initial establishment of cryptographic key material.
+Those services MUST also follow the rules specified here.
 
 ### Out of Scope {#out-of-scope}
 
 The following topics are out of scope for this specification:
 
-* Client or end-user identities.
-
-  Certificates representing client or end-user identities (e.g., the rfc822Name
-  identifier) can be used for mutual authentication between a client and server
-  or between two clients, thus enabling stronger client-server security or
-  end-to-end security.  However, certification authorities, application developers,
-  and service operators have less experience with client certificates than
-  with server certificates, thus giving us fewer models from which to generalize
-  and a less solid basis for defining best practices.
-
-* Identifiers other than fully qualified DNS domain names.
-
-  For example, this specification does not discuss IP addresses or
-  other attributes within a certificate beyond the subjectAltName
-  extension. The focus of this document is on
-  application service identities, not
-  specific resources located at such services.
-  Therefore this document discusses Uniform Resource Identifiers
-  {{URI}} only as a way to communicate a DNS domain name (via the URI
-  "host" component or its equivalent), not as a way to communicate
-  other aspects of a service such as a specific resource (via the URI
-  "path" component) or parameters (via the URI "query" component).
-
-* Security protocols other than {{TLS}} or {{DTLS}}.
-
-  Although other secure, lower-layer protocols exist and even employ
-  PKIX certificates at times (e.g., IPsec {{IPSEC}}), their use cases
-  can differ from those of TLS-based and DTLS-based application
-  technologies.
-  Furthermore, application technologies have less experience
-  with IPsec than with TLS, thus making it more difficult to gather feedback
-  on proposed best practices.
+* Security protocols other than {{TLS}} or {{DTLS}} except as
+  described above.
 
 * Keys or certificates employed outside the context of PKIX-based systems.
 
-  Some deployed application technologies use a web of trust model
-  based on or similar to OpenPGP {{OPENPGP}}, or use self-signed
-  certificates, or are deployed on networks that are not directly
-  connected to the public Internet and therefore cannot depend on
-  Certificate Revocation Lists (CRLs) or the Online Certificate Status
-  Protocol {{OCSP}} to check CA-issued certificates.
-  However, the method for binding a public key to an identifier in
-  OpenPGP differs essentially from the method in X.509, the data in
-  self-signed certificates has not been certified by a third party in
-  any way, and checking of CA-issued certificates via CRLs or OCSP is
-  critically important to maintaining the security of PKIX-based
-  systems.
-  Attempting to define best practices for such technologies would
-  unduly complicate the rules defined in this specification.
+* Client or end-user identities.
 
-* Certification authority policies, such as:
+  Certificates representing client identities other than that
+  described above can also be, such as rfc822Name, but is beyond the scope
+  of this document.
 
-  * What types or "classes" of certificates to issue and whether to apply different
-    policies for them.
+* Identifiers other than fully qualified DNS domain names.
 
-  * Whether to issue certificates based on IP addresses (or
-    some other form, such as relative domain names) in addition to fully qualified
-    DNS domain names.
+  Identifiers such as IP address are not discussed. In addition, the focus of
+  this document is on application service identities, not specific resources
+  located at such services.  Therefore this document discusses Uniform
+  Resource Identifiers {{URI}} only as a way to communicate a DNS domain name
+  (via the URI "host" component or its equivalent), not other aspects of a
+  service such as a specific resource (via the URI "path" component) or
+  parameters (via the URI "query" component).
 
-  * Which identifiers to include (e.g., whether to include SRV-IDs or URI-IDs
-    as defined in the body of this specification).
+* Certification authority policies.
+
+  This includes items such as the following:
 
   * How to certify or validate fully qualified DNS domain names and application
-    service types.
+    service types (see {{ACME}} for some definition of this).
 
-  * How to certify or validate other kinds of information that might be included
-    in a certificate (e.g., organization name).
+  * Issuing certificates with additional identifiers such as IP address or
+    relative domain name, in addition to fully qualified DNS domain names.
+
+  * Types or "classes" of certificates to issue and whether to apply different
+    policies for them.
+
+  * How to certify or validate other kinds of information that might be
+    included in a certificate (e.g., organization name).
 
 * Resolution of DNS domain names.
 
-  Although the process whereby a client resolves the DNS domain name
-  of an application service can involve several steps (e.g., this is
-  true of resolutions that depend on DNS SRV resource records, Naming
-  Authority Pointer (NAPTR) DNS resource records {{NAPTR}}, and
-  related technologies such as {{S-NAPTR}}), for our purposes we care
-  only about the fact that the client needs to verify the identity of
-  the entity with which it communicates as a result of the resolution
-  process.
-  Thus the resolution process itself is out of scope for this
-  specification.
+  Although the process whereby a client resolves the DNS domain name of an
+  application service can involve several steps, for our purposes we care
+  only about the fact that the client needs to verify the identity of the
+  entity with which it communicates as a result of the resolution process.
+  Thus the resolution process itself is out of scope for this specification.
 
 * User interface issues.
 
@@ -377,39 +322,33 @@ The following topics are out of scope for this specification:
 
 ## Terminology {#terminology}
 
-Because many concepts related to "identity" are often too vague to be actionable
-in application protocols, we define a set of more concrete terms for use
-in this specification.
+Because many concepts related to "identity" are often too vague to be
+actionable in application protocols, we define a set of more concrete terms
+for use in this specification.
 
 application service:
 : A service on the Internet that enables interactive and automated clients
-  to connect for the purpose of retrieving or uploading information, communicating
-  with other entities, or connecting to a broader network of services.
+  to connect for the purpose of retrieving or uploading information,
+  communicating with other entities, or connecting to a broader network of
+  services.
 
 application service provider:
 : An organization or individual that hosts or deploys an application service.
 
 application service type:
-: A formal identifier for the
-  application protocol used to provide a particular kind of application service
-  at a domain;
-  the application service type typically takes the form of a Uniform Resource
-  Identifier
-  scheme {{URI}} or a DNS SRV Service {{DNS-SRV}}.
+: A formal identifier for the application protocol used to provide a
+  particular kind of application service at a domain.  This often apepars as
+  a URI scheme {{URI}} or a DNS SRV Service {{DNS-SRV}}.
 
 automated client:
 : A software agent or device that is not directly controlled by a human user.
 
 delegated domain:
 : A domain name or host name that is explicitly configured for communicating
-  with the source domain, by either (a) the human user controlling an interactive
-  client or (b) a trusted administrator.  In case (a), one example of delegation
-  is an account setup that specifies the domain name of a particular host to
-  be used for retrieving information or connecting to a network, which might
-  be different from the server portion of the user's account name (e.g., a
-  server at mailhost.example.com for connecting to an IMAP server hosting an
-  email address of juliet@example.com).  In case (b), one example of delegation
-  is an admin-configured host-to-address/address-to-host lookup table.
+  with the source domain, by either the human user controlling an interactive
+  client or a trusted administrator.  For example, a server at
+  mailhost.example.com for connecting to an IMAP server hosting an email
+  address of user@example.com.
 
 derived domain:
 : A domain name or host name that a client has derived from the source domain
@@ -420,51 +359,43 @@ identifier:
   server in a certificate or referenced by a client for matching purposes.
 
 identifier type:
-: A formally defined category of identifier that can be included in a certificate
-  and therefore that can also be used for matching purposes.  For conciseness
-  and convenience, we define the following identifier types of interest, which
-  are based on those found in the PKIX specification {{PKIX}} and various PKIX extensions.
+: A formally defined category of identifier that can be included in a
+  certificate and therefore that can also be used for matching purposes. For
+  conciseness and convenience, we define the following identifier types of
+  interest, which are based on those found in the PKIX specification {{PKIX}}
+  and various PKIX extensions:
 
-  * DNS-ID = a subjectAltName entry of type dNSName; see {{PKIX}}
+  * DNS-ID: a subjectAltName entry of type dNSName
 
-  * SRV-ID = a subjectAltName entry of type otherName whose name form is SRVName;
+  * SRV-ID: a subjectAltName entry of type otherName whose name form is SRVName;
     see {{SRVNAME}}
 
-  * URI-ID = a subjectAltName entry of type uniformResourceIdentifier whose value
-    includes both (i) a "scheme" and (ii) a "host" component (or its equivalent)
-    that matches the "reg-name" rule (where the quoted terms represent
-    the associated {{ABNF}} productions from {{URI}}); see {{PKIX}} and {{URI}}
+  * URI-ID: a subjectAltName entry of type uniformResourceIdentifier whose
+    value includes both (i) a "scheme" and (ii) a "host" component (or its
+    equivalent) that matches the "reg-name" rule (where the quoted terms
+    represent the associated {{ABNF}} productions from {{URI}})
 
 interactive client:
-: A software agent or device that is directly controlled by a human user.
-  (Other specifications related to security and application protocols, such
-  as {{WSC-UI}}, often refer to this entity as a "user agent".)
+: A software agent or device that is directly controlled by a human user,
+  commonly known as a "user agent."
 
 PKIX:
 : PKIX is a short name for the Internet Public Key Infrastructure using X.509
-  defined in RFC 5280 [PKIX], which comprises a profile of the X.509v3 certificate
-  specifications and X.509v2 certificate revocation list (CRL) specifications
-  for use in the Internet.
-
-PKIX-based system:
-: A software implementation or deployed service that makes use of X.509v3 certificates
-  and X.509v2 certificate revocation lists (CRLs).
-
-PKIX certificate:
-: An X.509v3 certificate generated and employed in the context of PKIX.
+  defined in {{PKIX}}.  That document provides a profile of the X.509v3
+  certificate specifications and X.509v2 certificate revocation list (CRL)
+  specifications for use in the Internet.
 
 presented identifier:
-: An identifier that is presented by a server to a client within a
-  PKIX certificate when the client attempts to establish secure
-  communication with the server; the certificate can include one or
-  more presented identifiers of different types, and if the server
-  hosts more than one domain then the certificate might present
-  distinct identifiers for each domain.
+: An identifier presented by a server to a client within a PKIX certificate
+  when the client attempts to establish secure communication with the server.
+  The certificate can include one or more presented identifiers of different
+  types, and if the server hosts more than one domain then the certificate
+  might present distinct identifiers for each domain.
 
 reference identifier:
-: An identifier, constructed from a source domain and optionally an
-  application service type, used by the client for matching purposes
-  when examining presented identifiers.
+: An identifier used by the client when examining presented identifiers.
+  It is constructed from the source domain, and optionally an application
+  service type.
 
 Relative Distinguished Name (RDN):
 : The ASN.1-based construction comprising a Relative Distinguished Name
@@ -472,14 +403,12 @@ Relative Distinguished Name (RDN):
   Names. See {{LDAP-DN, Section 2}}.
 
 source domain:
-: The fully qualified DNS domain name
-  that a client expects an application service to present in the certificate
-  (e.g., `www.example.com`), typically input by a human user, configured into
-  a
-  client, or provided by reference such as in a hyperlink.  The combination
-  of a
-  source domain and, optionally, an application service type enables a client
-  to construct one or more reference identifiers.
+: The fully qualified DNS domain name that a client expects an application
+  service to present in the certificate. This is typically input by
+  a human user, configured into a client, or provided by reference such as
+  URL. The combination of a source domain and, optionally, an application
+  service type enables a client to construct one or more reference
+  identifiers.
 
 subjectAltName entry:
 : An identifier placed in a subjectAltName extension.
@@ -490,21 +419,8 @@ subjectAltName extension:
 
 subject name:
 : In this specification, the term refers to the name of a PKIX
-  certificate's subject, encoded
-  in a certificate's subject field (see {{PKIX, Section 4.1.2.6}}).
-
-TLS client:
-: An entity that assumes the role of a client in a Transport Layer
-  Security {{TLS}} negotiation. In this specification we generally
-  assume that the TLS client is an (interactive or automated)
-  application client; however, in application protocols that enable
-  server-to-server communication, the TLS client could be a peer
-  application service.
-
-TLS server:
-: An entity that assumes the role of a server in a Transport Layer
-  Security {{TLS}} negotiation; in this specification we assume that
-  the TLS server is an application service.
+  certificate's subject, encoded in a certificate's subject field (see
+  {{PKIX, Section 4.1.2.6}}).
 
 Most security-related terms in this document are to be understood in
 the sense defined in {{SECTERMS}}; such terms include, but are not
@@ -533,7 +449,7 @@ runtime input, prior configuration, or explicit acceptance of a client
 communication attempt), whereas other names are indirect because they are
 automatically resolved by the client based on user input (e.g., a target
 name
-resolved from a source name using DNS SRV or NAPTR records). This dimension
+resolved from a source name using DNS SRV or {{NAPTR}} records). This dimension
 matters most for certificate consumption, specifically verification as
 discussed in this document.
 
