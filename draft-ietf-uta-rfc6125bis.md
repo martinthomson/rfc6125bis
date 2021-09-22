@@ -510,7 +510,7 @@ services to not share certificates.
 Protocol specifications MUST specify which identifiers are
 mandatory-to-implement and SHOULD provide operational guidance when necessary.
 
-that the Common Name RDN MUST NOT be used to identify a service. Reasons
+The Common Name RDN MUST NOT be used to identify a service. Reasons
 for this include:
 
 * It is not strongly typed and therefore suffers from ambiguities
