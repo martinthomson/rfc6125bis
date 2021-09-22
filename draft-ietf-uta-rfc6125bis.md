@@ -64,6 +64,35 @@ informative:
   TLS: RFC8446
   VERIFY: RFC6125
   XMPP: RFC6120
+  ALPACA:
+    target: https://alpaca-attack.com/ALPACA.pdf
+    title: "ALPACA: Application Layer Protocol Confusion - Analyzing and Mitigating Cracks in TLS Authentication"
+    author:
+    - ins: M. Brinkmann
+      name: Marcus Brinkmann
+      org: Ruhr University Bochum
+    - ins: C. Dresen
+      name: Christian Dresen
+      org: Münster University of Applied Sciences
+    - ins: R. Merget
+      name: Robert Merget
+      org: Ruhr University Bochum
+    - ins: D. Poddebniak
+      name: Damian Poddebniak
+      org: Münster University of Applied Sciences
+    - ins: J. Müller
+      name: Jens Müler
+      org: Ruhr University Bochum
+    - ins: J. Somorovsky
+      name: Juraj Somorovsky
+      org: Paderborn University
+    - ins: J. Schwenk
+      name: Jörg Schwek
+      org: Ruhr University Bochum
+    - ins: S. Schinzel
+      name: Sebastian Schinzel
+      org: Ruhr University Bochum
+    date: 2021-9
   HTTPSbytes:
     target: https://media.blackhat.com/bh-ad-10/Hansen/Blackhat-AD-2010-Hansen-Sokol-HTTPS-Can-Byte-Me-slides.pdf
     title: HTTPS Can Byte Me
@@ -87,12 +116,6 @@ informative:
     date: 2009-02
     seriesinfo:
       BlackHat: DC
-  EV-CERTS:
-    target: http://www.cabforum.org/Guidelines_v1_2.pdf
-    title: Guidelines For The Issuance And Management Of Extended Validation Certificates
-    author:
-    - org: CA/Browser Forum
-    date: 2009-10
   US-ASCII:
     title: Coded Character Set - 7-bit American Standard Code for Information Interchange
     author:
@@ -431,34 +454,45 @@ and "verify".
 
 # Naming of Application Services {#names}
 
-This section discusses naming of application services on the Internet, followed
-by a brief tutorial about subject naming in PKIX.
-
-## Naming Application Services {#names-apps}
-
-This specification assumes that the name of an application service is
+This document assumes that the name of an application service is
 based on a DNS domain name (e.g., `example.com`) -- supplemented in
 some circumstances by an application service type (e.g., "the IMAP
 server at example.com").
+The DNS name conforms to one of the following forms:
 
-From the perspective of the application client or user, some names
-are direct because they are provided directly by a human user (e.g., via
+1. A "traditional domain name", i.e., a fully qualified DNS domain name or
+  "FQDN" (see {{DNS-CONCEPTS}}) all of whose labels are "LDH labels" as
+  described in {{IDNA-DEFS}}.  Informally, such labels are constrained to
+  {{US-ASCII}} letters, digits, and the hyphen, with the hyphen prohibited in
+  the first character position.  Additional qualifications apply (refer to
+  the above-referenced specifications for details), but they are not relevant
+  here.
+
+2. An "internationalized domain name", a DNS domain name that includes at
+  least one label containing appropriately encoded Unicode code points
+  outside the traditional US-ASCII range. That is, it contains at least one
+  U-label or A-label, but otherwise may contain any mixture of NR-LDH labels,
+  A-labels, or U-labels, as described in {{IDNA-DEFS}} and the associated
+  documents.
+
+From the perspective of the application client or user, some names are
+*direct* because they are provided directly by a human user.  This includes
 runtime input, prior configuration, or explicit acceptance of a client
-communication attempt), whereas other names are indirect because they are
-automatically resolved by the client based on user input (e.g., a target
-name
-resolved from a source name using DNS SRV or {{NAPTR}} records). This dimension
-matters most for certificate consumption, specifically verification as
-discussed in this document.
+communication attempt.  Other names are *indirect* because they are
+automatically resolved by the application based on user input, such as a
+target name resolved from a source name using DNS SRV or {{NAPTR}} records).
+The distinction matters most for certificate consumption, specifically
+verification as discussed in this document.
 
-From the perspective of the application service, some names are unrestricted
-because they can be used in any type of service (e.g., a certificate might
-be reused for both the HTTP service and the IMAP service at example.com),
-whereas other names are restricted because they can be used in only one type
-of service (e.g., a special-purpose certificate that can be used only for
-an IMAP service).  This dimension matters most for certificate issuance.
+From the perspective of the application service, some names are
+*unrestricted* because they can be used in any type of service, such as a
+single certificate being used for both the HTTP and IMAP services at the host
+example.com.  Other names are *restricted* because they can only be used for
+one type of service, such as a special-purpose certificate that can only be
+used for an IMAP service.  This distinction matters most for certificate
+issuance.
 
-Therefore, we can categorize the identifier types of interest as follows:
+We can categorize the supported identifier types as follows:
 
 * A DNS-ID is direct and unrestricted.
 
@@ -466,64 +500,17 @@ Therefore, we can categorize the identifier types of interest as follows:
 
 * A URI-ID is direct and restricted.
 
-When implementing software, deploying services, and issuing certificates
-for secure PKIX-based authentication, it is important to keep these distinctions
-in mind.  In particular, best practices differ somewhat for application server
-implementations, application client implementations, application service
-providers, and certification authorities.  Ideally, protocol specifications
-that reference this document will specify which identifiers are mandatory-to-implement
-by servers and clients, which identifiers ought to be supported by certificate
-issuers, and which identifiers ought to be requested by application service
-providers.  Because these requirements differ across applications, it is
-impossible to categorically stipulate universal rules (e.g., that all software
-implementations, service providers, and certification authorities for all
-application protocols need to use or support DNS-IDs as a baseline for the
-purpose of interoperability).
+It is important to keep these distinctions in mind, as best practices
+for the deployment and use of the identifiers differ.
+As a further example, cross-protocol attacks such as {{ALPACA}}
+are possibile when two
+different protocol services use the same certificate.
+This can be addressed by using restricted identifiers, or telling
+services to not share certificates.
+Protocol specifications MUST specify which identifiers are
+mandatory-to-implement and SHOULD provide operational guidance when necessary.
 
-However, it is preferable that each application protocol will at least define
-a baseline that applies to the community of software developers, application
-service providers, and CAs actively using or supporting that technology (one
-such community, the CA/Browser Forum, has codified such a baseline for "Extended
-Validation Certificates" in {{EV-CERTS}}).
-
-## DNS Domain Names {#names-dns}
-
-For the purposes of this specification, the name of an application service
-is (or is based on) a DNS domain name that conforms to one of the following
-forms:
-
-1. A "traditional domain name", i.e., a fully qualified DNS domain
-  name or "FQDN" (see {{DNS-CONCEPTS}}) all of whose labels are "LDH
-  labels" as described in {{IDNA-DEFS}}.
-  Informally, such labels are constrained to {{US-ASCII}} letters,
-  digits, and the hyphen, with the hyphen prohibited in the first
-  character position.
-  Additional qualifications apply (please refer to the
-  above-referenced specifications for details), but they are not
-  relevant to this specification.
-
-2. An "internationalized domain name", i.e., a DNS domain name that
-  conforms to the overall form of a domain name (informally,
-  dot-separated letter-digit-hyphen labels) but includes at least one
-  label containing appropriately encoded Unicode code points outside
-  the traditional US-ASCII range. That is, it contains at least one
-  U-label or A-label, but otherwise may contain any mixture of NR-LDH
-  labels, A-labels, or U-labels, as described in {{IDNA-DEFS}} and the
-  associated documents.
-
-## Subject Naming in PKIX Certificates {#names-pkix}
-
-For our purposes, an application service can be identified by a name
-or names carried in one or more of
-the following identifier types within subjectAltName entries:
-
-* DNS-ID
-
-* SRV-ID
-
-* URI-ID
-
-The Common Name RDN MUST NOT be used to identify a service. Reasons
+that the Common Name RDN MUST NOT be used to identify a service. Reasons
 for this include:
 
 * It is not strongly typed and therefore suffers from ambiguities
@@ -879,7 +866,7 @@ identifier according to the following rules (and SHOULD also check the
 application service type as described under {{verify-app}}).
 The rules differ depending on whether the domain to be checked is a
 "traditional domain name" or an "internationalized domain name" (as
-defined under {{names-dns}}).
+defined under {{names}}).
 Furthermore, to meet the needs of clients that support presented
 identifiers containing the wildcard character "\*", we define a
 supplemental rule for such "wildcard certificates".
