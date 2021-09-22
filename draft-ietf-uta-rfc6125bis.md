@@ -422,12 +422,10 @@ subject name:
   certificate's subject, encoded in a certificate's subject field (see
   {{PKIX, Section 4.1.2.6}}).
 
-Most security-related terms in this document are to be understood in
-the sense defined in {{SECTERMS}}; such terms include, but are not
-limited to, "attack", "authentication", "authorization",
-"certification authority", "certification path", "certificate",
-"credential", "identity", "self-signed certificate", "trust", "trust
-anchor", "trust chain", "validate", and "verify".
+Security-related terms used in this document, but not defined here or in
+{{PKIX}} should be understood in the the sense defined in {{SECTERMS}}. Such
+terms include "attack", "authentication", "identity", "trust", "validate",
+and "verify".
 
 {::boilerplate bcp14-tagged}
 
