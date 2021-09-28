@@ -48,6 +48,7 @@ normative:
 informative:
   ABNF: RFC5234
   ACME: RFC8555
+  ALPN: RFC7301
   DNS-CASE: RFC4343
   DNSSEC: RFC4033
   DTLS: RFC6347
@@ -114,6 +115,10 @@ informative:
     date: 2009-02
     seriesinfo:
       BlackHat: DC
+  Public-Suffix:
+    target: https://publicsuffix.org
+    title: "Public Suffix List"
+    date: 2020
   US-ASCII:
     title: Coded Character Set - 7-bit American Standard Code for Information Interchange
     author:
@@ -988,32 +993,31 @@ configuration, rather than a just-in-time override for a failed connection.
 
 ## Wildcard Certificates {#security-wildcards}
 
-Wildcard certificates, those that have an identifier with
-"\*" as the left-most DNS label,
-automatically vouch for any single-label host names
-within their domain, but not multiple levels of domains.
-This can be convenient for administrators but
-also poses the risk of vouching for rogue or buggy hosts. See for
-example {{Defeating-SSL}} (beginning at slide 91) and {{HTTPSbytes}}
-(slides 38-40).
+Wildcard certificates, those that have an identifier with "\*" as the
+left-most DNS label, automatically vouch for any single-label host names
+within their domain, but not multiple levels of domains.  This can be
+convenient for administrators but also poses the risk of vouching for rogue
+or buggy hosts. See for example {{Defeating-SSL}} (beginning at slide 91) and
+{{HTTPSbytes}} (slides 38-40).
 
-Protection against a wildcard that identifies a
-so-called "public suffix" (e.g., `*.co.uk` or `*.com`)
-is beyond the scope of this document.
+Protection against a wildcard that identifies a public suffix
+{{Public-Suffix}}, such as `*.co.uk` or `*.com`, is beyond the scope of this
+document.
 
 ## Internationalized Domain Names {#security-idn}
 
 Allowing internationalized domain names can lead to the inclusion of visually
-similar (so-called "confusable") characters in certificates; for discussion,
-see for example {{IDNA-DEFS}}.
+similar, or confusable, characters in certificates.  For discussion, see for
+example {{IDNA-DEFS}}.
 
 ## Multiple Identifiers {#security-multi}
 
 A given application service might be addressed by multiple DNS domain names
-for a variety of reasons, and a given deployment might service multiple domains
-or protocols.
-The client SHOULD use the TLS Server Name Identification (SNI) extension
-as discussed in {{TLS, Section 4.4.2.2}}.
+for a variety of reasons, and a given deployment might service multiple
+domains or protocols.  The client MUST use the TLS Server Name Identification
+(SNI) extension as discussed in {{TLS, Section 4.4.2.2}}.  If multiple
+protocols share the same port, the client MUST use the Application-Layer
+Protocol Negotiation as described in {{ALPN}}.
 
 To accommodate the workaround that was needed before the development
 of the SNI extension, this specification allows multiple DNS-IDs,
