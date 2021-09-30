@@ -510,7 +510,7 @@ services to not share certificates.
 Protocol specifications MUST specify which identifiers are
 mandatory-to-implement and SHOULD provide operational guidance when necessary.
 
-that the Common Name RDN MUST NOT be used to identify a service. Reasons
+The Common Name RDN MUST NOT be used to identify a service. Reasons
 for this include:
 
 * It is not strongly typed and therefore suffers from ambiguities
@@ -523,28 +523,27 @@ identify a service.
 
 # Designing Application Protocols {#design}
 
-This section provides guidelines for designers of application protocols,
-in the form of a checklist to follow when reusing the recommendations provided
-in this document.
+This section defines how protocol designers should reference this document,
+which MUST be a normative reference in their specification.  The technology
+MUST only use the identifiers defined in this document.  Its specification
+MAY choose to allow only one of them.
 
-* If your technology does not use DNS SRV records to resolve the DNS domain
-  names of application services then consider stating that SRV-ID as defined
-  in this document is not supported.
-  Note that many existing application technologies use DNS SRV
-  records to resolve the DNS domain names of application services, but
-  do not rely on representations of those records in PKIX certificates
-  by means of SRV-IDs as defined in {{SRVNAME}}.
+If the technology does not use DNS SRV records to resolve the DNS domain
+names of application services then its specification MUST state that SRV-ID
+as defined in this document is not supported.  Note that many existing
+application technologies use DNS SRV records to resolve the DNS domain names
+of application services, but do not rely on representations of those records
+in PKIX certificates by means of SRV-IDs as defined in {{SRVNAME}}.
 
-* If your technology does not use use URIs to identify application services,
-  then consider stating that URI-ID as defined in this document is not
-  supported.
-  Note that many existing application technologies use URIs to
-  identify application services, but do not rely on representation of
-  those URIs in PKIX certificates by means of URI-IDs.
+If the technology does not use URI's to identify application services, then
+its specification MUST state that URI-ID as defined in this document is not
+supported.  Note that many existing application technologies use URIs to
+identify application services, but do not rely on representation of those
+URIs in PKIX certificates by means of URI-IDs.
 
-* If your technology disallows the wildcard character in DNS domain names,
-  then state the wildcard certificates as defined in this document are not
-  supported.
+A technology MAY disallow the use of the wildcard character in DNS names. If
+it does so, then the specification MUST state that wildcard certificates as
+defined in this document are not supported.
 
 # Representing Server Identity {#represent}
 
