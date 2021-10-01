@@ -1047,3 +1047,6 @@ SRV-IDs, or URI-IDs in a certificate.
 
 We gratefully acknowledge everyone who contributed to the previous
 version of this document, {{VERIFY}}.
+Thanks also to Carsten Bormann for converting the previous document
+to Markdown so that we could more easily use Martin Thomson's `i-d-template`
+software.
