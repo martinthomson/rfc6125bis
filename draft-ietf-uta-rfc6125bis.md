@@ -271,17 +271,19 @@ systems.
 
 TLS uses the words client and server, where the client is the entity
 that initiates the connection.  In many cases, this models common practice,
-such as a browser connecting to a Web origin.  Sometimes, however, the two
-parties can be more properly considered as peers, and often the initiating
-client will also have a certificate that the server must verify, known as
-mutual authentication.  In that environment, the rules specified here SHOULD
-also be applied.  For the sake of clarity, however, we will continue to use
+such as a browser connecting to a Web origin.
+For the sake of clarity, and to follow the usage in {{TLS}} and related
+specifications, we will continue to use
 to use the terms client and server in this document.
+Note that these are TLS-layer roles, and that the application protocol
+could support the TLS server making requests to the TLS client after the
+TLS handshake; these is no requirement that the roles at the application
+layer match the TLS-layer.
 
 At the time of this writing, other protocols such as {{QUIC}} and
 Network Time Security (NTS, {{NTS}}) use TLS as a service to do the
 initial establishment of cryptographic key material.
-Those services MUST also follow the rules specified here.
+Such services MUST also follow the rules specified here.
 
 ### Out of Scope {#out-of-scope}
 
@@ -295,7 +297,7 @@ The following topics are out of scope for this specification:
 * Client or end-user identities.
 
   Certificates representing client identities other than that
-  described above can also be, such as rfc822Name, but is beyond the scope
+  described above, such as rfc822Name, are beyond the scope
   of this document.
 
 * Identifiers other than fully qualified DNS domain names.
