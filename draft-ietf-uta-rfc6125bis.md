@@ -369,6 +369,8 @@ identifier type:
     value includes both (i) a "scheme" and (ii) a "host" component (or its
     equivalent) that matches the "reg-name" rule (where the quoted terms
     represent the associated {{ABNF}} productions from {{URI}})
+    An entry which does not have both the scheme and host is not a valid
+    URI-ID and MUST be ignored.
 
 interactive client:
 : A software agent or device that is directly controlled by a human user,
@@ -620,15 +622,8 @@ types of `imap`, `imaps`, `pop3`, `pop3s`, and `submission` as described in
 
 # Verifying Service Identity {#verify}
 
-This section provides rules and guidelines for implementers of application
-client software regarding algorithms for verification of application service
-identity.
-
-## Overview {#verify-overview}
-
 At a high level, the client verifies the application service's
-identity by performing the actions listed below (which are defined in
-the following subsections of this document):
+identity by performing the following actions:
 
 1. The client constructs a list of acceptable reference identifiers
   based on the source domain and, optionally, the type of service to
@@ -638,19 +633,17 @@ the following subsections of this document):
    certificate.
 
 3. The client checks each of its reference identifiers against the
-  presented identifiers for the purpose of finding a match.
+  presented identifiers for the purpose of finding a match. When checking a
+  reference identifier against a presented identifier, the client matches the
+  source domain of the identifiers and, optionally, their application service
+  type.
 
-4. When checking a reference identifier against a presented
-  identifier, the client matches the source domain of the identifiers
-  and, optionally, their application service type.
-
-Naturally, in addition to checking identifiers, a client might
-complete further checks to ensure that the server is authorized to
-provide the requested service.
-However, such checking is not a matter of verifying the application
-service identity presented in a certificate, and therefore methods for
-doing so (e.g., consulting local policy information) are out of scope
-for this document.
+Naturally, in addition to checking identifiers, a client should perform
+further checks, such as expiration and revocation, to ensure that the server
+is authorized to provide the requested service.  Such checking is not a
+matter of verifying the application service identity presented in a
+certificate, however, and methods for doing so are therefore out of scope for
+this document.
 
 ## Constructing a List of Reference Identifiers {#verify-reference}
 
@@ -660,59 +653,50 @@ The client MUST construct a list of acceptable reference identifiers,
 and MUST do so independently of the identifiers presented by the
 service.
 
-The inputs used by the client to construct its list of reference
-identifiers might be a URI that a user has typed into an interface
-(e.g., an HTTPS URL for a website), configured account information
-(e.g., the domain name of a particular host or URI used for retrieving
-information or connecting to a network, which might be different from
-the DNS domain name portion of a username), a hyperlink in a web page
-that triggers a browser to retrieve a media object or script, or some
-other combination of information that can yield a source domain and an
-application service type.
+The inputs used by the client to construct its list of reference identifiers
+might be a URI that a user has typed into an interface (e.g., an HTTPS URL
+for a website), configured account information (e.g., the domain name of a
+host for retrieving email, which might be different from the DNS domain name
+portion of a username), a hyperlink in a web page that triggers a browser to
+retrieve a media object or script, or some other combination of information
+that can yield a source domain and an application service type.
 
-The client might need to extract the source domain and application
-service type from the input(s) it has received.
-The extracted data MUST include only information that can be securely
-parsed out of the inputs (e.g., parsing the FQDN
-name out of the "host" component (or its equivalent) of a URI or
-deriving the application service type from the scheme of a URI) or
-information that is derived in a manner not subject to subversion by
-network attackers (e.g., pulling the data from a delegated domain that
-is explicitly established via client or system configuration,
-resolving the data via {{DNSSEC}}, or obtaining the data from a
-third-party domain mapping service in which a human user has
-explicitly placed trust and with which the client communicates over a
-connection or association that provides both mutual authentication and
-integrity checking).
-These considerations apply only to extraction of the source domain
-from the inputs; naturally, if the inputs themselves are invalid or
-corrupt (e.g., a user has clicked a link provided by a malicious
-entity in a phishing attack), then the client might end up
-communicating with an unexpected application service.
+The client might need to extract the source domain and application service
+type from the input(s) it has received.  The extracted data MUST include only
+information that can be securely parsed out of the inputs, such as parsing
+the FQDN out of the "host" component or deriving the application service type
+from the scheme of a URI.  Other possibilities include pulling the data from
+a delegated domain that is explicitly established via client or system
+configuration, resolving the data via {{DNSSEC}}, or obtaining the data from
+a third-party domain mapping service in which a human user has explicitly
+placed trust and with which the client communicates over a connection or
+association that provides both mutual authentication and integrity checking.
+These considerations apply only to extraction of the source domain from the
+inputs.  Naturally, if the inputs themselves are invalid or corrupt (e.g., a
+user has clicked a link provided by a malicious entity in a phishing attack),
+then the client might end up communicating with an unexpected application
+service.
 
 For example, given an input URI of \<sips:alice@example.net>, a client
 would derive the application service type `sip` from the scheme
 and parse the domain name `example.net` from the host component.
 
-Each reference identifier in the list SHOULD be based on the source
-domain and SHOULD NOT be based on a derived domain (e.g., a host name
-or domain name discovered through DNS resolution of the source
-domain).
-This rule is important because only a match between the user inputs
-and a presented identifier enables the client to be sure that the
-certificate can legitimately be used to secure the client's
-communication with the server.
+Each reference identifier in the list MUST be based on the source domain and
+MUST NOT be based on a derived domain such as a domain name discovered
+through DNS resolution of the source domain.  This rule is important because
+only a match between the user inputs and a presented identifier enables the
+client to be sure that the certificate can legitimately be used to secure the
+client's communication with the server.
 
-Using the combination of FQDN(s) and
-application service type, the client constructs a list of reference identifiers
-in accordance with the following rules:
+Using the combination of FQDN(s) and application service type, the client
+MUST construct its list of reference identifiers in accordance with the
+following rules:
 
 * The list SHOULD include a DNS-ID.
-  A reference identifier of type DNS-ID can be directly constructed
-  from a FQDN that is (a) contained in or
-  securely derived from the inputs (i.e., the source domain), or (b)
-  explicitly associated with the source domain by means of user
-  configuration (i.e., a derived domain).
+  A reference identifier of type DNS-ID can be directly constructed from a
+  FQDN that is (a) contained in or securely derived from the inputs, or
+  (b) explicitly associated with the source domain by means of user
+  configuration.
 
 * If a server for the application service type is typically discovered
   by means of DNS SRV records, then the list SHOULD include an SRV-ID.
@@ -723,33 +707,27 @@ in accordance with the following rules:
   SHOULD include a URI-ID.
 
 Which identifier types a client includes in its list of reference
-identifiers is a matter of local policy.
-For example, in certain deployment environments, a client that is
-built to connect only to a particular kind of service (e.g., only IM
-services) might be configured to accept as valid only certificates
-that include an SRV-ID for that application service type; in this
-case, the client would include only SRV-IDs matching the application
-service type in its list of reference identifiers (not, for example,
-DNS-IDs).
-By contrast, a more lenient client (even one built to connect only
-to a particular kind of service) might include both SRV-IDs and
-DNS-IDs in its list of reference identifiers.
+identifiers, and their priority, is a matter of local policy.  For example, a
+client that is built to connect only to a particular kind of service might be
+configured to accept as valid only certificates that include an SRV-ID for
+that application service type.  By contrast, a more lenient client, even if
+built to connect only to a particular kind of service, might include both
+SRV-IDs and DNS-IDs in its list of reference identifiers.
 
 ### Examples {#verify-reference-examples}
 
 A web browser that is connecting via HTTPS to the website at `www.example.com`
 would have a single reference identifier: a DNS-ID of `www.example.com`.
 
-A mail user agent that is connecting via IMAPS to the email
-service at `example.net` (resolved as `mail.example.net`) might have three
-reference identifiers: an SRV-ID of `_imaps.example.net` (see {{EMAIL-SRV}}),
-and DNS-IDs of `example.net` and `mail.example.net`.
-(A legacy email user agent would
-not support {{EMAIL-SRV}} and therefore would probably be explicitly configured to
+A mail user agent that is connecting via IMAPS to the email service at
+`example.net` (resolved as `mail.example.net`) might have three reference
+identifiers: an SRV-ID of `_imaps.example.net` (see {{EMAIL-SRV}}), and
+DNS-IDs of `example.net` and `mail.example.net`.  An email user agentthat
+does not support {{EMAIL-SRV}} would probably be explicitly configured to
 connect to `mail.example.net`, whereas an SRV-aware user agent would derive
 `example.net` from an email address of the form `user@example.net` but might
 also accept `mail.example.net` as the DNS domain name portion of reference
-identifiers for the service.)
+identifiers for the service.
 
 A voice-over-IP (VoIP) user agent that is connecting via SIP to the voice
 service at `voice.example.edu` might have only one reference identifier:
@@ -766,7 +744,8 @@ SRV-ID of `_xmpp-client.im.example.org` (see {{XMPP}}), a DNS-ID of
 Once the client has constructed its list of reference identifiers and has
 received the server's presented identifiers in the form of a PKIX certificate,
 the client checks its reference identifiers against the presented identifiers
-for the purpose of finding a match.  The search fails if the client exhausts
+for the purpose of finding a match.
+The search fails if the client exhausts
 its list of reference identifiers without finding a match.  The search succeeds
 if any presented identifier matches one of the reference identifiers, at
 which point the client SHOULD stop the search.
@@ -776,189 +755,145 @@ sections, the client might need to split the reference identifier into
 its DNS domain name portion and its application service type portion,
 as follows:
 
-* A reference identifier of type DNS-ID does not include an
-  application service type portion and thus can be used directly as the DNS
-  domain name for comparison purposes.  As an example, a DNS-ID of `www.example.com`
-  would result in a DNS domain name portion of `www.example.com`.
+* A DNS-ID reference identifier MUST be used directly as the DNS domain
+  name and there is no application service type.
 
-* For a reference identifier of type SRV-ID, the DNS domain name
-  portion is the Name and the application service type portion is the Service.
-  As an example, an SRV-ID of `_imaps.example.net` would be split into a DNS
-  domain name portion of `example.net` and an application service type portion
-  of `imaps` (mapping to an application protocol of IMAP as explained in {{EMAIL-SRV}}).
+* For an SRV-ID reference identifier, the DNS domain name portion is
+  the Name and the application service type portion is the Service.  For
+  example, an SRV-ID of `_imaps.example.net` has a DNS domain name portion
+  of `example.net` and an application service type portion of
+  `imaps`, which maps to the IMAP application protocol as explained in
+  {{EMAIL-SRV}}.
 
 * For a reference identifier of type URI-ID, the DNS domain name
-  portion is the "reg-name" part of the "host" component (or its
-  equivalent) and the application service type portion is the
-  application service type associated with the scheme name matching
-  the {{ABNF}} "scheme" rule from {{URI}} (not including the ':'
-  separator).
-  As previously mentioned, this document specifies that a URI-ID
-  always contains a "host" component (or its equivalent) containing a
-  "reg-name".
-  (Matching only the "reg-name" rule from {{URI}} limits verification
-  to DNS domain names, thereby differentiating a URI-ID from a
-  uniformResourceIdentifier entry that contains an IP address or a
-  mere host name, or that does not contain a "host" component at all.)
-  Furthermore, note that extraction of the "reg-name" might
-  necessitate normalization of the URI (as explained in {{URI}}).
-  As an example, a URI-ID of `sip:voice.example.edu` would be split
-  into a DNS domain name portion of `voice.example.edu` and an
-  application service type of `sip` (associated with an application
-  protocol of SIP as explained in {{SIP-CERTS}}).
+  portion is the "reg-name" part of the "host" component and the application
+  service type portion is the scheme, as defind above.  Matching only the
+  "reg-name" rule from {{URI}} limits verification to DNS domain names,
+  thereby differentiating a URI-ID from a uniformResourceIdentifier entry
+  that contains an IP address or a mere host name, or that does not contain a
+  "host" component at all.  Furthermore, note that extraction of the
+  "reg-name" might necessitate normalization of the URI (as explained in
+  {{URI}}).  For example, a URI-ID of `sip:voice.example.edu` would be split
+  into a DNS domain name portion of `voice.example.edu` and an application
+  service type of `sip` (associated with an application protocol of SIP as
+  explained in {{SIP-CERTS}}).
 
-Detailed comparison rules for matching the DNS domain name portion
-and application service type portion of the reference identifier are provided
-in the following sections.
+A client MUST match the DNS name, and if an application service type
+is present it MUST also match the service type as well.
+These are described below.
 
 ## Matching the DNS Domain Name Portion {#verify-domain}
 
-The client MUST match the DNS domain name portion of a reference
-identifier according to the following rules (and SHOULD also check the
-application service type as described under {{verify-app}}).
-The rules differ depending on whether the domain to be checked is a
-"traditional domain name" or an "internationalized domain name" (as
-defined under {{names}}).
-Furthermore, to meet the needs of clients that support presented
-identifiers containing the wildcard character "\*", we define a
-supplemental rule for such "wildcard certificates".
+This section describes how the client must determine if the the presented DNS
+name matches the reference DNS name.  The rules differ depending on whether
+the domain to be checked is a "traditional domain name" or an
+"internationalized domain name" (as defined under {{names}}).  For clients
+that support names containing the wildcard character "\*", this section
+also specifies a supplemental rule for such "wildcard certificates".
+This section uses the description of labels and domain names in
+{{DNS-CONCEPTS}}.
 
-### Checking of Traditional Domain Names {#verify-domain-trad}
-
-If the DNS domain name portion of a reference identifier is a
-"traditional domain name", then matching of the reference identifier
-against the presented identifier is performed by comparing the set of
-domain name labels using a case-insensitive ASCII comparison, as
-clarified by {{DNS-CASE}} (e.g., `WWW.Example.Com` would be
-lower-cased to `www.example.com` for comparison purposes).
-Each label MUST match in order for the names to be considered to
-match, except as supplemented by the rule about checking of wildcard
-labels ({{verify-domain-wildcards}}).
-
-### Checking of Internationalized Domain Names {#verify-domain-idn}
+If the DNS domain name portion of a reference identifier is a "traditional
+domain name", then matching of the reference identifier against the presented
+identifier MUST be performed by comparing the set of domain name labels using
+a case-insensitive ASCII comparison, as clarified by {{DNS-CASE}}.  For
+example, `WWW.Example.Com` would be lower-cased to `www.example.com` for
+comparison purposes.  Each label MUST match in order for the names to be
+considered to match, except as supplemented by the rule about checking of
+wildcard labels given below.
 
 If the DNS domain name portion of a reference identifier is an
-internationalized domain name, then an implementation MUST convert any
-U-labels {{IDNA-DEFS}} in the domain name to A-labels before checking
-the domain name.
+internationalized domain name, then the client MUST convert any U-labels
+{{IDNA-DEFS}} in the domain name to A-labels before checking the domain name.
 In accordance with {{IDNA-PROTO}}, A-labels MUST be compared as
-case-insensitive ASCII.
-Each label MUST match in order for the domain names to be considered
-to match, except as supplemented by the rule about checking of
-wildcard labels ({{verify-domain-wildcards}}; but see also
-{{security-wildcards}} regarding wildcards in internationalized domain
-names).
+case-insensitive ASCII.  Each label MUST match in order for the domain names
+to be considered to match, except as supplemented by the rule about checking
+of wildcard labels given below.
 
-### Checking of Wildcard Certificates {#verify-domain-wildcards}
-
-A client MAY match the
-reference identifier against a presented identifier whose DNS domain name
-portion contains the wildcard character "\*" in a label
-(following the description of labels and domain names in {{DNS-CONCEPTS}}),
-provided these requirements are met:
+If the technology specification supports wildcards, then the client MUST
+match the reference identifier against a presented identifier whose DNS
+domain name portion contains the wildcard character "\*" in a label provided
+these requirements are met:
 
 1. There is only one wildcard character.
 
-2. The wildcard character appears only as the content of the
-   left-most label.
+2. The wildcard character appears only as the content of the left-most label.
 
-3. The wildcard character is not embedded in an A-label or U-label
-   {{IDNA-DEFS}} of an internationalized domain name {{IDNA-PROTO}}.
+If the requirements are not met, the presented identifier is invalid and MUST
+be ignored.
 
-A wildcard in a presented identifier can only match exactly one label in
-a reference identifier. Note that this is not the same as DNS wildcard
-matching, where the "\*" label always matches at least one whole
-label and sometimes more. See {{DNS-CONCEPTS, Section 4.3.3}}
-and {{DNS-WILDCARDS}}.
+A wildcard in a presented identifier can only match exactly one label in a
+reference identifier. Note that this is not the same as DNS wildcard
+matching, where the "\*" label always matches at least one whole label and
+sometimes more. See {{DNS-CONCEPTS, Section 4.3.3}} and {{DNS-WILDCARDS}}.
 
-For information regarding the security characteristics of wildcard certificates,
-see {{security-wildcards}}.
+For information regarding the security characteristics of wildcard
+certificates, see {{security-wildcards}}.
 
 ## Matching the Application Service Type Portion {#verify-app}
 
-When a client checks identifiers of type SRV-ID and URI-ID, it MUST
-check not only the DNS domain name portion of the identifier but also
-the application service type portion.
-The client does this by splitting the identifier into the DNS domain
-name portion and the application service type portion (as described
-under {{verify-seek}}), then checking both the DNS domain name portion
-(as described under {{verify-domain}}) and the application service
-type portion as described in the following subsections.
+The rules for matching the application service type deopend on whether
+the identifier is an SRV-ID or a URI-ID.
 
-Implementation Note: An identifier of type SRV-ID or URI-ID provides an
-application service type portion to be checked, but that portion is combined
-only with the DNS domain name portion of the SRV-ID or URI-ID itself.  For
-example, if a client's list of reference identifiers includes an SRV-ID of
-`_xmpp-client.im.example.org` and a DNS-ID of `apps.example.net`, the client
-would check (a) the combination of an application service type of
-`xmpp-client` and a DNS domain name of `im.example.org` and (b) a DNS domain
-name of `apps.example.net`.  However, the client would not check (c) the
-combination of an application service type of `xmpp-client` and a DNS domain
-name of `apps.example.net` because it does not have an SRV-ID of
-`_xmpp-client.apps.example.net` in its list of reference identifiers.
+These identifiers provide an application service type portion to be checked,
+but that portion is combined only with the DNS domain name portion of the
+SRV-ID or URI-ID itself.  For example, if a client's list of reference
+identifiers includes an SRV-ID of `_xmpp-client.im.example.org` and a DNS-ID
+of `apps.example.net`, the client would check both the combination of an
+application service type of `xmpp-client` and a DNS domain name of
+`im.example.org` and a DNS domain name of `apps.example.net`.  However, the
+client would not check the combination of an application service type of
+`xmpp-client` and a DNS domain name of `apps.example.net` because it does not
+have an SRV-ID of `_xmpp-client.apps.example.net` in its list of reference
+identifiers.
 
-### SRV-ID {#verify-app-srv}
-
-The application service name portion of an SRV-ID (e.g., `imaps`) MUST
-be matched in a case-insensitive manner, in accordance with
-{{DNS-SRV}}.
+If the identifier is an SRV-ID, then the application service name MUST
+be matched in a case-insensitive manner, in accordance with {{DNS-SRV}}.
 Note that the `_` character is prepended to the service identifier in
 DNS SRV records and in SRV-IDs (per {{SRVNAME}}), and thus does not
 need to be included in any comparison.
 
-### URI-ID {#verify-app-uri}
-
-The scheme name portion of a URI-ID (e.g., `sip`) MUST be matched in a
-case-insensitive manner, in accordance with {{URI}}.
+If the identifier is a URI-ID, then the scheme name portion MUST be
+matched in a case-insensitive manner, in accordance with {{URI}}.
 Note that the `:` character is a separator between the scheme name
 and the rest of the URI, and thus does not need to be included in any
 comparison.
 
 ## Outcome
 
-The outcome of the matching procedure is one of the following cases.
-
-### Success: Match Found
-
-If the client has found a presented identifier that matches a reference identifier,
-then the service identity check has succeeded.  In this case, the client
-MUST use the matched reference identifier as the validated identity of the
-application service.
-
-### Failure: No Match Found
+If the client has found a presented identifier that matches a reference
+identifier, then the service identity check has succeeded.  In this case, the
+client MUST use the matched reference identifier as the validated identity of
+the application service.
 
 If the client does not find a presented identifier matching any of the
-reference identifiers then the client MUST
-proceed as described as follows.
+reference identifiers then the client MUST proceed as described as follows.
 
-If the client is an automated application not directly controlled
-by a human user, then it SHOULD terminate the communication attempt with
-a bad certificate error and log the error appropriately.
-The application
-MAY provide a configuration setting to disable this behavior, but it
-MUST enable it by default.
+If the client is an automated application not directly controlled by a human
+user, then it SHOULD terminate the communication attempt with a bad
+certificate error and log the error appropriately.  The application MAY
+provide a configuration setting to disable this behavior, but it MUST enable
+it by default.
 
 If the client is an interactive client that is directly controlled by a human
-user, then it SHOULD inform the user of the identity mismatch and automatically
-terminate the communication attempt with a bad certificate error in order
-to prevent users from inadvertently bypassing security
+user, then it SHOULD inform the user of the identity mismatch and
+automatically terminate the communication attempt with a bad certificate
+error in order to prevent users from inadvertently bypassing security
 protections in hostile situations.
 
-Some interactive clients MAY give advanced users the option
-of proceeding with acceptance despite the identity mismatch.
-Although this behavior can be appropriate in certain specialized
-circumstances, it needs to be handled with
+Some interactive clients MAY give advanced users the option of proceeding
+with acceptance despite the identity mismatch.  Although this behavior can be
+appropriate in certain specialized circumstances, it needs to be handled with
 extreme caution, for example by first encouraging even an advanced user to
-terminate the communication attempt and, if they choose to
-proceed anyway, by forcing the user to view the entire certification path
-before proceeding.
+terminate the communication attempt and, if they choose to proceed anyway, by
+forcing the user to view the entire certification path before proceeding.
 
-The application MAY also present the user with the ability to accept
-the presented certificate as valid for subsequent connections.
-Such ad-hoc "pinning" SHOULD NOT restrict future connections to just
-the pinned certificate. Local policy that statically enforces a given
-certificate for a given peer is best made available only as prior
-configuration, rather than a just-in-time override for a failed connection.
+The application MAY also present the user with the ability to accept the
+presented certificate as valid for subsequent connections.  Such ad-hoc
+"pinning" SHOULD NOT restrict future connections to just the pinned
+certificate. Local policy that statically enforces a given certificate for a
+given peer is best made available only as prior configuration, rather than a
+just-in-time override for a failed connection.
 
 # Security Considerations {#security}
 
