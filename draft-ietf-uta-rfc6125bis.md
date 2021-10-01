@@ -124,18 +124,14 @@ informative:
     seriesinfo:
       ANSI: X3.4
   WSC-UI:
-    target: http://www.w3.org/TR/2010/WD-wsc-ui-20100309
+    target: https://www.w3.org/TR/2010/REC-wsc-ui-20100812/
     title: 'Web Security Context: User Interface Guidelines'
     author:
     - ins: A. Saldhana
       name: Anil Saldhana
-      org: ''
     - ins: T. Roessler
       name: Thomas Roessler
-      org: ''
-    date: '2010-03-9'
-    seriesinfo:
-      World Wide Web Consortium LastCall: WD-wsc-ui-20100309
+    date: '2010-08-12'
 
 --- abstract
 
