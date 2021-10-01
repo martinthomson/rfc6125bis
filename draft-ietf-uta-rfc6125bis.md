@@ -48,7 +48,6 @@ normative:
 informative:
   ABNF: RFC5234
   ACME: RFC8555
-  ALPN: RFC7301
   DNS-CASE: RFC4343
   DNSSEC: RFC4033
   DTLS: RFC6347
@@ -92,6 +91,14 @@ informative:
       name: Sebastian Schinzel
       org: Ruhr University Bochum
     date: 2021-9
+  UTS-39:
+    target: https://unicode.org/reports/tr39
+    title: Unicode Security Mechanisms
+    author:
+    - ins: M. Davis
+      name: Mark Davis
+    - ins: M. Suignard
+      name: Michel Suignard
   HTTPSbytes:
     target: https://media.blackhat.com/bh-ad-10/Hansen/Blackhat-AD-2010-Hansen-Sokol-HTTPS-Can-Byte-Me-slides.pdf
     title: HTTPS Can Byte Me
@@ -1006,18 +1013,18 @@ document.
 
 ## Internationalized Domain Names {#security-idn}
 
-Allowing internationalized domain names can lead to the inclusion of visually
-similar, or confusable, characters in certificates.  For discussion, see for
-example {{IDNA-DEFS}}.
+Allowing internationalized domain names can lead to visually similar
+characters, also referred to as "confusables", being included within
+certificates. For discussion, see for example {{IDNA-DEFS, Section 4.4}}
+and {{UTS-39}}.
 
 ## Multiple Identifiers {#security-multi}
 
 A given application service might be addressed by multiple DNS domain names
 for a variety of reasons, and a given deployment might service multiple
-domains or protocols.  The client MUST use the TLS Server Name Identification
-(SNI) extension as discussed in {{TLS, Section 4.4.2.2}}.  If multiple
-protocols share the same port, the client MUST use the Application-Layer
-Protocol Negotiation as described in {{ALPN}}.
+domains or protocols.  One way to address this issue is for the service
+to require the client to send the TLS Server Name Identification
+(SNI) extension as discussed in {{TLS, Section 4.4.2.2}}.
 
 To accommodate the workaround that was needed before the development
 of the SNI extension, this specification allows multiple DNS-IDs,
