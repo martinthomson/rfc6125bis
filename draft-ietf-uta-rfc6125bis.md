@@ -280,13 +280,11 @@ The following topics are out of scope for this specification:
 * Keys or certificates employed outside the context of PKIX-based systems.
 
 * Client or end-user identities.
-
   Certificates representing client identities other than that
   described above, such as rfc822Name, are beyond the scope
   of this document.
 
 * Identifiers other than FQDNs.
-
   Identifiers such as IP address are not discussed. In addition, the focus of
   this document is on application service identities, not specific resources
   located at such services.  Therefore this document discusses Uniform
@@ -296,7 +294,6 @@ The following topics are out of scope for this specification:
   parameters (via the URI "query" component).
 
 * Certification authority policies.
-
   This includes items such as the following:
 
   * How to certify or validate FQDNs and application
@@ -312,7 +309,6 @@ The following topics are out of scope for this specification:
     included in a certificate (e.g., organization name).
 
 * Resolution of DNS domain names.
-
   Although the process whereby a client resolves the DNS domain name of an
   application service can involve several steps, for our purposes we care
   only about the fact that the client needs to verify the identity of the
@@ -320,7 +316,6 @@ The following topics are out of scope for this specification:
   Thus the resolution process itself is out of scope for this specification.
 
 * User interface issues.
-
   In general, such issues are properly the responsibility of client
   software developers and standards development organizations
   dedicated to particular application technologies (see, for example,
