@@ -181,15 +181,6 @@ It therefore implicitly defines requirements on other parties, such as
 the CA's that issue certificates, the service administrators requesting
 them, and the protocol designers defining how things are named.
 
-## Audience {#audience}
-
-The primary audience for this document consists of application protocol
-designers.  Secondarily, the audience consists of certification authorities,
-service providers, and client developers from technology communities that
-might reuse the recommendations in this document when defining certificate
-issuance policies, generating certificate signing requests, or writing
-software algorithms for identity matching.
-
 ## Changes since RFC 6125
 
 This document revises and obsoletes {{VERIFY}} based
