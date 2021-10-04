@@ -251,9 +251,8 @@ he rules are brief:
 
 ### In Scope {#in-scope}
 
-This document applies only to service identities associated with fully
-qualified DNS domain names, only to TLS and DTLS, and only to PKIX-based
-systems.
+This document applies only to service identities associated with FQDNs
+only to TLS and DTLS, and only to PKIX-based systems.
 
 TLS uses the words client and server, where the client is the entity
 that initiates the connection.  In many cases, this models common practice,
@@ -286,7 +285,7 @@ The following topics are out of scope for this specification:
   described above, such as rfc822Name, are beyond the scope
   of this document.
 
-* Identifiers other than fully qualified DNS domain names.
+* Identifiers other than FQDNs.
 
   Identifiers such as IP address are not discussed. In addition, the focus of
   this document is on application service identities, not specific resources
@@ -300,11 +299,11 @@ The following topics are out of scope for this specification:
 
   This includes items such as the following:
 
-  * How to certify or validate fully qualified DNS domain names and application
+  * How to certify or validate FQDNs and application
     service types (see {{ACME}} for some definition of this).
 
   * Issuing certificates with additional identifiers such as IP address or
-    relative domain name, in addition to fully qualified DNS domain names.
+    relative domain name, in addition to FQDNs.
 
   * Types or "classes" of certificates to issue and whether to apply different
     policies for them.
@@ -410,7 +409,7 @@ Relative Distinguished Name (RDN):
   Names. See {{LDAP-DN, Section 2}}.
 
 source domain:
-: The fully qualified DNS domain name that a client expects an application
+: The FQDN that a client expects an application
   service to present in the certificate. This is typically input by
   a human user, configured into a client, or provided by reference such as
   URL. The combination of a source domain and, optionally, an application
@@ -444,8 +443,8 @@ some circumstances by an application service type (e.g., "the IMAP
 server at example.com").
 The DNS name conforms to one of the following forms:
 
-1. A "traditional domain name", i.e., a fully qualified DNS domain name or
-  "FQDN" (see {{DNS-CONCEPTS}}) all of whose labels are "LDH labels" as
+1. A "traditional domain name", i.e., a FQDN
+  (see {{DNS-CONCEPTS}}) all of whose labels are "LDH labels" as
   described in {{IDNA-DEFS}}.  Informally, such labels are constrained to
   {{US-ASCII}} letters, digits, and the hyphen, with the hyphen prohibited in
   the first character position.  Additional qualifications apply (refer to
@@ -557,8 +556,8 @@ document.
   identifiers of type URI-ID (e.g., this is true of {{SIP}} as specified by
   {{SIP-CERTS}}), then the certificate SHOULD include a URI-ID.  The scheme
   MUST be that of the protocol associated with the application service type
-  and the "host" component (or its equivalent) MUST be the fully qualified
-  DNS domain name of the service.  The application protocol specification
+  and the "host" component (or its equivalent) MUST be the FQDN
+  of the service.  The application protocol specification
   MUST specify which URI schemes are acceptable in URI-IDs contained in PKIX
   certificates used for the application protocol (e.g., `sip` but not `sips`
   or `tel` for SIP as described in {{SIP-SIPS}}).
@@ -685,7 +684,7 @@ application service type.
 The client might need to extract the source domain and application
 service type from the input(s) it has received.
 The extracted data MUST include only information that can be securely
-parsed out of the inputs (e.g., parsing the fully qualified DNS domain
+parsed out of the inputs (e.g., parsing the FQDN
 name out of the "host" component (or its equivalent) of a URI or
 deriving the application service type from the scheme of a URI) or
 information that is derived in a manner not subject to subversion by
@@ -715,13 +714,13 @@ and a presented identifier enables the client to be sure that the
 certificate can legitimately be used to secure the client's
 communication with the server.
 
-Using the combination of fully qualified DNS domain name(s) and
+Using the combination of FQDN(s) and
 application service type, the client constructs a list of reference identifiers
 in accordance with the following rules:
 
 * The list SHOULD include a DNS-ID.
   A reference identifier of type DNS-ID can be directly constructed
-  from a fully qualified DNS domain name that is (a) contained in or
+  from a FQDN that is (a) contained in or
   securely derived from the inputs (i.e., the source domain), or (b)
   explicitly associated with the source domain by means of user
   configuration (i.e., a derived domain).
