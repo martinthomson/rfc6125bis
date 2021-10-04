@@ -213,30 +213,6 @@ The major changes, in no particular order, include:
 - Detailed discussion of pinning (configuring use of a certificate that
   doesn't match the criteria in this document) has been removed.
 
-## How to Read This Document {#reading}
-
-This document is longer than the authors would have liked because it was
-necessary to carefully define terminology, explain the underlying concepts,
-define the scope, and specify behavior for all involved parties.  The
-following sections are of special interest to various audiences:
-
-* Protocol designers might want to first read the checklist in {{design}}.
-
-* Certification authorities might want to first read the recommendations for
-  representation of server identity in {{represent}}.
-
-* Service providers might want to first read the recommendations for requesting
-  of server certificates in {{request}}.
-
-* Software implementers might want to first read the recommendations for
-  verification of server identity in {{verify}}.
-
-The sections on terminology ({{terminology}}), naming of application
-services ({{names}}), document scope ({{scope}}), and the like provide
-useful background information regarding the recommendations
-and guidelines that are contained in the above-referenced sections, but are
-not absolutely necessary for a first reading of this document.
-
 ## Applicability {#applicability}
 
 This document does not supersede the rules for certificate issuance or
@@ -253,18 +229,15 @@ to verify the entire certification path as per {{PKIX}}.
 
 ## Overview of Recommendations {#overview}
 
-To orient the reader, this section provides an informational overview of the
-recommendations contained in this document.
-
 The previous version of this specification, {{VERIFY}}, surveyed the current
 practice from many IETF standards and tried to generalize best practices.
-This document takes the lessons learned in the past decade and codifies them
-into a standard. The rules are brief:
+This document takes the lessons learned in the past decade and codifies them.
+he rules are brief:
 
 * Only check DNS domain names via the subjectAlternativeName
   extension designed for that purpose: dNSName.
 
-* Move toward including and checking even more specific
+* Allow use of even more specific
   subjectAlternativeName extensions where appropriate such as
   uniformResourceIdentifier and the otherName form SRVName.
 
@@ -294,7 +267,7 @@ TLS handshake; these is no requirement that the roles at the application
 layer match the TLS-layer.
 
 At the time of this writing, other protocols such as {{QUIC}} and
-Network Time Security (NTS, {{NTS}}) use TLS as a service to do the
+Network Time Security ({{NTS}}) use TLS as a service to do the
 initial establishment of cryptographic key material.
 Such services MUST also follow the rules specified here.
 
