@@ -613,39 +613,34 @@ also have an XMPP-specific `XmppAddr` of `im.example.org` (see {{XMPP}}).
 
 # Requesting Server Certificates {#request}
 
-This section provides rules and guidelines for service providers regarding
+This section provides instructions for service providers regarding
 the information to include in certificate signing requests (CSRs).
-
-In general, service providers are encouraged to request certificates that
+In general, service providers SHOULD request certificates that
 include all of the identifier types that are required or recommended for
 the application service type that will be secured using the certificate to
 be issued.
 
-If the certificate might be used for any type of application service, then
-the service provider is encouraged to request a certificate that includes
-only a DNS-ID.
-
 If the certificate will be used for only a single type of application
-service, then the service provider is encouraged to request a certificate
-that
-includes a DNS-ID and, if appropriate for the application service type, an
-SRV-ID or URI-ID
-that limits the deployment scope of the certificate to only the defined
-application service type.
+service, the service provider SHOULD request a certificate that includes
+a DNS-ID and, if appropriate for the application service type, an SRV-ID or
+URI-ID that limits the deployment scope of the certificate to only the
+defined application service type.
 
-If a service provider offering multiple application service types
-(e.g., a World Wide Web service, an email service, and an instant
-messaging service) wishes to limit the applicability of certificates
-using SRV-IDs or URI-IDs, then the service provider is encouraged to
-request multiple certificates, i.e., one certificate per application
-service type. Conversely, the service provider is discouraged from
-requesting a single certificate containing multiple SRV-IDs or URI-IDs
-identifying each different application service type.
-This guideline does not apply to application service type "bundles"
-that are used to identify manifold distinct access methods to the same
-underlying application (e.g., an email application with access methods
-denoted by the application service types of `imap`, `imaps`, `pop3`,
-`pop3s`, and `submission` as described in {{EMAIL-SRV}}).
+If the certificate might be used for any type of application service, then
+the service provider SHOULD to request a certificate that includes
+only a DNS-ID. Again, because of multi-protocol attacks this practice is
+discouraged; this can be mitigated by providing only one service on
+a host.
+
+If a service provider offersmultiple application service types and wishes to
+limit the applicability of certificates using SRV-IDs or URI-IDs, they SHOULD
+request multiple certificates, rather than a single certificate containing
+multiple SRV-IDs or URI-IDs each identifying ia different application service
+type. This rule does not apply to application service type "bundles" that
+identify distinct access methods to the same underlying application such as
+an email application with access methods denoted by the application service
+types of `imap`, `imaps`, `pop3`, `pop3s`, and `submission` as described in
+{{EMAIL-SRV}}.
 
 # Verifying Service Identity {#verify}
 
