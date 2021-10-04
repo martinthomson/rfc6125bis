@@ -52,8 +52,6 @@ informative:
   DNSSEC: RFC4033
   DTLS: RFC6347
   EMAIL-SRV: RFC6186
-  HTTP: RFC7230
-  HTTP-TLS: RFC2818
   NAPTR: RFC3403
   NTS: RFC8915
   QUIC: RFC9001
@@ -545,20 +543,20 @@ defined in this document are not supported.
 
 # Representing Server Identity {#represent}
 
-This section provides rules and guidelines for issuers of
+This section provides instructions for issuers of
 certificates.
 
 ## Rules {#represent-rules}
 
-When a certification authority issues a certificate based on the fully
-qualified DNS domain name at which the application service provider
+When a certification authority issues a certificate based on the FQDN
+at which the application service provider
 will provide the relevant application, the following rules apply to
 the representation of application service identities.
-The reader needs to be aware that some of these rules are cumulative
+Note that some of these rules are cumulative
 and can interact in important ways that are illustrated later in this
 document.
 
-1. The certificate SHOULD include a "DNS-ID" if possible as a baseline
+1. The certificate MUST include a "DNS-ID" as a baseline
    for interoperability.
 
 2. If the service using the certificate deploys a technology for which
@@ -567,65 +565,51 @@ document.
   then the certificate SHOULD include an SRV-ID.
 
 3. If the service using the certificate deploys a technology for which
-  the relevant specification stipulates that certificates ought to
-  include identifiers of type URI-ID (e.g., this is true of {{SIP}} as
-  specified by {{SIP-CERTS}}, but not true of {{HTTP}} since
-  {{HTTP-TLS}} does not describe usage of a URI-ID for HTTP services),
-  then the certificate SHOULD include a URI-ID.
-  The scheme SHALL be that of the protocol associated with the
-  application service type and the "host" component (or its
-  equivalent) SHALL be the fully qualified DNS domain name of the
-  service.
-  A specification that reuses this one MUST specify which URI schemes
-  are to be considered acceptable in URI-IDs contained in PKIX
-  certificates used for the application protocol (e.g., `sip` but not
-  `sips` or `tel` for SIP as described in {{SIP-SIPS}}, or perhaps
-  http and https for HTTP as might be described in a future
-  specification).
+  the relevant specification stipulates that certificates ought to include
+  identifiers of type URI-ID (e.g., this is true of {{SIP}} as specified by
+  {{SIP-CERTS}}), then the certificate SHOULD include a URI-ID.  The scheme
+  MUST be that of the protocol associated with the application service type
+  and the "host" component (or its equivalent) MUST be the fully qualified
+  DNS domain name of the service.  The application protocol specification
+  MUST specify which URI schemes are acceptable in URI-IDs contained in PKIX
+  certificates used for the application protocol (e.g., `sip` but not `sips`
+  or `tel` for SIP as described in {{SIP-SIPS}}).
 
-4. The certificate MAY include other application-specific identifiers
-  for types that were defined before publication of {{SRVNAME}} (e.g.,
-  XmppAddr for {{XMPP}}) or for which service names or URI schemes do
-  not exist; however, such application-specific identifiers are not
-  applicable to all application technologies and therefore are out of
-  scope for this specification.
-
-5. The certificate MAY contain more than one DNS-ID, SRV-ID, or URI-ID
+4. The certificate MAY contain more than one DNS-ID, SRV-ID, or URI-ID
   as further explained under {{security-multi}}.
+
+5. The certificate MAY include other application-specific identifiers
+  for compatibility with a deployed base. Such identifiers are out of
+  scope for this specification.
 
 ## Examples {#represent-examples}
 
-Consider a simple website at `www.example.com`, which is not
-discoverable via DNS SRV lookups.
-Because HTTP does not specify the use of URIs in server certificates,
-a certificate for this service might include only a DNS-ID of
+Consider a simple website at `www.example.com`, which is not discoverable via
+DNS SRV lookups.  Because HTTP does not specify the use of URIs in server
+certificates, a certificate for this service might include only a DNS-ID of
 `www.example.com`.
 
-Consider an IMAP-accessible email server at the host
-`mail.example.net` servicing email addresses of the form
-`user@example.net` and discoverable via DNS SRV lookups on the
-application service name of `example.net`.
-A certificate for this service might include SRV-IDs of
-`_imap.example.net` and `_imaps.example.net` (see {{EMAIL-SRV}}) along
-with DNS-IDs of `example.net` and `mail.example.net`.
+Consider an IMAP-accessible email server at the host `mail.example.net`
+servicing email addresses of the form `user@example.net` and discoverable via
+DNS SRV lookups on the application service name of `example.net`.  A
+certificate for this service might include SRV-IDs of `_imap.example.net` and
+`_imaps.example.net` (see {{EMAIL-SRV}}) along with DNS-IDs of `example.net`
+and `mail.example.net`.
 
 Consider a SIP-accessible voice-over-IP (VoIP) server at the host
 `voice.example.edu` servicing SIP addresses of the form
-`user@voice.example.edu` and identified by a URI of
-\<sip:voice.example.edu>.
+`user@voice.example.edu` and identified by a URI of \<sip:voice.example.edu>.
 A certificate for this service would include a URI-ID of
 `sip:voice.example.edu` (see {{SIP-CERTS}}) along with a DNS-ID of
 `voice.example.edu`.
 
 Consider an XMPP-compatible instant messaging (IM) server at the host
-`im.example.org` servicing IM addresses of the form
-`user@im.example.org` and discoverable via DNS SRV lookups on the
-`im.example.org` domain.
-A certificate for this service might include SRV-IDs of
-`_xmpp-client.im.example.org` and
-`_xmpp-server.im.example.org` (see {{XMPP}}), a DNS-ID of
-`im.example.org`, and an XMPP-specific `XmppAddr` of `im.example.org`
-(see {{XMPP}}).
+`im.example.org` servicing IM addresses of the form `user@im.example.org` and
+discoverable via DNS SRV lookups on the `im.example.org` domain.  A
+certificate for this service might include SRV-IDs of
+`_xmpp-client.im.example.org` and `_xmpp-server.im.example.org` (see
+{{XMPP}}), a DNS-ID of `im.example.org`.  For backward compatibility, it may
+also have an XMPP-specific `XmppAddr` of `im.example.org` (see {{XMPP}}).
 
 # Requesting Server Certificates {#request}
 
