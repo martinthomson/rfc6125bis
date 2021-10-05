@@ -1022,9 +1022,12 @@ and {{UTS-39}}.
 
 A given application service might be addressed by multiple DNS domain names
 for a variety of reasons, and a given deployment might service multiple
-domains or protocols.  One way to address this issue is for the service
-to require the client to send the TLS Server Name Identification
-(SNI) extension as discussed in {{TLS, Section 4.4.2.2}}.
+domains or protocols. TLS Extensions such as TLS Server
+Name Identification (SNI), discussed in {{TLS, Section 4.4.2.2}},
+and Application Layer Protocol Negotiation (ALPN), discussed in
+{{ALPN}}, provide a way for the application to indicate the desired
+identifier and protocol to the server, which can be used to select
+the most appropriate certificate.
 
 To accommodate the workaround that was needed before the development
 of the SNI extension, this specification allows multiple DNS-IDs,
