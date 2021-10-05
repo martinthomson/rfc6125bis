@@ -1018,7 +1018,7 @@ characters, also referred to as "confusables", being included within
 certificates. For discussion, see for example {{IDNA-DEFS, Section 4.4}}
 and {{UTS-39}}.
 
-## Multiple Identifiers {#security-multi}
+## Multiple Presented Identifiers {#security-multi}
 
 A given application service might be addressed by multiple DNS domain names
 for a variety of reasons, and a given deployment might service multiple
