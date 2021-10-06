@@ -153,6 +153,8 @@ This document specifies
 procedures for representing and verifying the identity of application services
 in such interactions.
 
+This document obsoletes RFC 6125.
+
 --- middle
 
 # Introduction {#intro}
@@ -1033,6 +1035,10 @@ the most appropriate certificate.
 To accommodate the workaround that was needed before the development
 of the SNI extension, this specification allows multiple DNS-IDs,
 SRV-IDs, or URI-IDs in a certificate.
+
+# IANA Considerations
+
+This document has no actions for IANA.
 
 --- back
 
