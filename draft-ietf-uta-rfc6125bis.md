@@ -204,6 +204,9 @@ The major changes, in no particular order, include:
 - Detailed discussion of pinning (configuring use of a certificate that
   doesn't match the criteria in this document) has been removed.
 
+- The sections detailing different target audiences and which sections
+  to read (first) have been removed.
+
 ## Applicability {#applicability}
 
 This document does not supersede the rules for certificate issuance or
