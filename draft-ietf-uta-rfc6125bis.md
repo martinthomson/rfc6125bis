@@ -181,15 +181,6 @@ It therefore implicitly defines requirements on other parties, such as
 the CA's that issue certificates, the service administrators requesting
 them, and the protocol designers defining how things are named.
 
-## Audience {#audience}
-
-The primary audience for this document consists of application protocol
-designers.  Secondarily, the audience consists of certification authorities,
-service providers, and client developers from technology communities that
-might reuse the recommendations in this document when defining certificate
-issuance policies, generating certificate signing requests, or writing
-software algorithms for identity matching.
-
 ## Changes since RFC 6125
 
 This document revises and obsoletes {{VERIFY}} based
@@ -213,29 +204,8 @@ The major changes, in no particular order, include:
 - Detailed discussion of pinning (configuring use of a certificate that
   doesn't match the criteria in this document) has been removed.
 
-## How to Read This Document {#reading}
-
-This document is longer than the authors would have liked because it was
-necessary to carefully define terminology, explain the underlying concepts,
-define the scope, and specify behavior for all involved parties.  The
-following sections are of special interest to various audiences:
-
-* Protocol designers might want to first read the checklist in {{design}}.
-
-* Certification authorities might want to first read the recommendations for
-  representation of server identity in {{represent}}.
-
-* Service providers might want to first read the recommendations for requesting
-  of server certificates in {{request}}.
-
-* Software implementers might want to first read the recommendations for
-  verification of server identity in {{verify}}.
-
-The sections on terminology ({{terminology}}), naming of application
-services ({{names}}), document scope ({{scope}}), and the like provide
-useful background information regarding the recommendations
-and guidelines that are contained in the above-referenced sections, but are
-not absolutely necessary for a first reading of this document.
+- The sections detailing different target audiences and which sections
+  to read (first) have been removed.
 
 ## Applicability {#applicability}
 
@@ -253,18 +223,15 @@ to verify the entire certification path as per {{PKIX}}.
 
 ## Overview of Recommendations {#overview}
 
-To orient the reader, this section provides an informational overview of the
-recommendations contained in this document.
-
 The previous version of this specification, {{VERIFY}}, surveyed the current
 practice from many IETF standards and tried to generalize best practices.
-This document takes the lessons learned in the past decade and codifies them
-into a standard. The rules are brief:
+This document takes the lessons learned in the past decade and codifies them.
+he rules are brief:
 
 * Only check DNS domain names via the subjectAlternativeName
   extension designed for that purpose: dNSName.
 
-* Move toward including and checking even more specific
+* Allow use of even more specific
   subjectAlternativeName extensions where appropriate such as
   uniformResourceIdentifier and the otherName form SRVName.
 
@@ -278,9 +245,8 @@ into a standard. The rules are brief:
 
 ### In Scope {#in-scope}
 
-This document applies only to service identities associated with fully
-qualified DNS domain names, only to TLS and DTLS, and only to PKIX-based
-systems.
+This document applies only to service identities associated with FQDNs
+only to TLS and DTLS, and only to PKIX-based systems.
 
 TLS uses the words client and server, where the client is the entity
 that initiates the connection.  In many cases, this models common practice,
@@ -294,7 +260,7 @@ TLS handshake; these is no requirement that the roles at the application
 layer match the TLS-layer.
 
 At the time of this writing, other protocols such as {{QUIC}} and
-Network Time Security (NTS, {{NTS}}) use TLS as a service to do the
+Network Time Security ({{NTS}}) use TLS as a service to do the
 initial establishment of cryptographic key material.
 Such services MUST also follow the rules specified here.
 
@@ -308,13 +274,11 @@ The following topics are out of scope for this specification:
 * Keys or certificates employed outside the context of PKIX-based systems.
 
 * Client or end-user identities.
-
   Certificates representing client identities other than that
   described above, such as rfc822Name, are beyond the scope
   of this document.
 
-* Identifiers other than fully qualified DNS domain names.
-
+* Identifiers other than FQDNs.
   Identifiers such as IP address are not discussed. In addition, the focus of
   this document is on application service identities, not specific resources
   located at such services.  Therefore this document discusses Uniform
@@ -324,14 +288,13 @@ The following topics are out of scope for this specification:
   parameters (via the URI "query" component).
 
 * Certification authority policies.
-
   This includes items such as the following:
 
-  * How to certify or validate fully qualified DNS domain names and application
+  * How to certify or validate FQDNs and application
     service types (see {{ACME}} for some definition of this).
 
   * Issuing certificates with additional identifiers such as IP address or
-    relative domain name, in addition to fully qualified DNS domain names.
+    relative domain name, in addition to FQDNs.
 
   * Types or "classes" of certificates to issue and whether to apply different
     policies for them.
@@ -340,7 +303,6 @@ The following topics are out of scope for this specification:
     included in a certificate (e.g., organization name).
 
 * Resolution of DNS domain names.
-
   Although the process whereby a client resolves the DNS domain name of an
   application service can involve several steps, for our purposes we care
   only about the fact that the client needs to verify the identity of the
@@ -348,7 +310,6 @@ The following topics are out of scope for this specification:
   Thus the resolution process itself is out of scope for this specification.
 
 * User interface issues.
-
   In general, such issues are properly the responsibility of client
   software developers and standards development organizations
   dedicated to particular application technologies (see, for example,
@@ -437,7 +398,7 @@ Relative Distinguished Name (RDN):
   Names. See {{LDAP-DN, Section 2}}.
 
 source domain:
-: The fully qualified DNS domain name that a client expects an application
+: The FQDN that a client expects an application
   service to present in the certificate. This is typically input by
   a human user, configured into a client, or provided by reference such as
   URL. The combination of a source domain and, optionally, an application
@@ -471,8 +432,8 @@ some circumstances by an application service type (e.g., "the IMAP
 server at example.com").
 The DNS name conforms to one of the following forms:
 
-1. A "traditional domain name", i.e., a fully qualified DNS domain name or
-  "FQDN" (see {{DNS-CONCEPTS}}) all of whose labels are "LDH labels" as
+1. A "traditional domain name", i.e., a FQDN
+  (see {{DNS-CONCEPTS}}) all of whose labels are "LDH labels" as
   described in {{IDNA-DEFS}}.  Informally, such labels are constrained to
   {{US-ASCII}} letters, digits, and the hyphen, with the hyphen prohibited in
   the first character position.  Additional qualifications apply (refer to
@@ -584,8 +545,8 @@ document.
   identifiers of type URI-ID (e.g., this is true of {{SIP}} as specified by
   {{SIP-CERTS}}), then the certificate SHOULD include a URI-ID.  The scheme
   MUST be that of the protocol associated with the application service type
-  and the "host" component (or its equivalent) MUST be the fully qualified
-  DNS domain name of the service.  The application protocol specification
+  and the "host" component (or its equivalent) MUST be the FQDN
+  of the service.  The application protocol specification
   MUST specify which URI schemes are acceptable in URI-IDs contained in PKIX
   certificates used for the application protocol (e.g., `sip` but not `sips`
   or `tel` for SIP as described in {{SIP-SIPS}}).
@@ -712,7 +673,7 @@ application service type.
 The client might need to extract the source domain and application
 service type from the input(s) it has received.
 The extracted data MUST include only information that can be securely
-parsed out of the inputs (e.g., parsing the fully qualified DNS domain
+parsed out of the inputs (e.g., parsing the FQDN
 name out of the "host" component (or its equivalent) of a URI or
 deriving the application service type from the scheme of a URI) or
 information that is derived in a manner not subject to subversion by
@@ -742,13 +703,13 @@ and a presented identifier enables the client to be sure that the
 certificate can legitimately be used to secure the client's
 communication with the server.
 
-Using the combination of fully qualified DNS domain name(s) and
+Using the combination of FQDN(s) and
 application service type, the client constructs a list of reference identifiers
 in accordance with the following rules:
 
 * The list SHOULD include a DNS-ID.
   A reference identifier of type DNS-ID can be directly constructed
-  from a fully qualified DNS domain name that is (a) contained in or
+  from a FQDN that is (a) contained in or
   securely derived from the inputs (i.e., the source domain), or (b)
   explicitly associated with the source domain by means of user
   configuration (i.e., a derived domain).
