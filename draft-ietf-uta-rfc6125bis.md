@@ -174,7 +174,7 @@ Internet Public Key Infrastructure using X.509 {{PKIX}}.  Informally, we can
 think of these identities as the client's "reference identity" and the
 server's "presented identity"; more formal definitions are given later.  A
 client needs to verify that the server's presented identity matches its
-reference identity so it can authenticate the communication.
+reference identity so it can deterministically and automatically authenticate the communication.
 
 This document defines procedures for how clients do this verification.
 It therefore also defines requirements on other parties, such as
