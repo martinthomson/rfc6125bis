@@ -675,8 +675,8 @@ MUST NOT be based on a derived domain such as a domain name discovered
 through DNS resolution of the source domain.  This rule is important because
 only a match between the user inputs and a presented identifier enables the
 client to be sure that the certificate can legitimately be used to secure the
-client's communication with the server. Put another way, it also
-removes DNS from the attack surface.
+client's communication with the server. This removes
+DNS and DNS resolution from the attack surface.
 
 Using the combination of FQDN(s) and application service type, the client
 MUST construct its list of reference identifiers in accordance with the
