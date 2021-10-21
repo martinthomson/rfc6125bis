@@ -294,8 +294,8 @@ The following topics are out of scope for this specification:
   * How to certify or validate FQDNs and application
     service types (see {{ACME}} for some definition of this).
 
-  * Issuing certificates with additional identifiers such as IP address or
-    relative domain name, in addition to FQDNs.
+  * Issuing certificates with additional identifiers such as IP address
+    or other, in addition to FQDNs.
 
   * Types or "classes" of certificates to issue and whether to apply different
     policies for them.
