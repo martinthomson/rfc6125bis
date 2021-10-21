@@ -333,7 +333,8 @@ application service provider:
 application service type:
 : A formal identifier for the application protocol used to provide a
   particular kind of application service at a domain.  This often appears as
-  a URI scheme {{URI}} or a DNS SRV Service {{DNS-SRV}}.
+  a URI scheme {{URI}}, DNS SRV Service {{DNS-SRV}}, or an ALPN {{ALPN}}
+  identifier.
 
 delegated domain:
 : A domain name or host name that is explicitly configured for communicating
