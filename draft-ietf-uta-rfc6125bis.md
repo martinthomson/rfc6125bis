@@ -261,7 +261,7 @@ TLS handshake; these is no requirement that the roles at the application
 layer match the TLS-layer.
 
 At the time of this writing, other protocols such as {{QUIC}} and
-Network Time Security ({{NTS}}) use DTLS or TLS as a service to do the
+Network Time Security ({{NTS}}) use DTLS or TLS to do the
 initial establishment of cryptographic key material.
 Such services MUST also follow the rules specified here.
 
