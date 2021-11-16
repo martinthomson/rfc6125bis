@@ -162,29 +162,29 @@ This document obsoletes RFC 6125.
 ## Motivation {#motivation}
 
 The visible face of the Internet largely consists of services that employ a
-client-server architecture in which an interactive or automated client
+client-server architecture in which a client
 communicates with an application service.  When a client communicates with an
-application service using Transport Layer Security {{TLS}} or Datagram
-Transport Layer Security {{DTLS}}, it has some notion of the server's
+application service using {{TLS}}, {{DTLS}}, or a protocol built on those,
+it has some notion of the server's
 identity (e.g., "the website at example.com") while attempting to establish
 secure communication.  Likewise, during TLS negotiation, the server presents
 its notion of the service's identity in the form of a public-key certificate
-that was issued by a certification authority (CA) in the context of the
+that was issued by a CA in the context of the
 Internet Public Key Infrastructure using X.509 {{PKIX}}.  Informally, we can
 think of these identities as the client's "reference identity" and the
-server's "presented identity" (more formal definitions are given later).  A
+server's "presented identity"; more formal definitions are given later.  A
 client needs to verify that the server's presented identity matches its
-reference identity so it can authenticate the communication.
+reference identity so it can deterministically and automatically authenticate the communication.
 
 This document defines procedures for how clients do this verification.
-It therefore implicitly defines requirements on other parties, such as
+It therefore also defines requirements on other parties, such as
 the CA's that issue certificates, the service administrators requesting
 them, and the protocol designers defining how things are named.
 
 ## Changes since RFC 6125
 
 This document revises and obsoletes {{VERIFY}} based
-on the decade of experience and changes since it was first published.
+on the decade of experience and changes since it was published.
 The major changes, in no particular order, include:
 
 - All references have been updated to the current latest version.
@@ -194,15 +194,16 @@ The major changes, in no particular order, include:
 - The only legal place for a certificate wildcard name is as the left-most
   component in a domain  name.
 
-- It is no longer allowed to use the commonName RDN, known as `CN-ID`,
-  to represent the server identity; only the subjectAltNames extension
-  is used.
+- The server identity can only be expressed in the subjectAltNames
+  extension; it is no longer valid to use the commonName RDN,
+  known as `CN-ID` in {{VERIFY}}.
 
 - References to the X.500 directory, the survey of prior art, and the
   sample text in Appendix A have been removed.
 
 - Detailed discussion of pinning (configuring use of a certificate that
-  doesn't match the criteria in this document) has been removed.
+  doesn't match the criteria in this document) has been removed and replaced
+  with two paragraphs in {{outcome}}.
 
 - The sections detailing different target audiences and which sections
   to read (first) have been removed.
@@ -212,7 +213,7 @@ The major changes, in no particular order, include:
 This document does not supersede the rules for certificate issuance or
 validation specified by {{PKIX}}.  That document also governs any
 certificate-related topic on which this document is silent.  This includes
-certificate syntax, certificate extensions such as name constraints or
+certificate syntax, extensions such as name constraints or
 extended key usage, and handling of certification paths.
 
 This document addresses only name forms in the leaf "end entity" server
@@ -225,8 +226,8 @@ to verify the entire certification path as per {{PKIX}}.
 
 The previous version of this specification, {{VERIFY}}, surveyed the current
 practice from many IETF standards and tried to generalize best practices.
-This document takes the lessons learned in the past decade and codifies them.
-he rules are brief:
+This document takes the lessons learned since then and codifies them.
+The rules are brief:
 
 * Only check DNS domain names via the subjectAlternativeName
   extension designed for that purpose: dNSName.
@@ -260,7 +261,7 @@ TLS handshake; these is no requirement that the roles at the application
 layer match the TLS-layer.
 
 At the time of this writing, other protocols such as {{QUIC}} and
-Network Time Security ({{NTS}}) use TLS as a service to do the
+Network Time Security ({{NTS}}) use DTLS or TLS to do the
 initial establishment of cryptographic key material.
 Such services MUST also follow the rules specified here.
 
@@ -287,14 +288,14 @@ The following topics are out of scope for this specification:
   service such as a specific resource (via the URI "path" component) or
   parameters (via the URI "query" component).
 
-* Certification authority policies.
+* CA policies.
   This includes items such as the following:
 
   * How to certify or validate FQDNs and application
     service types (see {{ACME}} for some definition of this).
 
-  * Issuing certificates with additional identifiers such as IP address or
-    relative domain name, in addition to FQDNs.
+  * Issuing certificates with additional identifiers such as IP address
+    or other, in addition to FQDNs.
 
   * Types or "classes" of certificates to issue and whether to apply different
     policies for them.
@@ -322,28 +323,25 @@ actionable in application protocols, we define a set of more concrete terms
 for use in this specification.
 
 application service:
-: A service on the Internet that enables interactive and automated clients
-  to connect for the purpose of retrieving or uploading information,
-  communicating with other entities, or connecting to a broader network of
-  services.
+: A service on the Internet that enables clients to connect for the
+  purpose of retrieving or uploading information, communicating with other
+  entities, or connecting to a broader network of services.
 
 application service provider:
-: An organization or individual that hosts or deploys an application service.
+: An entity that hosts or deploys an application service.
 
 application service type:
 : A formal identifier for the application protocol used to provide a
-  particular kind of application service at a domain.  This often apepars as
-  a URI scheme {{URI}} or a DNS SRV Service {{DNS-SRV}}.
-
-automated client:
-: A software agent or device that is not directly controlled by a human user.
+  particular kind of application service at a domain.  This often appears as
+  a URI scheme {{URI}}, DNS SRV Service {{DNS-SRV}}, or an ALPN {{ALPN}}
+  identifier.
 
 delegated domain:
 : A domain name or host name that is explicitly configured for communicating
-  with the source domain, by either the human user controlling an interactive
-  client or a trusted administrator.  For example, a server at
-  mailhost.example.com for connecting to an IMAP server hosting an email
-  address of user@example.com.
+  with the source domain, by either the human user controlling the client
+  or a trusted administrator.  For example, a server at mailhost.example.com
+  for connecting to an IMAP server hosting an email address of
+  user@example.com.
 
 derived domain:
 : A domain name or host name that a client has derived from the source domain
@@ -354,30 +352,25 @@ identifier:
   server in a certificate or referenced by a client for matching purposes.
 
 identifier type:
-: A formally defined category of identifier that can be included in a
+: A formally-defined category of identifier that can be included in a
   certificate and therefore that can also be used for matching purposes. For
   conciseness and convenience, we define the following identifier types of
-  interest, which are based on those found in the PKIX specification {{PKIX}}
-  and various PKIX extensions:
+  interest:
 
-  * DNS-ID: a subjectAltName entry of type dNSName
+  * DNS-ID: a subjectAltName entry of type dNSName as defined in {{PKIX}}.
 
-  * SRV-ID: a subjectAltName entry of type otherName whose name form is SRVName;
-    see {{SRVNAME}}
+  * SRV-ID: a subjectAltName entry of type otherName whose name form is
+    SRVName, as defined in {{SRVNAME}}.
 
-  * URI-ID: a subjectAltName entry of type uniformResourceIdentifier whose
-    value includes both (i) a "scheme" and (ii) a "host" component (or its
-    equivalent) that matches the "reg-name" rule (where the quoted terms
-    represent the associated {{ABNF}} productions from {{URI}})
-    An entry which does not have both the scheme and host is not a valid
-    URI-ID and MUST be ignored.
-
-interactive client:
-: A software agent or device that is directly controlled by a human user,
-  commonly known as a "user agent."
+  * URI-ID: a subjectAltName entry of type uniformResourceIdentifier
+    as defined in {{PKIX}}. This entry MUST include both a "scheme" and
+    a "host" component (or its equivalent) that matches the "reg-name"
+    rule (where the quoted terms represent the associated {{ABNF}}
+    productions from {{URI}}).  If the entry does not have both, it is not a
+    valid URI-ID and MUST be ignored.
 
 PKIX:
-: PKIX is a short name for the Internet Public Key Infrastructure using X.509
+: The short name for the Internet Public Key Infrastructure using X.509
   defined in {{PKIX}}.  That document provides a profile of the X.509v3
   certificate specifications and X.509v2 certificate revocation list (CRL)
   specifications for use in the Internet.
@@ -395,15 +388,14 @@ reference identifier:
   service type.
 
 Relative Distinguished Name (RDN):
-: The ASN.1-based construction comprising a Relative Distinguished Name
-  (RDN), which itself is a building-block component of Distinguished
-  Names. See {{LDAP-DN, Section 2}}.
+: An ASN.1-based construction which itself is a building-block component of
+  Distinguished Names. See {{LDAP-DN, Section 2}}.
 
 source domain:
 : The FQDN that a client expects an application
   service to present in the certificate. This is typically input by
   a human user, configured into a client, or provided by reference such as
-  URL. The combination of a source domain and, optionally, an application
+  a URL. The combination of a source domain and, optionally, an application
   service type enables a client to construct one or more reference
   identifiers.
 
@@ -411,13 +403,12 @@ subjectAltName entry:
 : An identifier placed in a subjectAltName extension.
 
 subjectAltName extension:
-: A standard PKIX certificate extension {{PKIX}} enabling identifiers
-  of various types to be bound to the certificate subject.
+: A standard PKIX extension enabling identifiers of various types to be
+  bound to the certificate subject.
 
-subject name:
-: In this specification, the term refers to the name of a PKIX
-  certificate's subject, encoded in a certificate's subject field (see
-  {{PKIX, Section 4.1.2.6}}).
+subjectName:
+: The name of a PKIX certificate's subject, encoded in a certificate's
+  subject field (see {{PKIX, Section 4.1.2.6}}).
 
 Security-related terms used in this document, but not defined here or in
 {{PKIX}} should be understood in the the sense defined in {{SECTERMS}}. Such
@@ -434,13 +425,12 @@ some circumstances by an application service type (e.g., "the IMAP
 server at example.com").
 The DNS name conforms to one of the following forms:
 
-1. A "traditional domain name", i.e., a FQDN
-  (see {{DNS-CONCEPTS}}) all of whose labels are "LDH labels" as
-  described in {{IDNA-DEFS}}.  Informally, such labels are constrained to
-  {{US-ASCII}} letters, digits, and the hyphen, with the hyphen prohibited in
-  the first character position.  Additional qualifications apply (refer to
-  the above-referenced specifications for details), but they are not relevant
-  here.
+1. A "traditional domain name", a FQDN (see {{DNS-CONCEPTS}}) all of
+  whose labels are "LDH labels" as described in {{IDNA-DEFS}}.  Informally,
+  such labels are constrained to {{US-ASCII}} letters, digits, and the
+  hyphen, with the hyphen prohibited in the first character position.
+  Additional qualifications apply (refer to the above-referenced
+  specifications for details), but they are not relevant here.
 
 2. An "internationalized domain name", a DNS domain name that includes at
   least one label containing appropriately encoded Unicode code points
@@ -454,7 +444,7 @@ From the perspective of the application client or user, some names are
 runtime input, prior configuration, or explicit acceptance of a client
 communication attempt.  Other names are *indirect* because they are
 automatically resolved by the application based on user input, such as a
-target name resolved from a source name using DNS SRV or {{NAPTR}} records).
+target name resolved from a source name using DNS SRV or {{NAPTR}} records.
 The distinction matters most for certificate consumption, specifically
 verification as discussed in this document.
 
@@ -466,7 +456,7 @@ one type of service, such as a special-purpose certificate that can only be
 used for an IMAP service.  This distinction matters most for certificate
 issuance.
 
-We can categorize the supported identifier types as follows:
+We can categorize the three identifier types as follows:
 
 * A DNS-ID is direct and unrestricted.
 
@@ -476,7 +466,7 @@ We can categorize the supported identifier types as follows:
 
 It is important to keep these distinctions in mind, as best practices
 for the deployment and use of the identifiers differ.
-As a further example, cross-protocol attacks such as {{ALPACA}}
+Note that cross-protocol attacks such as {{ALPACA}}
 are possibile when two
 different protocol services use the same certificate.
 This can be addressed by using restricted identifiers, or telling
@@ -490,9 +480,9 @@ for this include:
 * It is not strongly typed and therefore suffers from ambiguities
   in interpretation.
 
-* It can appear more than once in the Subject Name.
+* It can appear more than once in the subjectName.
 
-For similar reasons, other RDN's within the Subject Name MUST NOT be used to
+For similar reasons, other RDN's within the subjectName MUST NOT be used to
 identify a service.
 
 # Designing Application Protocols {#design}
@@ -526,7 +516,7 @@ certificates.
 
 ## Rules {#represent-rules}
 
-When a certification authority issues a certificate based on the FQDN
+When a CA issues a certificate based on the FQDN
 at which the application service provider
 will provide the relevant application, the following rules apply to
 the representation of application service identities.
@@ -539,12 +529,12 @@ document.
 
 2. If the service using the certificate deploys a technology for which
   the relevant specification stipulates that certificates ought to
-  include identifiers of type SRV-ID (e.g., this is true of {{XMPP}}),
+  include identifiers of type SRV-ID (e.g., {{XMPP}}),
   then the certificate SHOULD include an SRV-ID.
 
 3. If the service using the certificate deploys a technology for which
   the relevant specification stipulates that certificates ought to include
-  identifiers of type URI-ID (e.g., this is true of {{SIP}} as specified by
+  identifiers of type URI-ID (e.g., {{SIP}} as specified by
   {{SIP-CERTS}}), then the certificate SHOULD include a URI-ID.  The scheme
   MUST be that of the protocol associated with the application service type
   and the "host" component (or its equivalent) MUST be the FQDN
@@ -605,12 +595,12 @@ URI-ID that limits the deployment scope of the certificate to only the
 defined application service type.
 
 If the certificate might be used for any type of application service, then
-the service provider SHOULD to request a certificate that includes
+the service provider SHOULD request a certificate that includes
 only a DNS-ID. Again, because of multi-protocol attacks this practice is
-discouraged; this can be mitigated by providing only one service on
+discouraged; this can be mitigated by deploying only one service on
 a host.
 
-If a service provider offersmultiple application service types and wishes to
+If a service provider offers multiple application service types and wishes to
 limit the applicability of certificates using SRV-IDs or URI-IDs, they SHOULD
 request multiple certificates, rather than a single certificate containing
 multiple SRV-IDs or URI-IDs each identifying ia different application service
@@ -686,7 +676,8 @@ MUST NOT be based on a derived domain such as a domain name discovered
 through DNS resolution of the source domain.  This rule is important because
 only a match between the user inputs and a presented identifier enables the
 client to be sure that the certificate can legitimately be used to secure the
-client's communication with the server.
+client's communication with the server. This removes
+DNS and DNS resolution from the attack surface.
 
 Using the combination of FQDN(s) and application service type, the client
 MUST construct its list of reference identifiers in accordance with the
@@ -742,7 +733,7 @@ SRV-ID of `_xmpp-client.im.example.org` (see {{XMPP}}), a DNS-ID of
 ## Preparing to Seek a Match {#verify-seek}
 
 Once the client has constructed its list of reference identifiers and has
-received the server's presented identifiers in the form of a PKIX certificate,
+received the server's presented identifiers,
 the client checks its reference identifiers against the presented identifiers
 for the purpose of finding a match.
 The search fails if the client exhausts
@@ -786,15 +777,15 @@ These are described below.
 
 This section describes how the client must determine if the the presented DNS
 name matches the reference DNS name.  The rules differ depending on whether
-the domain to be checked is a "traditional domain name" or an
-"internationalized domain name" (as defined under {{names}}).  For clients
+the domain to be checked is a traditional domain name or an
+internationalized domain name, as defined in {{names}}.  For clients
 that support names containing the wildcard character "\*", this section
 also specifies a supplemental rule for such "wildcard certificates".
 This section uses the description of labels and domain names in
 {{DNS-CONCEPTS}}.
 
-If the DNS domain name portion of a reference identifier is a "traditional
-domain name", then matching of the reference identifier against the presented
+If the DNS domain name portion of a reference identifier is a traditional
+domain name, then matching of the reference identifier against the presented
 identifier MUST be performed by comparing the set of domain name labels using
 a case-insensitive ASCII comparison, as clarified by {{DNS-CASE}}.  For
 example, `WWW.Example.Com` would be lower-cased to `www.example.com` for
@@ -832,17 +823,17 @@ certificates, see {{security-wildcards}}.
 
 ## Matching the Application Service Type Portion {#verify-app}
 
-The rules for matching the application service type deopend on whether
+The rules for matching the application service type depend on whether
 the identifier is an SRV-ID or a URI-ID.
 
 These identifiers provide an application service type portion to be checked,
 but that portion is combined only with the DNS domain name portion of the
 SRV-ID or URI-ID itself.  For example, if a client's list of reference
 identifiers includes an SRV-ID of `_xmpp-client.im.example.org` and a DNS-ID
-of `apps.example.net`, the client would check both the combination of an
+of `apps.example.net`, the client MUST check both the combination of an
 application service type of `xmpp-client` and a DNS domain name of
 `im.example.org` and a DNS domain name of `apps.example.net`.  However, the
-client would not check the combination of an application service type of
+client MUST NOT check the combination of an application service type of
 `xmpp-client` and a DNS domain name of `apps.example.net` because it does not
 have an SRV-ID of `_xmpp-client.apps.example.net` in its list of reference
 identifiers.
@@ -859,7 +850,7 @@ Note that the `:` character is a separator between the scheme name
 and the rest of the URI, and thus does not need to be included in any
 comparison.
 
-## Outcome
+## Outcome {#outcome}
 
 If the client has found a presented identifier that matches a reference
 identifier, then the service identity check has succeeded.  In this case, the
@@ -869,19 +860,18 @@ the application service.
 If the client does not find a presented identifier matching any of the
 reference identifiers then the client MUST proceed as described as follows.
 
-If the client is an automated application not directly controlled by a human
-user, then it SHOULD terminate the communication attempt with a bad
+If the client is an automated application,
+then it SHOULD terminate the communication attempt with a bad
 certificate error and log the error appropriately.  The application MAY
 provide a configuration setting to disable this behavior, but it MUST enable
 it by default.
 
-If the client is an interactive client that is directly controlled by a human
+If the client is one that is directly controlled by a human
 user, then it SHOULD inform the user of the identity mismatch and
 automatically terminate the communication attempt with a bad certificate
 error in order to prevent users from inadvertently bypassing security
 protections in hostile situations.
-
-Some interactive clients MAY give advanced users the option of proceeding
+Such clients MAY give advanced users the option of proceeding
 with acceptance despite the identity mismatch.  Although this behavior can be
 appropriate in certain specialized circumstances, it needs to be handled with
 extreme caution, for example by first encouraging even an advanced user to
@@ -892,15 +882,14 @@ The application MAY also present the user with the ability to accept the
 presented certificate as valid for subsequent connections.  Such ad-hoc
 "pinning" SHOULD NOT restrict future connections to just the pinned
 certificate. Local policy that statically enforces a given certificate for a
-given peer is best made available only as prior configuration, rather than a
+given peer is SHOULD made available only as prior configuration, rather than a
 just-in-time override for a failed connection.
 
 # Security Considerations {#security}
 
 ## Wildcard Certificates {#security-wildcards}
 
-Wildcard certificates, those that have an identifier with "\*" as the
-left-most DNS label, automatically vouch for any single-label host names
+Wildcard certificates automatically vouch for any single-label host names
 within their domain, but not multiple levels of domains.  This can be
 convenient for administrators but also poses the risk of vouching for rogue
 or buggy hosts. See for example {{Defeating-SSL}} (beginning at slide 91) and
@@ -924,8 +913,8 @@ for a variety of reasons, and a given deployment might service multiple
 domains or protocols. TLS Extensions such as TLS Server
 Name Identification (SNI), discussed in {{TLS, Section 4.4.2.2}},
 and Application Layer Protocol Negotiation (ALPN), discussed in
-{{ALPN}}, provide a way for the application to indicate the desired
-identifier and protocol to the server, which can be used to select
+{{ALPN}}, provide a way for the client to indicate the desired
+identifier and protocol to the server, which can then select
 the most appropriate certificate.
 
 To accommodate the workaround that was needed before the development
