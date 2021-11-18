@@ -13,9 +13,7 @@ pi:
   toc: 'yes'
   tocdepth: '4'
   rfcedstyle: 'yes'
-title: Representation and Verification of Domain-Based Application Service Identity
-  within Internet Public Key Infrastructure Using X.509 (PKIX) Certificates in the
-  Context of Transport Layer Security (TLS)
+title: Service Names in TLS
 abbrev: Service Identity
 area: Applications
 kw: Internet-Draft
@@ -935,3 +933,11 @@ version of this document, {{VERIFY}}.
 Thanks also to Carsten Bormann for converting the previous document
 to Markdown so that we could more easily use Martin Thomson's `i-d-template`
 software.
+
+In addition to discussion on the mailing list, the following people
+contributed significant changes:
+Viktor Dukhovni,
+Jim Fenton,
+Olle Johansson,
+and
+Ryan Sleevi.
