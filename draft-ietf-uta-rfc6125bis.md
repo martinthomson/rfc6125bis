@@ -13,7 +13,7 @@ pi:
   toc: 'yes'
   tocdepth: '4'
   rfcedstyle: 'yes'
-title: On TLS Service Names
+title: Service Names in TLS
 abbrev: Service Identity
 area: Applications
 kw: Internet-Draft
