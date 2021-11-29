@@ -486,9 +486,9 @@ identify a service.
 # Designing Application Protocols {#design}
 
 This section defines how protocol designers should reference this document,
-which MUST be a normative reference in their specification.  The technology
-MUST only use the identifiers defined in this document.  Its specification
-MAY choose to allow only one of them.
+which would typically be a normative reference in their specification.
+Its specification
+MAY choose to allow only one of the identifier types defined here.
 
 If the technology does not use DNS SRV records to resolve the DNS domain
 names of application services then its specification MUST state that SRV-ID
@@ -522,7 +522,7 @@ Note that some of these rules are cumulative
 and can interact in important ways that are illustrated later in this
 document.
 
-1. The certificate MUST include a "DNS-ID" as a baseline
+1. The certificate SHOULD include a "DNS-ID" as a baseline
    for interoperability.
 
 2. If the service using the certificate deploys a technology for which
