@@ -236,7 +236,7 @@ layer match the TLS layer.
 At the time of this writing, other protocols such as {{QUIC}} and
 Network Time Security ({{NTS}}) use DTLS or TLS to do the
 initial establishment of cryptographic key material.
-The rules specified here are intended to apply to such services, as well.
+The rules specified here apply to such services, as well.
 
 ### Out of Scope {#out-of-scope}
 
