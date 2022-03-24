@@ -175,7 +175,7 @@ reference identity so it can deterministically and automatically authenticate th
 
 This document defines procedures for how clients do this verification.
 It therefore also defines requirements on other parties, such as
-the certification authorities that issue certificates, the service administrators requesting
+the certificate authorities that issue certificates, the service administrators requesting
 them, and the protocol designers defining how things are named.
 
 This document obsoletes RFC 6125. Changes from RFC 6125 are described under {{changes}}.
@@ -489,7 +489,7 @@ certificates.
 
 ## Rules {#represent-rules}
 
-When a certification authority issues a certificate based on the FQDN
+When a certificate authority issues a certificate based on the FQDN
 at which the application service provider
 will provide the relevant application, the following rules apply to
 the representation of application service identities.
