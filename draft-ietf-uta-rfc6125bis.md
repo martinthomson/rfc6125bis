@@ -630,10 +630,7 @@ information that can be securely parsed out of the inputs, such as parsing
 the FQDN out of the "host" component or deriving the application service type
 from the scheme of a URI.  Other possibilities include pulling the data from
 a delegated domain that is explicitly established via client or system
-configuration, resolving the data via {{DNSSEC}}, or obtaining the data from
-a third-party domain mapping service in which a human user has explicitly
-placed trust and with which the client communicates over a connection or
-association that provides both mutual authentication and integrity checking.
+configuration or resolving the data via {{DNSSEC}}.
 These considerations apply only to extraction of the source domain from the
 inputs.  Naturally, if the inputs themselves are invalid or corrupt (e.g., a
 user has clicked a link provided by a malicious entity in a phishing attack),
