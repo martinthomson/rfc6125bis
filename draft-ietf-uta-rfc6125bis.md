@@ -20,13 +20,12 @@ kw: Internet-Draft
 author:
 - ins: P. Saint-Andre
   name: Peter Saint-Andre
-  country: USA
+  country: US
   email: stpeter@stpeter.im
 - ins: J. Hodges
   name: Jeff Hodges
-  org: Google
   country: US
-  email: jdhodges@google.com
+  email: netwerkeddude@gmail.com
 - ins: R. Salz
   name: Rich Salz
   org: Akamai Technologies
