@@ -880,7 +880,7 @@ The application MAY also present the user with the ability to accept the
 presented certificate as valid for subsequent connections.  Such ad-hoc
 "pinning" SHOULD NOT restrict future connections to just the pinned
 certificate. Local policy that statically enforces a given certificate for a
-given peer is SHOULD made available only as prior configuration, rather than a
+given peer SHOULD made available only as prior configuration, rather than a
 just-in-time override for a failed connection.
 
 # Security Considerations {#security}
