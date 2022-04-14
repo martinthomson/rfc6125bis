@@ -1,6 +1,6 @@
-# Representation and Verification of Domain-Based Application Service Identity within Internet Public Key Infrastructure Using X.509 (PKIX) Certificates in the Context of Transport Layer Security (TLS)
+# Service Names in TLS
 
-This is the working area for the IETF [UTA Working Group](https://datatracker.ietf.org/wg/uta/documents/) Internet-Draft, "Representation and Verification of Domain-Based Application Service Identity within Internet Public Key Infrastructure Using X.509 (PKIX) Certificates in the Context of Transport Layer Security (TLS)".
+This is the working area for the IETF [UTA Working Group](https://datatracker.ietf.org/wg/uta/documents/) Internet-Draft, "Service Names in TLS".
 
 * [Editor's Copy](https://richsalz.github.io/draft-ietf-uta-rfc6125bis/#go.draft-ietf-uta-rfc6125bis.html)
 * [Working Group Draft](https://datatracker.ietf.org/doc/html/draft-ietf-uta-rfc6125bis)
