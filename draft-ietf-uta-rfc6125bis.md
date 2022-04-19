@@ -218,14 +218,15 @@ The rules are brief:
 
 ### In Scope {#in-scope}
 
-This document applies only to service identities associated with fully-qualified domain names (FQDNs)
-only to TLS and DTLS, and only to PKIX-based systems.
+This document applies only to service identities that meet these
+three characteristics: associated with fully-qualified domain names (FQDNs),
+used with TLS and DTLS, and are PKIX-based.
 
 TLS uses the words client and server, where the client is the entity
 that initiates the connection.  In many cases, this is consistent with common practice,
 such as a browser connecting to a Web origin.
 For the sake of clarity, and to follow the usage in {{TLS}} and related
-specifications, we will continue to use
+specifications, we will continue
 to use the terms client and server in this document.
 However, these are TLS-layer roles, and the application protocol
 could support the TLS server making requests to the TLS client after the
