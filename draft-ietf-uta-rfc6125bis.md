@@ -208,7 +208,8 @@ The rules are brief:
   subjectAlternativeName extensions where appropriate such as
   uniformResourceIdentifier and the otherName form SRVName.
 
-* Constrain wildcard certificates so that the wildcard can only
+* Wildcard support is now the default.
+  Constrain wildcard certificates so that the wildcard can only
   be the complete left-most component of a domain name.
 
 * Do not include or check strings that look like domain names
