@@ -88,6 +88,9 @@ informative:
       name: Sebastian Schinzel
       org: Ruhr University Bochum
     date: 2021-9
+  DROWN:
+    target: https://drownattack.com
+    title: The DROWN Attack
   UTS-39:
     target: https://unicode.org/reports/tr39
     title: Unicode Security Mechanisms
@@ -178,6 +181,9 @@ the certificate authorities that issue certificates, the service administrators 
 them, and the protocol designers defining how things are named.
 
 This document obsoletes RFC 6125. Changes from RFC 6125 are described under {{changes}}.
+
+- Additional text on multiple identifiers, and their security considerations,
+  has been added.
 
 ## Applicability {#applicability}
 
@@ -881,16 +887,45 @@ and {{UTS-39}}.
 
 A given application service might be addressed by multiple DNS domain names
 for a variety of reasons, and a given deployment might service multiple
-domains or protocols. TLS Extensions such as TLS Server
-Name Identification (SNI), discussed in {{TLS, Section 4.4.2.2}},
-and Application Layer Protocol Negotiation (ALPN), discussed in
-{{ALPN}}, provide a way for the client to indicate the desired
-identifier and protocol to the server, which can then select
-the most appropriate certificate.
+domains or protocols. TLS Extensions such as TLS Server Name Indication
+(SNI), discussed in {{TLS, Section 4.4.2.2}}, and Application Layer Protocol
+Negotiation (ALPN), discussed in {{ALPN}}, provide a way for the application
+to indicate the desired identifier and protocol to the server, which it
+can then use to select the most appropriate certificate.
 
-To accommodate the workaround that was needed before the development
-of the SNI extension, this specification allows multiple DNS-IDs,
-SRV-IDs, or URI-IDs in a certificate.
+This specification allows multiple DNS-IDs, SRV-IDs, or URI-IDs in a
+certificate.  As a result, an application service can use the same
+certificate for multiple hostnames, such as when a client does not support
+the TLS SNI extension, or for multiple protocols, such as SMTP and HTTP, on a
+single hostname. The use of a single certificate and its keypair in such
+environments can make it easier to launch cross-protocol attacks, particularly when used in
+inconsistent TLS configurations; see, for example, {{ALPACA}} and {{DROWN}}.
+Server operators SHOULD take steps to mitigate the risk of cross-protocol
+attacks, such as ensuring all TLS endpoints using a given certificate support
+exactly the same TLS version(s) and ciphersuite(s), and SHOULD use the TLS
+ALPN extension to ensure the correct protocol is used.
+
+## Multiple Reference Identifiers
+
+This specification describes how a client may construct multiple acceptable
+reference identifiers, and may match any of those reference identifiers with
+the set of presented identifiers. {{PKIX, Section 4.2.1.10}} describes a
+mechanism to allow CA certificates to be constrained in the set of presented
+identifiers that they may include within server certificates.  However, these
+constraints only apply to the explicitly enumerated name forms. For example,
+a CA that is only name constrained for DNS-IDs is not constrained for SRV-IDs
+and URI-IDs, unless those name forms are also explicitly included within the
+name constraints extension.
+
+A client that constructs multiple reference identifiers of different types,
+such as both DNS-ID and SRV-IDs, as described in {{verify-reference-rules}},
+SHOULD take care to ensure that CAs issuing such certificates are
+appropriately constrained. This MAY take the form of local policy through
+agreement with the issuing CA, or MAY be enforced by the client requiring
+that if one form of presented identifier is constrained, such as a dNSName
+name constraint for DNS-IDs, then all other forms of acceptable reference
+identities are also constrained, such as requiring a uniformResourceIndicator
+name constraint for URI-IDs.
 
 # IANA Considerations
 
