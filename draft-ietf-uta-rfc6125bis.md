@@ -182,9 +182,6 @@ them, and the protocol designers defining how things are named.
 
 This document obsoletes RFC 6125. Changes from RFC 6125 are described under {{changes}}.
 
-- Additional text on multiple identifiers, and their security considerations,
-  has been added.
-
 ## Applicability {#applicability}
 
 This document does not supersede the rules for certificate issuance or
@@ -939,7 +936,7 @@ This document revises and obsoletes {{VERIFY}} based
 on the decade of experience and changes since it was published.
 The major changes, in no particular order, include:
 
-- The only legal place for a certificate wildcard name is as the complete left-most
+- The only legal place for a certificate wildcard is as the complete left-most
   component in a domain name.
 
 - The server identity can only be expressed in the subjectAltNames
@@ -959,6 +956,9 @@ The major changes, in no particular order, include:
 - All references have been updated to the current latest version.
 
 - The TLS SNI extension is no longer new, it is commonplace.
+
+- Additional text on multiple identifiers, and their security considerations,
+  has been added.
 
 # Acknowledgements {#acknowledgements}
 {: numbered='false'}
