@@ -681,10 +681,13 @@ SRV-IDs and DNS-IDs in its list of reference identifiers.
 
 ### Examples {#verify-reference-examples}
 
-A web browser that is connecting via HTTPS to the website at `www.example.com`
+The following examples are for illustrative purposes only and are not 
+intended to be comprehensive.
+
+1. A web browser that is connecting via HTTPS to the website at `www.example.com`
 would have a single reference identifier: a DNS-ID of `www.example.com`.
 
-A mail user agent that is connecting via IMAPS to the email service at
+2. A mail user agent that is connecting via IMAPS to the email service at
 `example.net` (resolved as `mail.example.net`) might have three reference
 identifiers: an SRV-ID of `_imaps.example.net` (see {{EMAIL-SRV}}), and
 DNS-IDs of `example.net` and `mail.example.net`.  An email user agent that
@@ -694,15 +697,28 @@ connect to `mail.example.net`, whereas an SRV-aware user agent would derive
 also accept `mail.example.net` as the DNS domain name portion of reference
 identifiers for the service.
 
-A voice-over-IP (VoIP) user agent that is connecting via SIP to the voice
+3. A voice-over-IP (VoIP) user agent that is connecting via SIP to the voice
 service at `voice.example.edu` might have only one reference identifier:
 a URI-ID of `sip:voice.example.edu` (see {{SIP-CERTS}}).
 
-An instant messaging (IM) client that is connecting via XMPP to the IM
+4. An instant messaging (IM) client that is connecting via XMPP to the IM
 service at `im.example.org` might have three reference identifiers: an
 SRV-ID of `_xmpp-client.im.example.org` (see {{XMPP}}), a DNS-ID of
 `im.example.org`, and an XMPP-specific `XmppAddr` of `im.example.org`
 (see {{XMPP}}).
+
+In all of these cases, presented identifiers that do not match the reference
+identifier(s) would be rejected; for instance:
+
+* With regard to the first example a DNS-ID of "web.example.com" would 
+  be rejected because the DNS domain name portion does not match 
+  "www.example.com".
+
+* With regard to the third example, a URI-ID of "sip:www.example.edu" 
+  would be rejected because the DNS domain name portion does not match 
+  "voice.example.edu" and a DNS-ID of "voice.example.edu" would be 
+  rejected because it lacks the appropriate application service type 
+  portion (i.e., it does not specify a "sip:" URI).
 
 ## Preparing to Seek a Match {#verify-seek}
 
