@@ -712,7 +712,7 @@ identifier(s) would be rejected; for instance:
 
 * With regard to the first example a DNS-ID of "web.example.com" would 
   be rejected because the DNS domain name portion does not match 
-  "www.example.com"
+  "www.example.com".
 
 * With regard to the third example, a URI-ID of "sip:www.example.edu" 
   would be rejected because the DNS domain name portion does not match 
