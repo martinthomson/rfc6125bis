@@ -1,0 +1,2205 @@
+{
+  "magic": "E!vIA5L86J2I",
+  "timestamp": "2021-11-30T01:00:14.973600+00:00",
+  "repo": "richsalz/draft-ietf-uta-rfc6125bis",
+  "labels": [
+    {
+      "name": "consensus",
+      "description": "WG consensus needed",
+      "color": "d73a4a"
+    },
+    {
+      "name": "editorial",
+      "description": "Improvements or additions to documentation",
+      "color": "0075ca"
+    },
+    {
+      "name": "invalid",
+      "description": "This doesn't seem right",
+      "color": "e4e669"
+    },
+    {
+      "name": "wontfix",
+      "description": "This will not be worked on",
+      "color": "ffffff"
+    }
+  ],
+  "issues": [
+    {
+      "number": 3,
+      "id": "MDU6SXNzdWU5MzYwNDU3Njg=",
+      "title": "is \"*foo.example.com\" allowed or just \"*.example.com\"",
+      "url": "https://github.com/richsalz/draft-ietf-uta-rfc6125bis/issues/3",
+      "state": "CLOSED",
+      "author": "richsalz",
+      "authorAssociation": "OWNER",
+      "assignees": [],
+      "labels": [
+        "consensus"
+      ],
+      "body": "WebPKI says just the latter. Browsers seem to do just the latter. OpenSSL allows the former, and then some.\r\nWG needs to decide.",
+      "createdAt": "2021-07-02T20:17:44Z",
+      "updatedAt": "2021-07-30T17:43:50Z",
+      "closedAt": "2021-07-30T17:43:50Z",
+      "comments": [
+        {
+          "author": "sleevi",
+          "authorAssociation": "NONE",
+          "body": "See also https://datatracker.ietf.org/doc/html/rfc6125#section-7.2",
+          "createdAt": "2021-07-02T20:26:26Z",
+          "updatedAt": "2021-07-02T20:26:26Z"
+        },
+        {
+          "author": "richsalz",
+          "authorAssociation": "OWNER",
+          "body": "\"As we\u2019re not really using GitHub for discussion, please comment on this list.\"\r\n\r\nhttps://mailarchive.ietf.org/arch/msg/uta/wwYRZ9PQu5YePavBzGwy1V_knNQ/\r\n",
+          "createdAt": "2021-07-08T14:13:59Z",
+          "updatedAt": "2021-07-08T14:13:59Z"
+        }
+      ]
+    },
+    {
+      "number": 7,
+      "id": "MDU6SXNzdWU5NDAwMDUxODc=",
+      "title": "Should we remove 'pinning' from the document?",
+      "url": "https://github.com/richsalz/draft-ietf-uta-rfc6125bis/issues/7",
+      "state": "CLOSED",
+      "author": "richsalz",
+      "authorAssociation": "OWNER",
+      "assignees": [],
+      "labels": [
+        "consensus"
+      ],
+      "body": "",
+      "createdAt": "2021-07-08T15:58:10Z",
+      "updatedAt": "2021-09-16T15:24:50Z",
+      "closedAt": "2021-09-16T15:24:50Z",
+      "comments": []
+    },
+    {
+      "number": 8,
+      "id": "MDU6SXNzdWU5NDAwMDg2ODg=",
+      "title": "Should we remove Directory infrastructure from the document?",
+      "url": "https://github.com/richsalz/draft-ietf-uta-rfc6125bis/issues/8",
+      "state": "CLOSED",
+      "author": "richsalz",
+      "authorAssociation": "OWNER",
+      "assignees": [],
+      "labels": [
+        "editorial"
+      ],
+      "body": "See for example `Subject Naming in PKIX Certificates`  I don't think we care any more since we don't mention commonName any more.\r\n",
+      "createdAt": "2021-07-08T16:02:17Z",
+      "updatedAt": "2021-09-08T15:10:21Z",
+      "closedAt": "2021-09-08T15:10:20Z",
+      "comments": []
+    },
+    {
+      "number": 12,
+      "id": "MDU6SXNzdWU5NDI0NzU0ODU=",
+      "title": "mention that this is *part* of work to trust certificate",
+      "url": "https://github.com/richsalz/draft-ietf-uta-rfc6125bis/issues/12",
+      "state": "CLOSED",
+      "author": "richsalz",
+      "authorAssociation": "OWNER",
+      "assignees": [
+        "richsalz"
+      ],
+      "labels": [
+        "editorial"
+      ],
+      "body": "As mentioned on the mailing list by briansmith:\r\n```\r\nBrian> that further validation happens outside (before, after, or in parallel to) RFC 6125 processing.\r\n \r\nR$> It seems like it would be worthwhile for us to mention that in the beginning.\r\n```",
+      "createdAt": "2021-07-12T21:44:32Z",
+      "updatedAt": "2021-09-27T16:43:27Z",
+      "closedAt": "2021-09-27T16:43:27Z",
+      "comments": []
+    },
+    {
+      "number": 14,
+      "id": "MDU6SXNzdWU5NDM3NzQ5Mjg=",
+      "title": "Remove block-quote text \"> foo...\"",
+      "url": "https://github.com/richsalz/draft-ietf-uta-rfc6125bis/issues/14",
+      "state": "CLOSED",
+      "author": "richsalz",
+      "authorAssociation": "OWNER",
+      "assignees": [],
+      "labels": [
+        "editorial"
+      ],
+      "body": "There are two instances of block quote text and both can be easily removed.  One is an example in `#verify-reference-rules` and the other is a security warning in `#verify-outcome-fallback`",
+      "createdAt": "2021-07-13T19:51:05Z",
+      "updatedAt": "2021-09-08T15:11:17Z",
+      "closedAt": "2021-09-08T15:11:17Z",
+      "comments": [
+        {
+          "author": "richsalz",
+          "authorAssociation": "OWNER",
+          "body": "There are also two \"implementation note\" sections which can just be removed.",
+          "createdAt": "2021-07-13T19:53:39Z",
+          "updatedAt": "2021-07-13T19:53:39Z"
+        }
+      ]
+    },
+    {
+      "number": 15,
+      "id": "MDU6SXNzdWU5NDM3NzgxOTU=",
+      "title": "Use more \"proposed standard\" language",
+      "url": "https://github.com/richsalz/draft-ietf-uta-rfc6125bis/issues/15",
+      "state": "CLOSED",
+      "author": "richsalz",
+      "authorAssociation": "OWNER",
+      "assignees": [],
+      "labels": [
+        "consensus"
+      ],
+      "body": "6125 was a survey of what a whole bunch of protocols did.\r\nThis document should be a set of MUST that protocols should do.\r\n\r\nThis should be able to give simpler wording. For example \"specifications that reference this document\" and the like can be dropped in favor of all-caps language.\r\n",
+      "createdAt": "2021-07-13T19:55:43Z",
+      "updatedAt": "2021-11-16T19:17:34Z",
+      "closedAt": "2021-11-16T19:17:34Z",
+      "comments": []
+    },
+    {
+      "number": 16,
+      "id": "MDU6SXNzdWU5NDM3Nzg3ODM=",
+      "title": "Pete and Jeff have/had ideas",
+      "url": "https://github.com/richsalz/draft-ietf-uta-rfc6125bis/issues/16",
+      "state": "OPEN",
+      "author": "richsalz",
+      "authorAssociation": "OWNER",
+      "assignees": [],
+      "labels": [],
+      "body": "There were things that the 6125 authors, Pete and Jeff, wanted to put into their document but didn't feel that they could.\r\n\r\nThis issue captures that to-do item.",
+      "createdAt": "2021-07-13T19:56:36Z",
+      "updatedAt": "2021-07-13T19:56:36Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 17,
+      "id": "MDU6SXNzdWU5NDk5NjkzNjk=",
+      "title": "Add \"changes from prev version\"",
+      "url": "https://github.com/richsalz/draft-ietf-uta-rfc6125bis/issues/17",
+      "state": "CLOSED",
+      "author": "richsalz",
+      "authorAssociation": "OWNER",
+      "assignees": [],
+      "labels": [],
+      "body": "From Peter: P.S. In the version of the document we should include an appendix\r\ndocumenting the changes from RFC 6125.\r\n",
+      "createdAt": "2021-07-21T18:06:04Z",
+      "updatedAt": "2021-09-08T15:11:32Z",
+      "closedAt": "2021-09-08T15:11:32Z",
+      "comments": []
+    },
+    {
+      "number": 20,
+      "id": "MDU6SXNzdWU5OTM0NTQwNTQ=",
+      "title": "Make sure to address all open errata",
+      "url": "https://github.com/richsalz/draft-ietf-uta-rfc6125bis/issues/20",
+      "state": "CLOSED",
+      "author": "richsalz",
+      "authorAssociation": "OWNER",
+      "assignees": [],
+      "labels": [],
+      "body": "https://www.rfc-editor.org/errata_search.php?rfc=6125\r\n",
+      "createdAt": "2021-09-10T17:44:11Z",
+      "updatedAt": "2021-10-04T17:36:10Z",
+      "closedAt": "2021-10-04T17:36:10Z",
+      "comments": [
+        {
+          "author": "richsalz",
+          "authorAssociation": "OWNER",
+          "body": "https://www.rfc-editor.org/errata/eid5673  Suggests a minor wording change and is done in #27 \r\n\r\nhttps://www.rfc-editor.org/errata/eid5654 suggests wording about SNI.  The text now just points to the TLS RFC.\r\n\r\nhttps://www.rfc-editor.org/errata/eid6325 updates a reference to X.520; the directory is removed from the draft, as is this reference.\r\n\r\nhttps://www.rfc-editor.org/errata/eid3090 discussed wildcard certificates. As the rules are now greatly simplified, this errata no longer applies.\r\n",
+          "createdAt": "2021-10-01T17:57:31Z",
+          "updatedAt": "2021-10-01T17:57:31Z"
+        }
+      ]
+    },
+    {
+      "number": 21,
+      "id": "MDU6SXNzdWU5OTM0NTUwOTE=",
+      "title": "Make spec work for peer-to-peer not just client-server",
+      "url": "https://github.com/richsalz/draft-ietf-uta-rfc6125bis/issues/21",
+      "state": "CLOSED",
+      "author": "richsalz",
+      "authorAssociation": "OWNER",
+      "assignees": [],
+      "labels": [],
+      "body": "Comment from Brian on the UTA list June 1:\r\n   I think we should avoid mentioning roles like \"client\" or \"server\" except non-normatively to emphasize that the spec would apply to both roles. What matters is that the entity's identity is a DNS name.",
+      "createdAt": "2021-09-10T17:45:51Z",
+      "updatedAt": "2021-09-27T15:51:05Z",
+      "closedAt": "2021-09-27T15:51:05Z",
+      "comments": [
+        {
+          "author": "richsalz",
+          "authorAssociation": "OWNER",
+          "body": "In the same thread, John Mattson said\r\n- Some sections mention \"server\" while other sections does not state anything, therefor applying to both client and server. I think the draft needs to be very clear on this point.\r\n- client certs are built with CN and cannot be easily changed. Other uses of RFC 6125 like the Service Based Architecture in 3GPP 5G makes little or no difference between server and client when it comes to certificates.\r\n",
+          "createdAt": "2021-09-10T17:48:02Z",
+          "updatedAt": "2021-09-10T17:48:02Z"
+        },
+        {
+          "author": "stpeter",
+          "authorAssociation": "NONE",
+          "body": "The terminology of client and server in RFC 6125 refers to TLS clients and servers, which seems perfectly appropriate. Even in a peer-to-peer architecture, for any given TLS interaction one entity will be the TLS client and one will be the TLS server.",
+          "createdAt": "2021-09-10T17:57:43Z",
+          "updatedAt": "2021-09-10T17:57:43Z"
+        },
+        {
+          "author": "richsalz",
+          "authorAssociation": "OWNER",
+          "body": "Yeah, I get that it comes from TLS and that's fine.  But should make more clear, I think, that the server can validate the client identity (if presented)  As the text says \"mutual TLS auth is ... [not often done] ...\"\r\n",
+          "createdAt": "2021-09-10T18:03:07Z",
+          "updatedAt": "2021-09-10T18:03:07Z"
+        },
+        {
+          "author": "richsalz",
+          "authorAssociation": "OWNER",
+          "body": "Going to close this as at least the draft now makes an overall statement. I don't think we should change all uses of client and server since, as @stpeter said, it's the terminology used in TLS.  If there are specific uses that are wrong, we can fix those if they're pointed out.\r\n",
+          "createdAt": "2021-09-27T15:51:05Z",
+          "updatedAt": "2021-09-27T15:51:05Z"
+        }
+      ]
+    },
+    {
+      "number": 22,
+      "id": "MDU6SXNzdWU5OTQ4OTE0MjA=",
+      "title": "Those using TLS as service?",
+      "url": "https://github.com/richsalz/draft-ietf-uta-rfc6125bis/issues/22",
+      "state": "CLOSED",
+      "author": "richsalz",
+      "authorAssociation": "OWNER",
+      "assignees": [],
+      "labels": [],
+      "body": "QUIC uses TLS to set up crypto keys. Implementations use the same TLS code, generally to validate the certifificate.\r\n\r\nNTS uses TLS similarly including the TLS validation code.\r\n\r\nHow to mention these? and say that future services should do the same thing?\r\n",
+      "createdAt": "2021-09-13T13:25:51Z",
+      "updatedAt": "2021-09-27T15:49:30Z",
+      "closedAt": "2021-09-27T15:49:30Z",
+      "comments": []
+    },
+    {
+      "number": 32,
+      "id": "I_kwDOFrdhtM48l79U",
+      "title": "Multiple identifiers in certificates",
+      "url": "https://github.com/richsalz/draft-ietf-uta-rfc6125bis/issues/32",
+      "state": "OPEN",
+      "author": "richsalz",
+      "authorAssociation": "OWNER",
+      "assignees": [],
+      "labels": [],
+      "body": "Ryan has draft text about handling multiple identifiers in certificates.\r\nSee the mail thread at https://mailarchive.ietf.org/arch/msg/uta/EmT_XEKYQbVz50S4XFAhPCVwGbw/\r\n",
+      "createdAt": "2021-10-05T17:20:07Z",
+      "updatedAt": "2021-10-05T17:20:07Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 35,
+      "id": "I_kwDOFrdhtM49e80q",
+      "title": "need a shorter title",
+      "url": "https://github.com/richsalz/draft-ietf-uta-rfc6125bis/issues/35",
+      "state": "CLOSED",
+      "author": "richsalz",
+      "authorAssociation": "OWNER",
+      "assignees": [],
+      "labels": [],
+      "body": "Perhaps something like `Naming services using TLS`\r\n\r\nOr since \"Naming services\" might be confused with DNS or Grapevine, perhaps `Specifying and Verifying service names in TLS`\r\n\r\nOr something.\r\n",
+      "createdAt": "2021-10-20T15:06:26Z",
+      "updatedAt": "2021-11-18T16:39:50Z",
+      "closedAt": "2021-11-18T16:39:50Z",
+      "comments": [
+        {
+          "author": "smyslov",
+          "authorAssociation": "NONE",
+          "body": "I strongly support the idea to make the title shorter. Currently it is too long, IMHO.",
+          "createdAt": "2021-11-12T08:39:55Z",
+          "updatedAt": "2021-11-12T08:39:55Z"
+        },
+        {
+          "author": "richsalz",
+          "authorAssociation": "OWNER",
+          "body": "Fixed with PR #36.",
+          "createdAt": "2021-11-18T16:39:50Z",
+          "updatedAt": "2021-11-18T16:39:50Z"
+        }
+      ]
+    }
+  ],
+  "pulls": [
+    {
+      "number": 1,
+      "id": "MDExOlB1bGxSZXF1ZXN0NjgwMjgyNjg0",
+      "title": "Tighten the wildcard rules",
+      "url": "https://github.com/richsalz/draft-ietf-uta-rfc6125bis/pull/1",
+      "state": "CLOSED",
+      "author": "richsalz",
+      "authorAssociation": "OWNER",
+      "assignees": [
+        "richsalz"
+      ],
+      "labels": [],
+      "body": "No wildcard characters in presented identifiers.\r\n\r\nThe * must only be in the left-most label, and must be the first or only\r\ncharacter in that label.\r\n\r\nThis is the first part of what was in draft-use-san.\r\n",
+      "createdAt": "2021-06-29T18:46:16Z",
+      "updatedAt": "2021-07-19T17:55:53Z",
+      "baseRepository": "richsalz/draft-ietf-uta-rfc6125bis",
+      "baseRefName": "master",
+      "baseRefOid": "2a648c09394617a63297da7f386efe1c52d48b91",
+      "headRepository": "richsalz/draft-ietf-uta-rfc6125bis",
+      "headRefName": "wildcard",
+      "headRefOid": "75776dfc7c70e6e425a46914a664a31521da7f01",
+      "closedAt": "2021-07-08T14:15:23Z",
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [
+        {
+          "author": "richsalz",
+          "authorAssociation": "OWNER",
+          "body": "merged locally; closing.",
+          "createdAt": "2021-07-08T14:15:23Z",
+          "updatedAt": "2021-07-08T14:15:23Z"
+        }
+      ],
+      "reviews": [
+        {
+          "id": "MDE3OlB1bGxSZXF1ZXN0UmV2aWV3Njk4NDQ2MDU3",
+          "commit": {
+            "abbreviatedOid": "c28fd0e"
+          },
+          "author": "briansmith",
+          "authorAssociation": "NONE",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2021-07-02T19:15:28Z",
+          "updatedAt": "2021-07-02T19:15:29Z",
+          "comments": [
+            {
+              "originalPosition": 69,
+              "body": "Could we separate out this change from the rest of the changes here? I feel like a verifier should be able to reject a certificate for any reason, but this seems counter to that. At the same time, I don't think we should immediately reject this change.",
+              "createdAt": "2021-07-02T19:15:29Z",
+              "updatedAt": "2021-07-02T19:15:29Z"
+            }
+          ]
+        },
+        {
+          "id": "MDE3OlB1bGxSZXF1ZXN0UmV2aWV3Njk4NDQ2Njkx",
+          "commit": {
+            "abbreviatedOid": "c28fd0e"
+          },
+          "author": "briansmith",
+          "authorAssociation": "NONE",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2021-07-02T19:16:47Z",
+          "updatedAt": "2021-07-02T19:16:48Z",
+          "comments": [
+            {
+              "originalPosition": 71,
+              "body": "\"part or all of a label\" is more general than what is intended--only accepting wildcards as the entire leftmost label.",
+              "createdAt": "2021-07-02T19:16:48Z",
+              "updatedAt": "2021-07-02T19:16:48Z"
+            }
+          ]
+        },
+        {
+          "id": "MDE3OlB1bGxSZXF1ZXN0UmV2aWV3Njk4NDQ3Mzc3",
+          "commit": {
+            "abbreviatedOid": "c28fd0e"
+          },
+          "author": "briansmith",
+          "authorAssociation": "NONE",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2021-07-02T19:18:07Z",
+          "updatedAt": "2021-07-02T19:18:08Z",
+          "comments": [
+            {
+              "originalPosition": 108,
+              "body": "This is actually a weaker requirement than what modern verifiers implement. They only accept wildcard certificates where the leftmost label is exactly \"*\".",
+              "createdAt": "2021-07-02T19:18:07Z",
+              "updatedAt": "2021-07-02T19:18:08Z"
+            }
+          ]
+        },
+        {
+          "id": "MDE3OlB1bGxSZXF1ZXN0UmV2aWV3Njk4NDQ4NTQ1",
+          "commit": {
+            "abbreviatedOid": "c28fd0e"
+          },
+          "author": "briansmith",
+          "authorAssociation": "NONE",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2021-07-02T19:20:21Z",
+          "updatedAt": "2021-07-02T19:20:21Z",
+          "comments": [
+            {
+              "originalPosition": 182,
+              "body": "This language supports reverting the \"MAY to MUST\" change you made.",
+              "createdAt": "2021-07-02T19:20:21Z",
+              "updatedAt": "2021-07-02T19:20:21Z"
+            }
+          ]
+        },
+        {
+          "id": "MDE3OlB1bGxSZXF1ZXN0UmV2aWV3Njk4NDY4NTk2",
+          "commit": {
+            "abbreviatedOid": "c28fd0e"
+          },
+          "author": "richsalz",
+          "authorAssociation": "OWNER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2021-07-02T19:59:48Z",
+          "updatedAt": "2021-07-02T19:59:49Z",
+          "comments": [
+            {
+              "originalPosition": 71,
+              "body": "Are you sure that `*foo.example.com` isn't supported?",
+              "createdAt": "2021-07-02T19:59:49Z",
+              "updatedAt": "2021-07-02T19:59:49Z"
+            }
+          ]
+        },
+        {
+          "id": "MDE3OlB1bGxSZXF1ZXN0UmV2aWV3Njk4NDcxNTYw",
+          "commit": {
+            "abbreviatedOid": "c28fd0e"
+          },
+          "author": "richsalz",
+          "authorAssociation": "OWNER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2021-07-02T20:05:49Z",
+          "updatedAt": "2021-07-02T20:05:49Z",
+          "comments": [
+            {
+              "originalPosition": 108,
+              "body": "This isn't correct; see https://www.openssl.org/docs/manmaster/man3/X509_check_host.html for example.\r\n",
+              "createdAt": "2021-07-02T20:05:49Z",
+              "updatedAt": "2021-07-02T20:05:49Z"
+            }
+          ]
+        },
+        {
+          "id": "MDE3OlB1bGxSZXF1ZXN0UmV2aWV3Njk4NDcxNzU0",
+          "commit": {
+            "abbreviatedOid": "c28fd0e"
+          },
+          "author": "richsalz",
+          "authorAssociation": "OWNER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2021-07-02T20:06:11Z",
+          "updatedAt": "2021-07-02T20:06:12Z",
+          "comments": [
+            {
+              "originalPosition": 182,
+              "body": "yes you are right.  i will undo that.\r\n",
+              "createdAt": "2021-07-02T20:06:12Z",
+              "updatedAt": "2021-07-02T20:06:12Z"
+            }
+          ]
+        },
+        {
+          "id": "MDE3OlB1bGxSZXF1ZXN0UmV2aWV3Njk4NDcyMTU1",
+          "commit": {
+            "abbreviatedOid": "c28fd0e"
+          },
+          "author": "briansmith",
+          "authorAssociation": "NONE",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2021-07-02T20:07:02Z",
+          "updatedAt": "2021-07-02T20:07:03Z",
+          "comments": [
+            {
+              "originalPosition": 71,
+              "body": "> Are you sure that `*foo.example.com` isn't supported?\r\n\r\nThe Baseline Requirements define:\r\n\r\n> Wildcard Certificate: A Certificate containing an asterisk (*) in the left\u2010most position of\r\nany of the Subject Fully\u2010Qualified Domain Names contained in the Certificate.\r\n>\r\n> Wildcard Domain Name: A Domain Name consisting of a single asterisk character\r\nfollowed by a single full stop character (\u201c*.\u201d) followed by a Fully\u2010Qualified Domain Name\r\n\r\nSee https://bugzilla.mozilla.org/show_bug.cgi?id=1107791 for Firefox's behavior, at least back then when I implemented it.\r\n\r\nSee also https://bugs.chromium.org/p/chromium/issues/detail?id=434960#c3: \"Disallow support for a*.example.net, *a.example.net, and a*b.example.net in certificate wildcard handling,\" which appears to be the same.\r\n\r\nI know my Rust webpki library always implements the strict \"only *\" form.",
+              "createdAt": "2021-07-02T20:07:02Z",
+              "updatedAt": "2021-07-02T20:07:03Z"
+            }
+          ]
+        },
+        {
+          "id": "MDE3OlB1bGxSZXF1ZXN0UmV2aWV3Njk4NDcyMjg2",
+          "commit": {
+            "abbreviatedOid": "c28fd0e"
+          },
+          "author": "richsalz",
+          "authorAssociation": "OWNER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2021-07-02T20:07:19Z",
+          "updatedAt": "2021-07-02T20:07:19Z",
+          "comments": [
+            {
+              "originalPosition": 69,
+              "body": "per following comment, this change is wrong; thanks.",
+              "createdAt": "2021-07-02T20:07:19Z",
+              "updatedAt": "2021-07-02T20:07:19Z"
+            }
+          ]
+        },
+        {
+          "id": "MDE3OlB1bGxSZXF1ZXN0UmV2aWV3Njk4NDczMDM2",
+          "commit": {
+            "abbreviatedOid": "c28fd0e"
+          },
+          "author": "briansmith",
+          "authorAssociation": "NONE",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2021-07-02T20:08:54Z",
+          "updatedAt": "2021-07-02T20:08:55Z",
+          "comments": [
+            {
+              "originalPosition": 108,
+              "body": "> This isn't correct; see https://www.openssl.org/docs/manmaster/man3/X509_check_host.html for example.\r\n\r\nOpenSSL might implement something different but I'm arguing that the stricter form should be the only one that is accepted.",
+              "createdAt": "2021-07-02T20:08:54Z",
+              "updatedAt": "2021-07-02T20:08:55Z"
+            }
+          ]
+        },
+        {
+          "id": "MDE3OlB1bGxSZXF1ZXN0UmV2aWV3Njk4NDc0NzYz",
+          "commit": {
+            "abbreviatedOid": "0068e63"
+          },
+          "author": "briansmith",
+          "authorAssociation": "NONE",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2021-07-02T20:12:35Z",
+          "updatedAt": "2021-07-02T20:12:35Z",
+          "comments": [
+            {
+              "originalPosition": 71,
+              "body": "@sleevi would be more up to date with what Chrome does. @mozkeeler would know what FIrefox does presently.",
+              "createdAt": "2021-07-02T20:12:35Z",
+              "updatedAt": "2021-07-02T20:12:35Z"
+            }
+          ]
+        },
+        {
+          "id": "MDE3OlB1bGxSZXF1ZXN0UmV2aWV3Njk4NDc2NDE3",
+          "commit": {
+            "abbreviatedOid": "0068e63"
+          },
+          "author": "richsalz",
+          "authorAssociation": "OWNER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2021-07-02T20:16:08Z",
+          "updatedAt": "2021-07-02T20:16:09Z",
+          "comments": [
+            {
+              "originalPosition": 71,
+              "body": "This is not just the webpki, but I get it. The WG will have to decide if \"*foo.example.com\" should be outlawed.",
+              "createdAt": "2021-07-02T20:16:09Z",
+              "updatedAt": "2021-07-02T20:16:09Z"
+            }
+          ]
+        },
+        {
+          "id": "MDE3OlB1bGxSZXF1ZXN0UmV2aWV3Njk4NDc3MzAy",
+          "commit": {
+            "abbreviatedOid": "0068e63"
+          },
+          "author": "richsalz",
+          "authorAssociation": "OWNER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2021-07-02T20:18:01Z",
+          "updatedAt": "2021-07-02T20:18:01Z",
+          "comments": [
+            {
+              "originalPosition": 108,
+              "body": "> OpenSSL might implement something different but I'm arguing that the stricter form should be the only one that is accepted.\r\n\r\nhttps://github.com/richsalz/draft-ietf-uta-rfc6125bis/issues/3\r\n",
+              "createdAt": "2021-07-02T20:18:01Z",
+              "updatedAt": "2021-07-02T20:18:01Z"
+            }
+          ]
+        },
+        {
+          "id": "MDE3OlB1bGxSZXF1ZXN0UmV2aWV3Njk4NDgxMDQw",
+          "commit": {
+            "abbreviatedOid": "0068e63"
+          },
+          "author": "sleevi",
+          "authorAssociation": "NONE",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2021-07-02T20:25:49Z",
+          "updatedAt": "2021-07-02T20:25:49Z",
+          "comments": [
+            {
+              "originalPosition": 71,
+              "body": "@richsalz This came up during the drafting of RFC 6125, and captured in [Section 7.2](https://datatracker.ietf.org/doc/html/rfc6125#section-7.2)\r\n\r\nIgnoring Chrome and Firefox here (which behave as Brian said; a wildcard is only allowed if it's the entire label), since they're more narrowly focused on WebPKI, the whole-label-only is also reflected in Security.framework (used by macOS/iOS/tvOS/watchOS for all verifications). The story on Windows is more complicated, since it's varied over time, and the construction you mention used to be allowed, but isn't on more recent versions in their strict mode (but I believe some compatibility may be retained for LDAPS)",
+              "createdAt": "2021-07-02T20:25:49Z",
+              "updatedAt": "2021-07-02T20:25:49Z"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "number": 2,
+      "id": "MDExOlB1bGxSZXF1ZXN0NjgwMzQ5NTkw",
+      "title": "Remove rules about CN-ID",
+      "url": "https://github.com/richsalz/draft-ietf-uta-rfc6125bis/pull/2",
+      "state": "CLOSED",
+      "author": "richsalz",
+      "authorAssociation": "OWNER",
+      "assignees": [],
+      "labels": [],
+      "body": "Don't use the CN-ID as an identifier for server identity.\r\n",
+      "createdAt": "2021-06-29T20:44:09Z",
+      "updatedAt": "2021-07-19T17:55:51Z",
+      "baseRepository": "richsalz/draft-ietf-uta-rfc6125bis",
+      "baseRefName": "master",
+      "baseRefOid": "2a648c09394617a63297da7f386efe1c52d48b91",
+      "headRepository": "richsalz/draft-ietf-uta-rfc6125bis",
+      "headRefName": "cn-id",
+      "headRefOid": "2a85489131cfd4e659c975e09c12210e7e190f55",
+      "closedAt": "2021-07-08T14:23:06Z",
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [
+        {
+          "author": "richsalz",
+          "authorAssociation": "OWNER",
+          "body": "Merged locally and pushed.",
+          "createdAt": "2021-07-08T14:23:06Z",
+          "updatedAt": "2021-07-08T14:23:06Z"
+        }
+      ],
+      "reviews": [
+        {
+          "id": "MDE3OlB1bGxSZXF1ZXN0UmV2aWV3Njk4NDUwODMx",
+          "commit": {
+            "abbreviatedOid": "3449692"
+          },
+          "author": "briansmith",
+          "authorAssociation": "NONE",
+          "state": "COMMENTED",
+          "body": "Some initial comments. I didn't go through the whole updated draft and look for missed changes yet.",
+          "createdAt": "2021-07-02T19:24:47Z",
+          "updatedAt": "2021-07-02T19:35:46Z",
+          "comments": [
+            {
+              "originalPosition": 48,
+              "body": "Is this intended to be in this PR? It looks unrelated. I see there are a lot of changes to quotes in this PR. Perhaps we should do those changes in a separate PR that focuses on such reformatting, and then rebase this on top of that or vice versa.",
+              "createdAt": "2021-07-02T19:24:47Z",
+              "updatedAt": "2021-07-02T19:35:46Z"
+            },
+            {
+              "originalPosition": 222,
+              "body": "As was discussed previously on the mailing list, recommending or disallowing CAs to include CN-IDs in the subject CN is a separate issue from requiring relying parties to only use subjectAltName when validating a certificate for a DNS name.\r\n\r\nAt our strictest, I think we should continue to allow CAs to include any DNS name in subject CN that also appears (verbatim) in the subjectAltName as a dNSName or iPAddress.\r\n\r\nOr, perhaps we just don't make any recommendations at all regarding the contents of the subject CN. The main purpose of revising this RFC is to make the subject CN irrelevant as far as certificate verification is concerned.",
+              "createdAt": "2021-07-02T19:28:41Z",
+              "updatedAt": "2021-07-02T19:35:46Z"
+            },
+            {
+              "originalPosition": 326,
+              "body": "I don't understand how the browser gets \"w3.example.com\" from \"www.example.com\" here. Typical operation of a web browser would be to only have \"www.example.com,\" no?\r\n\r\nI think in this PR we should stick to removing the CN-ID from this example, changing \"two reference identifiers\" to \"one reference identifier\".\r\n\r\nIf we want to say something about more exotic name resolution stuff for web browsers, we should do that in a separate PR.",
+              "createdAt": "2021-07-02T19:32:15Z",
+              "updatedAt": "2021-07-02T19:35:46Z"
+            },
+            {
+              "originalPosition": 358,
+              "body": "I think this change should be reverted or moved to a formatting-only PR.",
+              "createdAt": "2021-07-02T19:34:44Z",
+              "updatedAt": "2021-07-02T19:35:46Z"
+            }
+          ]
+        },
+        {
+          "id": "MDE3OlB1bGxSZXF1ZXN0UmV2aWV3Njk4NDcyOTAy",
+          "commit": {
+            "abbreviatedOid": "3449692"
+          },
+          "author": "richsalz",
+          "authorAssociation": "OWNER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2021-07-02T20:08:38Z",
+          "updatedAt": "2021-07-02T20:08:38Z",
+          "comments": [
+            {
+              "originalPosition": 48,
+              "body": "Gah, stpuid git mistake.  Will fix in a day or two.",
+              "createdAt": "2021-07-02T20:08:38Z",
+              "updatedAt": "2021-07-02T20:08:38Z"
+            }
+          ]
+        },
+        {
+          "id": "MDE3OlB1bGxSZXF1ZXN0UmV2aWV3Njk4NDc0MzE3",
+          "commit": {
+            "abbreviatedOid": "3449692"
+          },
+          "author": "richsalz",
+          "authorAssociation": "OWNER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2021-07-02T20:11:33Z",
+          "updatedAt": "2021-07-02T20:11:34Z",
+          "comments": [
+            {
+              "originalPosition": 222,
+              "body": "I will remove this item, you're right, focusing on the validation only is simpler.\r\n",
+              "createdAt": "2021-07-02T20:11:34Z",
+              "updatedAt": "2021-07-02T20:11:34Z"
+            }
+          ]
+        },
+        {
+          "id": "MDE3OlB1bGxSZXF1ZXN0UmV2aWV3Njk4NDc0ODU0",
+          "commit": {
+            "abbreviatedOid": "3449692"
+          },
+          "author": "richsalz",
+          "authorAssociation": "OWNER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2021-07-02T20:12:47Z",
+          "updatedAt": "2021-07-02T20:12:47Z",
+          "comments": [
+            {
+              "originalPosition": 326,
+              "body": "Chagned to single reference identifier.",
+              "createdAt": "2021-07-02T20:12:47Z",
+              "updatedAt": "2021-07-02T20:12:47Z"
+            }
+          ]
+        },
+        {
+          "id": "MDE3OlB1bGxSZXF1ZXN0UmV2aWV3Njk4NjIxMDA4",
+          "commit": {
+            "abbreviatedOid": "ab4de89"
+          },
+          "author": "richsalz",
+          "authorAssociation": "OWNER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2021-07-03T21:47:31Z",
+          "updatedAt": "2021-07-03T21:47:31Z",
+          "comments": [
+            {
+              "originalPosition": 358,
+              "body": "okay, reverted the formatting change.\r\n",
+              "createdAt": "2021-07-03T21:47:31Z",
+              "updatedAt": "2021-07-03T21:47:31Z"
+            }
+          ]
+        },
+        {
+          "id": "MDE3OlB1bGxSZXF1ZXN0UmV2aWV3Njk4NjIxMDE3",
+          "commit": {
+            "abbreviatedOid": "ab4de89"
+          },
+          "author": "richsalz",
+          "authorAssociation": "OWNER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2021-07-03T21:47:46Z",
+          "updatedAt": "2021-07-03T21:47:46Z",
+          "comments": [
+            {
+              "originalPosition": 48,
+              "body": "updated commit pushed fixing the errors.\r\n",
+              "createdAt": "2021-07-03T21:47:46Z",
+              "updatedAt": "2021-07-03T21:47:46Z"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "number": 4,
+      "id": "MDExOlB1bGxSZXF1ZXN0Njg2MDY1Nzk3",
+      "title": "Remove extra/spurious blank lines",
+      "url": "https://github.com/richsalz/draft-ietf-uta-rfc6125bis/pull/4",
+      "state": "MERGED",
+      "author": "richsalz",
+      "authorAssociation": "OWNER",
+      "assignees": [
+        "richsalz"
+      ],
+      "labels": [],
+      "body": "Trivial editorial, not going to wait for comments.\r\n",
+      "createdAt": "2021-07-08T14:25:30Z",
+      "updatedAt": "2021-07-19T17:55:50Z",
+      "baseRepository": "richsalz/draft-ietf-uta-rfc6125bis",
+      "baseRefName": "master",
+      "baseRefOid": "0b360219b65727f74b6c2a78ec44b136ca97b533",
+      "headRepository": "richsalz/draft-ietf-uta-rfc6125bis",
+      "headRefName": "blanklines",
+      "headRefOid": "021c322b403951dffeb4a9e3908fb92925def40f",
+      "closedAt": "2021-07-08T14:25:40Z",
+      "mergedAt": "2021-07-08T14:25:40Z",
+      "mergedBy": "richsalz",
+      "mergeCommit": {
+        "oid": "5465a5a29e3352d37631b80003e50a5d9728842d"
+      },
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 5,
+      "id": "MDExOlB1bGxSZXF1ZXN0Njg2MDY5MzI3",
+      "title": "Remove table of direct/restricted",
+      "url": "https://github.com/richsalz/draft-ietf-uta-rfc6125bis/pull/5",
+      "state": "MERGED",
+      "author": "richsalz",
+      "authorAssociation": "OWNER",
+      "assignees": [
+        "richsalz"
+      ],
+      "labels": [],
+      "body": "Since CN-ID is gone, there are only three bullets before the table\r\nand they suffice.",
+      "createdAt": "2021-07-08T14:29:36Z",
+      "updatedAt": "2021-07-19T17:55:42Z",
+      "baseRepository": "richsalz/draft-ietf-uta-rfc6125bis",
+      "baseRefName": "master",
+      "baseRefOid": "4ffc01970bce8646712c45092b03f53817cad4af",
+      "headRepository": "richsalz/draft-ietf-uta-rfc6125bis",
+      "headRefName": "remove-table",
+      "headRefOid": "30d9e063a6fb85f3dcea4c8db4964f5225749dbf",
+      "closedAt": "2021-07-09T14:48:06Z",
+      "mergedAt": "2021-07-09T14:48:06Z",
+      "mergedBy": "richsalz",
+      "mergeCommit": {
+        "oid": "b0f8c9d43cb80737c7bdd31f24211caa101f1796"
+      },
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 6,
+      "id": "MDExOlB1bGxSZXF1ZXN0Njg2MDg1NzA3",
+      "title": "SNI is not new.",
+      "url": "https://github.com/richsalz/draft-ietf-uta-rfc6125bis/pull/6",
+      "state": "MERGED",
+      "author": "richsalz",
+      "authorAssociation": "OWNER",
+      "assignees": [
+        "richsalz"
+      ],
+      "labels": [],
+      "body": "Update TLS and DTLS RFC's, remove references to SSL.\r\nAlso update some obsolete RFC references.",
+      "createdAt": "2021-07-08T14:49:30Z",
+      "updatedAt": "2021-07-19T17:55:49Z",
+      "baseRepository": "richsalz/draft-ietf-uta-rfc6125bis",
+      "baseRefName": "master",
+      "baseRefOid": "5465a5a29e3352d37631b80003e50a5d9728842d",
+      "headRepository": "richsalz/draft-ietf-uta-rfc6125bis",
+      "headRefName": "rm-old-refs",
+      "headRefOid": "40f35aa7c4f9bd1e0f0a01f4a1b9e3749cee94da",
+      "closedAt": "2021-07-09T14:26:53Z",
+      "mergedAt": "2021-07-09T14:26:53Z",
+      "mergedBy": "richsalz",
+      "mergeCommit": {
+        "oid": "93dd5743a3000d997fdb5708e3d15deb53be5884"
+      },
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 9,
+      "id": "MDExOlB1bGxSZXF1ZXN0Njg2MTgzNDI0",
+      "title": "Only allow* as the entire left-most DNS component",
+      "url": "https://github.com/richsalz/draft-ietf-uta-rfc6125bis/pull/9",
+      "state": "CLOSED",
+      "author": "richsalz",
+      "authorAssociation": "OWNER",
+      "assignees": [
+        "richsalz"
+      ],
+      "labels": [
+        "consensus"
+      ],
+      "body": "Also cleanup/remove some language.",
+      "createdAt": "2021-07-08T17:01:05Z",
+      "updatedAt": "2021-07-30T17:45:18Z",
+      "baseRepository": "richsalz/draft-ietf-uta-rfc6125bis",
+      "baseRefName": "master",
+      "baseRefOid": "b0f8c9d43cb80737c7bdd31f24211caa101f1796",
+      "headRepository": "richsalz/draft-ietf-uta-rfc6125bis",
+      "headRefName": "simpler-wildcard",
+      "headRefOid": "155c436f5e92cf2ee257b5662bdd75f76f97533a",
+      "closedAt": "2021-07-30T17:45:15Z",
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [
+        {
+          "author": "richsalz",
+          "authorAssociation": "OWNER",
+          "body": "I merged this.  If there are suggestions about wording, let's take it to the list.  Thanks for the feedback, @jimfenton!",
+          "createdAt": "2021-07-30T17:45:15Z",
+          "updatedAt": "2021-07-30T17:45:15Z"
+        }
+      ],
+      "reviews": [
+        {
+          "id": "MDE3OlB1bGxSZXF1ZXN0UmV2aWV3NzAzNjA3NTU2",
+          "commit": {
+            "abbreviatedOid": "d4dcbd3"
+          },
+          "author": "jimfenton",
+          "authorAssociation": "NONE",
+          "state": "COMMENTED",
+          "body": "Agree with the change generally, but one interoperability question and several nits.",
+          "createdAt": "2021-07-11T17:08:37Z",
+          "updatedAt": "2021-07-11T17:12:58Z",
+          "comments": [
+            {
+              "originalPosition": 52,
+              "body": "I'm concerned that this MAY could cause an interoperability problem: if clients aren't required to observe the wildcard, it is generally not useful to publish.",
+              "createdAt": "2021-07-11T17:08:37Z",
+              "updatedAt": "2021-07-11T17:12:58Z"
+            },
+            {
+              "originalPosition": 55,
+              "body": "```suggestion\r\nportion contains the wildcard character `*` as the left-most label\r\n```",
+              "createdAt": "2021-07-11T17:09:03Z",
+              "updatedAt": "2021-07-11T17:12:58Z"
+            },
+            {
+              "originalPosition": 70,
+              "body": "Items 1 and 2 might be redundant with my wording suggestion above.",
+              "createdAt": "2021-07-11T17:09:48Z",
+              "updatedAt": "2021-07-11T17:12:58Z"
+            },
+            {
+              "originalPosition": 103,
+              "body": "```suggestion\r\nwithin their domain, but not multiple levels of labels.\r\n```",
+              "createdAt": "2021-07-11T17:10:48Z",
+              "updatedAt": "2021-07-11T17:12:58Z"
+            }
+          ]
+        },
+        {
+          "id": "MDE3OlB1bGxSZXF1ZXN0UmV2aWV3NzA0MTUzMTI3",
+          "commit": {
+            "abbreviatedOid": "d4dcbd3"
+          },
+          "author": "richsalz",
+          "authorAssociation": "OWNER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2021-07-12T14:04:38Z",
+          "updatedAt": "2021-07-12T14:04:38Z",
+          "comments": [
+            {
+              "originalPosition": 52,
+              "body": "Clients must be free to ignore wildcards, because of things like `*.air-traffic-control.aero` and others that are on the public suffix list.",
+              "createdAt": "2021-07-12T14:04:38Z",
+              "updatedAt": "2021-07-12T14:04:38Z"
+            }
+          ]
+        },
+        {
+          "id": "MDE3OlB1bGxSZXF1ZXN0UmV2aWV3NzA0MTU1MzM5",
+          "commit": {
+            "abbreviatedOid": "d4dcbd3"
+          },
+          "author": "richsalz",
+          "authorAssociation": "OWNER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2021-07-12T14:06:35Z",
+          "updatedAt": "2021-07-12T14:06:36Z",
+          "comments": [
+            {
+              "originalPosition": 55,
+              "body": "I wanted to keep the \"prose description, followed by explicit rules\" construction.",
+              "createdAt": "2021-07-12T14:06:35Z",
+              "updatedAt": "2021-07-12T14:06:36Z"
+            }
+          ]
+        },
+        {
+          "id": "MDE3OlB1bGxSZXF1ZXN0UmV2aWV3NzA0MTU1ODcx",
+          "commit": {
+            "abbreviatedOid": "d4dcbd3"
+          },
+          "author": "richsalz",
+          "authorAssociation": "OWNER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2021-07-12T14:07:02Z",
+          "updatedAt": "2021-07-12T14:07:03Z",
+          "comments": [
+            {
+              "originalPosition": 103,
+              "body": "added \"of labels\" thanks.",
+              "createdAt": "2021-07-12T14:07:02Z",
+              "updatedAt": "2021-07-12T14:07:03Z"
+            }
+          ]
+        },
+        {
+          "id": "MDE3OlB1bGxSZXF1ZXN0UmV2aWV3NzA0MTU2MzI1",
+          "commit": {
+            "abbreviatedOid": "d4dcbd3"
+          },
+          "author": "richsalz",
+          "authorAssociation": "OWNER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2021-07-12T14:07:25Z",
+          "updatedAt": "2021-07-12T14:07:25Z",
+          "comments": [
+            {
+              "originalPosition": 70,
+              "body": "I prefer to keep the explicit list of rules, easier for implementors :)",
+              "createdAt": "2021-07-12T14:07:25Z",
+              "updatedAt": "2021-07-12T14:07:25Z"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "number": 10,
+      "id": "MDExOlB1bGxSZXF1ZXN0Njg2MjYzNDQ3",
+      "title": "Remove \"global directory\" and related",
+      "url": "https://github.com/richsalz/draft-ietf-uta-rfc6125bis/pull/10",
+      "state": "MERGED",
+      "author": "richsalz",
+      "authorAssociation": "OWNER",
+      "assignees": [],
+      "labels": [],
+      "body": "Also simplify wording around what is out of scope.\r\n\r\nFixes: #8",
+      "createdAt": "2021-07-08T19:16:12Z",
+      "updatedAt": "2021-09-08T15:10:25Z",
+      "baseRepository": "richsalz/draft-ietf-uta-rfc6125bis",
+      "baseRefName": "master",
+      "baseRefOid": "dce96cf499f7d19aa8d6521e14929860ba74d63a",
+      "headRepository": "richsalz/draft-ietf-uta-rfc6125bis",
+      "headRefName": "rmdir",
+      "headRefOid": "b8b0051cc9986b2b08b2b481d60eef8cf59ee9bf",
+      "closedAt": "2021-09-08T15:10:21Z",
+      "mergedAt": "2021-09-08T15:10:20Z",
+      "mergedBy": "richsalz",
+      "mergeCommit": {
+        "oid": "e10aa09bd2493a88168691d354b2afc1f9b8ac84"
+      },
+      "comments": [
+        {
+          "author": "richsalz",
+          "authorAssociation": "OWNER",
+          "body": "@sleevi, I assume you support this :)",
+          "createdAt": "2021-07-09T20:21:47Z",
+          "updatedAt": "2021-07-09T20:21:47Z"
+        }
+      ],
+      "reviews": []
+    },
+    {
+      "number": 11,
+      "id": "MDExOlB1bGxSZXF1ZXN0Njg2ODU3NzM0",
+      "title": "Remove Appendix A",
+      "url": "https://github.com/richsalz/draft-ietf-uta-rfc6125bis/pull/11",
+      "state": "MERGED",
+      "author": "richsalz",
+      "authorAssociation": "OWNER",
+      "assignees": [
+        "richsalz"
+      ],
+      "labels": [],
+      "body": "Rewrote the \"{#design}\" checklist so that the appendix is\r\nreally superfluous.  This is a start to moving the doc from a\r\nBest Practices to Proposed Standard.",
+      "createdAt": "2021-07-09T15:05:44Z",
+      "updatedAt": "2021-09-08T15:10:54Z",
+      "baseRepository": "richsalz/draft-ietf-uta-rfc6125bis",
+      "baseRefName": "master",
+      "baseRefOid": "dce96cf499f7d19aa8d6521e14929860ba74d63a",
+      "headRepository": "richsalz/draft-ietf-uta-rfc6125bis",
+      "headRefName": "rm-appendix-a",
+      "headRefOid": "0031aac2de000ab8bc941146c028491fb51d28ca",
+      "closedAt": "2021-09-08T15:10:50Z",
+      "mergedAt": "2021-09-08T15:10:50Z",
+      "mergedBy": "richsalz",
+      "mergeCommit": {
+        "oid": "f214fd84c9833a3934fd97a21212884838dc24f1"
+      },
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 13,
+      "id": "MDExOlB1bGxSZXF1ZXN0Njg5MzQ3NzY5",
+      "title": "Rewrite/remove \"> xxx\" text.",
+      "url": "https://github.com/richsalz/draft-ietf-uta-rfc6125bis/pull/13",
+      "state": "MERGED",
+      "author": "richsalz",
+      "authorAssociation": "OWNER",
+      "assignees": [
+        "richsalz"
+      ],
+      "labels": [
+        "editorial"
+      ],
+      "body": "Remove \">\" text, or rewrite it so it fits inline more naturally.\r\n",
+      "createdAt": "2021-07-13T19:36:50Z",
+      "updatedAt": "2021-09-08T15:11:42Z",
+      "baseRepository": "richsalz/draft-ietf-uta-rfc6125bis",
+      "baseRefName": "master",
+      "baseRefOid": "b0f8c9d43cb80737c7bdd31f24211caa101f1796",
+      "headRepository": "richsalz/draft-ietf-uta-rfc6125bis",
+      "headRefName": "rm-gt",
+      "headRefOid": "14a7aed70979df3886deeb963d85be9e9d7ffdcf",
+      "closedAt": "2021-09-08T15:11:16Z",
+      "mergedAt": "2021-09-08T15:11:16Z",
+      "mergedBy": "richsalz",
+      "mergeCommit": {
+        "oid": "6b912ce7d504fb559f6642dfd7e7197b355f280f"
+      },
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 18,
+      "id": "MDExOlB1bGxSZXF1ZXN0NzIyNjU1NzIy",
+      "title": "Add \"Changes since\" section",
+      "url": "https://github.com/richsalz/draft-ietf-uta-rfc6125bis/pull/18",
+      "state": "MERGED",
+      "author": "richsalz",
+      "authorAssociation": "OWNER",
+      "assignees": [],
+      "labels": [
+        "editorial"
+      ],
+      "body": "",
+      "createdAt": "2021-08-30T16:55:53Z",
+      "updatedAt": "2021-09-08T15:11:34Z",
+      "baseRepository": "richsalz/draft-ietf-uta-rfc6125bis",
+      "baseRefName": "master",
+      "baseRefOid": "dce96cf499f7d19aa8d6521e14929860ba74d63a",
+      "headRepository": "richsalz/draft-ietf-uta-rfc6125bis",
+      "headRefName": "add-changes",
+      "headRefOid": "a838de8dce6b99c3b62fda6e82e0ed65f8d5eb77",
+      "closedAt": "2021-09-08T15:11:31Z",
+      "mergedAt": "2021-09-08T15:11:31Z",
+      "mergedBy": "richsalz",
+      "mergeCommit": {
+        "oid": "182f22b0a20e6594fb4b9190ee4f1cb2891e8608"
+      },
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 19,
+      "id": "MDExOlB1bGxSZXF1ZXN0NzI5NzcyMjg5",
+      "title": "Remove pinning",
+      "url": "https://github.com/richsalz/draft-ietf-uta-rfc6125bis/pull/19",
+      "state": "MERGED",
+      "author": "richsalz",
+      "authorAssociation": "OWNER",
+      "assignees": [
+        "richsalz"
+      ],
+      "labels": [],
+      "body": "Fixes: #7",
+      "createdAt": "2021-09-08T15:48:02Z",
+      "updatedAt": "2021-09-16T15:24:54Z",
+      "baseRepository": "richsalz/draft-ietf-uta-rfc6125bis",
+      "baseRefName": "main",
+      "baseRefOid": "182f22b0a20e6594fb4b9190ee4f1cb2891e8608",
+      "headRepository": "richsalz/draft-ietf-uta-rfc6125bis",
+      "headRefName": "rm-pin",
+      "headRefOid": "2ed0d52dcd3f9f686491b47d1f92bca8e532407d",
+      "closedAt": "2021-09-16T15:24:50Z",
+      "mergedAt": "2021-09-16T15:24:50Z",
+      "mergedBy": "richsalz",
+      "mergeCommit": {
+        "oid": "6c31d4a5121d48b4ab32fa9dc47367fa2e5466ce"
+      },
+      "comments": [],
+      "reviews": [
+        {
+          "id": "MDE3OlB1bGxSZXF1ZXN0UmV2aWV3NzUwOTAyODMz",
+          "commit": {
+            "abbreviatedOid": "76e3273"
+          },
+          "author": "martinthomson",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2021-09-09T22:40:12Z",
+          "updatedAt": "2021-09-09T22:40:47Z",
+          "comments": [
+            {
+              "originalPosition": 4,
+              "body": "```suggestion\r\n- Detailed discussion of pinning (configuring use of a certificate that\r\n```",
+              "createdAt": "2021-09-09T22:40:12Z",
+              "updatedAt": "2021-09-09T22:40:47Z"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "number": 23,
+      "id": "PR_kwDOFrdhtM4r2SNY",
+      "title": "Wordsmith introduction section.",
+      "url": "https://github.com/richsalz/draft-ietf-uta-rfc6125bis/pull/23",
+      "state": "MERGED",
+      "author": "richsalz",
+      "authorAssociation": "OWNER",
+      "assignees": [
+        "richsalz"
+      ],
+      "labels": [],
+      "body": "Consult the diff.\r\n\r\nAlso added words to fix two issues folks have reported.\r\n\r\nFixes: #22, #21",
+      "createdAt": "2021-09-16T16:55:05Z",
+      "updatedAt": "2021-09-27T16:30:44Z",
+      "baseRepository": "richsalz/draft-ietf-uta-rfc6125bis",
+      "baseRefName": "main",
+      "baseRefOid": "6c31d4a5121d48b4ab32fa9dc47367fa2e5466ce",
+      "headRepository": "richsalz/draft-ietf-uta-rfc6125bis",
+      "headRefName": "edit-introduction",
+      "headRefOid": "c879322f555d963ebd3218f4f6a90886a2b54b77",
+      "closedAt": "2021-09-27T15:49:30Z",
+      "mergedAt": "2021-09-27T15:49:30Z",
+      "mergedBy": "richsalz",
+      "mergeCommit": {
+        "oid": "6e3ab326402080ec71648daeffc96b69194811eb"
+      },
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOFrdhtM4tkT1c",
+          "commit": {
+            "abbreviatedOid": "c879322"
+          },
+          "author": "vdukhovni",
+          "authorAssociation": "NONE",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2021-09-27T16:22:01Z",
+          "updatedAt": "2021-09-27T16:22:02Z",
+          "comments": [
+            {
+              "originalPosition": 244,
+              "body": "This sentence does not parse well, and needs work.",
+              "createdAt": "2021-09-27T16:22:01Z",
+              "updatedAt": "2021-09-27T16:22:02Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOFrdhtM4tkVl_",
+          "commit": {
+            "abbreviatedOid": "c879322"
+          },
+          "author": "vdukhovni",
+          "authorAssociation": "NONE",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2021-09-27T16:28:36Z",
+          "updatedAt": "2021-09-27T16:28:36Z",
+          "comments": [
+            {
+              "originalPosition": 215,
+              "body": "The final clause \", known as ...\" does not have a referent in the preceding content.  It is also far from clear how 6125(bis) rules should be applied when verifying client certificates, since there is very rarely a prior notion of the \"reference identifier\" against which to compare the presented identifiers when doing client authentication.\r\n\r\nWith STARTTLS one can imagine some pre-agreed identity exchanged prior to mutual TLS that server can then verify, but otherwise, all there are are just the presented identifiers, and the server can authorise or not authorise these for particular client requests.\r\n\r\nSo I'm not sure that imputing symmetry of roles in \"mutual TLS\" is reasonable. Generally I find that mutual TLS is often misunderstood, precisely by assuming the sort of symmetry that isn't actually there...",
+              "createdAt": "2021-09-27T16:28:36Z",
+              "updatedAt": "2021-09-27T16:28:36Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOFrdhtM4tkWIQ",
+          "commit": {
+            "abbreviatedOid": "c879322"
+          },
+          "author": "vdukhovni",
+          "authorAssociation": "NONE",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2021-09-27T16:30:42Z",
+          "updatedAt": "2021-09-27T16:30:44Z",
+          "comments": [
+            {
+              "originalPosition": 217,
+              "body": "The terms \"client\" and \"server\" were correct as written, but perhaps worth saying somewhere that these are TLS-layer roles, and that the application could support the TLS server making requests of the TLS client after the TLS handshake, there is no requirement that the roles at that layer match the TLS-layer roles.",
+              "createdAt": "2021-09-27T16:30:43Z",
+              "updatedAt": "2021-09-27T16:30:44Z"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "number": 24,
+      "id": "PR_kwDOFrdhtM4sJoSc",
+      "title": "Wordsmith naming section",
+      "url": "https://github.com/richsalz/draft-ietf-uta-rfc6125bis/pull/24",
+      "state": "MERGED",
+      "author": "richsalz",
+      "authorAssociation": "OWNER",
+      "assignees": [
+        "richsalz"
+      ],
+      "labels": [],
+      "body": "Based on #23, so only look at the latest commit(s).",
+      "createdAt": "2021-09-22T18:28:40Z",
+      "updatedAt": "2021-09-27T16:03:02Z",
+      "baseRepository": "richsalz/draft-ietf-uta-rfc6125bis",
+      "baseRefName": "main",
+      "baseRefOid": "6e3ab326402080ec71648daeffc96b69194811eb",
+      "headRepository": "richsalz/draft-ietf-uta-rfc6125bis",
+      "headRefName": "edit-naming",
+      "headRefOid": "a4ddbfc074d39a794953711bc886f12e4d569cd3",
+      "closedAt": "2021-09-27T16:02:58Z",
+      "mergedAt": "2021-09-27T16:02:58Z",
+      "mergedBy": "richsalz",
+      "mergeCommit": {
+        "oid": "2b9afd8059cd4e028b159b4fa1de3e6330bfdcd3"
+      },
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 25,
+      "id": "PR_kwDOFrdhtM4sJutN",
+      "title": "Wordsmith design section",
+      "url": "https://github.com/richsalz/draft-ietf-uta-rfc6125bis/pull/25",
+      "state": "MERGED",
+      "author": "richsalz",
+      "authorAssociation": "OWNER",
+      "assignees": [
+        "richsalz"
+      ],
+      "labels": [],
+      "body": "This is based on #24 so only look at the latest commit(s).",
+      "createdAt": "2021-09-22T18:52:11Z",
+      "updatedAt": "2021-09-30T20:45:21Z",
+      "baseRepository": "richsalz/draft-ietf-uta-rfc6125bis",
+      "baseRefName": "main",
+      "baseRefOid": "2b9afd8059cd4e028b159b4fa1de3e6330bfdcd3",
+      "headRepository": "richsalz/draft-ietf-uta-rfc6125bis",
+      "headRefName": "edit-design",
+      "headRefOid": "e60d2d4ae0c06a1300ff5506cfaecb43e687536e",
+      "closedAt": "2021-09-30T20:45:18Z",
+      "mergedAt": "2021-09-30T20:45:17Z",
+      "mergedBy": "richsalz",
+      "mergeCommit": {
+        "oid": "687b8cc117ad22d5692364d17175803a5fb71624"
+      },
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 26,
+      "id": "PR_kwDOFrdhtM4sUwpB",
+      "title": "Wordsmith 'representing server identity' section",
+      "url": "https://github.com/richsalz/draft-ietf-uta-rfc6125bis/pull/26",
+      "state": "MERGED",
+      "author": "richsalz",
+      "authorAssociation": "OWNER",
+      "assignees": [
+        "richsalz"
+      ],
+      "labels": [],
+      "body": "",
+      "createdAt": "2021-09-27T16:40:35Z",
+      "updatedAt": "2021-10-04T17:34:14Z",
+      "baseRepository": "richsalz/draft-ietf-uta-rfc6125bis",
+      "baseRefName": "main",
+      "baseRefOid": "e42f2d792265168a104dec851a9eb0b8794103ed",
+      "headRepository": "richsalz/draft-ietf-uta-rfc6125bis",
+      "headRefName": "edit-represent",
+      "headRefOid": "8400b884549d15acf897cf8d039391fca4066d53",
+      "closedAt": "2021-10-04T17:33:46Z",
+      "mergedAt": "2021-10-04T17:33:46Z",
+      "mergedBy": "richsalz",
+      "mergeCommit": {
+        "oid": "46a5900987d08718d855ff2a0ec6c179b901fdc0"
+      },
+      "comments": [
+        {
+          "author": "richsalz",
+          "authorAssociation": "OWNER",
+          "body": "Based on #25, so only look at the latest commits.\r\n",
+          "createdAt": "2021-09-27T16:41:45Z",
+          "updatedAt": "2021-09-27T16:41:45Z"
+        },
+        {
+          "author": "richsalz",
+          "authorAssociation": "OWNER",
+          "body": "Rebased on main now.\r\n",
+          "createdAt": "2021-10-01T20:59:55Z",
+          "updatedAt": "2021-10-01T20:59:55Z"
+        }
+      ],
+      "reviews": []
+    },
+    {
+      "number": 27,
+      "id": "PR_kwDOFrdhtM4sUw8_",
+      "title": "Edit 'requesting server certificates' section",
+      "url": "https://github.com/richsalz/draft-ietf-uta-rfc6125bis/pull/27",
+      "state": "MERGED",
+      "author": "richsalz",
+      "authorAssociation": "OWNER",
+      "assignees": [],
+      "labels": [],
+      "body": "Based on #26 so only look at the latest commits.\r\n",
+      "createdAt": "2021-09-27T16:42:36Z",
+      "updatedAt": "2021-10-04T17:36:32Z",
+      "baseRepository": "richsalz/draft-ietf-uta-rfc6125bis",
+      "baseRefName": "main",
+      "baseRefOid": "46a5900987d08718d855ff2a0ec6c179b901fdc0",
+      "headRepository": "richsalz/draft-ietf-uta-rfc6125bis",
+      "headRefName": "edit-request",
+      "headRefOid": "529e3291e66efe2cbb3003736f2c1c8516e41f39",
+      "closedAt": "2021-10-04T17:36:09Z",
+      "mergedAt": "2021-10-04T17:36:09Z",
+      "mergedBy": "richsalz",
+      "mergeCommit": {
+        "oid": "3d47777da076b798ba2b1ad9d65df5d98ceb4718"
+      },
+      "comments": [
+        {
+          "author": "richsalz",
+          "authorAssociation": "OWNER",
+          "body": "Rebased to be just on main now.\r\n",
+          "createdAt": "2021-10-01T21:02:35Z",
+          "updatedAt": "2021-10-01T21:02:35Z"
+        }
+      ],
+      "reviews": []
+    },
+    {
+      "number": 28,
+      "id": "PR_kwDOFrdhtM4sUy3R",
+      "title": "Viktor's feedback on PR #23",
+      "url": "https://github.com/richsalz/draft-ietf-uta-rfc6125bis/pull/28",
+      "state": "MERGED",
+      "author": "richsalz",
+      "authorAssociation": "OWNER",
+      "assignees": [
+        "richsalz"
+      ],
+      "labels": [],
+      "body": "to be discussed on the email list?\r\n",
+      "createdAt": "2021-09-27T16:54:01Z",
+      "updatedAt": "2021-10-01T18:01:04Z",
+      "baseRepository": "richsalz/draft-ietf-uta-rfc6125bis",
+      "baseRefName": "main",
+      "baseRefOid": "687b8cc117ad22d5692364d17175803a5fb71624",
+      "headRepository": "richsalz/draft-ietf-uta-rfc6125bis",
+      "headRefName": "viktor-notes",
+      "headRefOid": "8f86b2e3e4fdcc897d548487a1c17de48fe37b13",
+      "closedAt": "2021-10-01T18:01:01Z",
+      "mergedAt": "2021-10-01T18:01:01Z",
+      "mergedBy": "richsalz",
+      "mergeCommit": {
+        "oid": "e42f2d792265168a104dec851a9eb0b8794103ed"
+      },
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 29,
+      "id": "PR_kwDOFrdhtM4sZbKG",
+      "title": "Wordsmith security considerations section",
+      "url": "https://github.com/richsalz/draft-ietf-uta-rfc6125bis/pull/29",
+      "state": "MERGED",
+      "author": "richsalz",
+      "authorAssociation": "OWNER",
+      "assignees": [
+        "richsalz"
+      ],
+      "labels": [],
+      "body": "This is based directly on the main branch BTW.",
+      "createdAt": "2021-09-28T14:19:47Z",
+      "updatedAt": "2021-10-06T16:59:41Z",
+      "baseRepository": "richsalz/draft-ietf-uta-rfc6125bis",
+      "baseRefName": "main",
+      "baseRefOid": "3d47777da076b798ba2b1ad9d65df5d98ceb4718",
+      "headRepository": "richsalz/draft-ietf-uta-rfc6125bis",
+      "headRefName": "edit-security",
+      "headRefOid": "23645c005f7c2649bd5187772853a68215a86ce8",
+      "closedAt": "2021-10-06T16:51:00Z",
+      "mergedAt": "2021-10-06T16:51:00Z",
+      "mergedBy": "richsalz",
+      "mergeCommit": {
+        "oid": "b917db230c13114ec9d3b45e1bf9622655388b9d"
+      },
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOFrdhtM4tojq8",
+          "commit": {
+            "abbreviatedOid": "6c65489"
+          },
+          "author": "sleevi",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2021-09-28T15:23:07Z",
+          "updatedAt": "2021-09-28T15:23:08Z",
+          "comments": [
+            {
+              "originalPosition": 51,
+              "body": "This is a bit of a nit, but since the reference is to IDNA-DEFS, perhaps it makes sense to keep the sequence (\"visually similar characters\") together, since that's the title of Section 4.4, since we're not referencing UTR39 directly, which calls them Confusable\r\n\r\n```suggestion\r\nAllowing internationalized domain names can lead to visually similar characters, also\r\nreferred to as \"confusables\", being included within certificates. For discussion, see\r\nfor example {{IDNA-DEFS, Section 4.4}} and {{UTS-39}}.\r\n```\r\n\r\nUTS-39 is the primary reference for this these days, and it seems like it's been acceptable to ref informative (e.g. [RFC 5894](https://datatracker.ietf.org/doc/html/rfc5894#ref-Unicode-UTS39)) or normative (e.g. [RFC 8266](https://datatracker.ietf.org/doc/html/rfc8266#ref-UTS39))\r\n\r\nI realize this reintroduces the quotes you were getting rid of, but that seems to be the proper plural noun used to refer to these characters (e.g. 4.1, 4.2, and 6.1 of UTS 39). I'm less attached to the quotes, to be clear, but was trying to make some indicator of this being the actual term of art used.",
+              "createdAt": "2021-09-28T15:23:07Z",
+              "updatedAt": "2021-09-28T15:25:57Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOFrdhtM4topM2",
+          "commit": {
+            "abbreviatedOid": "6c65489"
+          },
+          "author": "sleevi",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2021-09-28T15:40:35Z",
+          "updatedAt": "2021-09-28T15:40:36Z",
+          "comments": [
+            {
+              "originalPosition": 64,
+              "body": "```suggestion\r\n(SNI) extension as discussed in {{TLS, Section 4.4.2.2}}.  If multiple\r\nprotocols share the same port, the client MUST use the Application-Layer\r\nProtocol Negotiation as described in {{ALPN}} if the intended protocol has\r\nregistered Protocol ID {{SOME-REF-HERE}}.\r\n```\r\n\r\nWhere {{SOME-REF-HERE}} would be reference to https://www.iana.org/assignments/tls-extensiontype-values/tls-extensiontype-values.xhtml#alpn-protocol-ids\r\n\r\nThere's probably a better way to smith this, and as (about to be) discussed on the list, this could be seen as superfluous.",
+              "createdAt": "2021-09-28T15:40:35Z",
+              "updatedAt": "2021-09-28T15:40:36Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOFrdhtM4t1fNi",
+          "commit": {
+            "abbreviatedOid": "6c65489"
+          },
+          "author": "richsalz",
+          "authorAssociation": "OWNER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2021-10-01T13:50:31Z",
+          "updatedAt": "2021-10-01T13:50:31Z",
+          "comments": [
+            {
+              "originalPosition": 64,
+              "body": "Yeah, I dropped ALPN completely.\r\n",
+              "createdAt": "2021-10-01T13:50:31Z",
+              "updatedAt": "2021-10-01T13:50:31Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOFrdhtM4t1hZP",
+          "commit": {
+            "abbreviatedOid": "6c65489"
+          },
+          "author": "richsalz",
+          "authorAssociation": "OWNER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2021-10-01T13:58:24Z",
+          "updatedAt": "2021-10-01T13:58:24Z",
+          "comments": [
+            {
+              "originalPosition": 51,
+              "body": "Thanks!  I took this wording, and added uts-39 as informative given the text above.\r\n",
+              "createdAt": "2021-10-01T13:58:24Z",
+              "updatedAt": "2021-10-01T13:58:24Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOFrdhtM4t_OWU",
+          "commit": {
+            "abbreviatedOid": "983b66e"
+          },
+          "author": "sleevi",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "CHANGES_REQUESTED",
+          "body": "Will follow-up on list",
+          "createdAt": "2021-10-05T14:43:01Z",
+          "updatedAt": "2021-10-05T15:49:23Z",
+          "comments": [
+            {
+              "originalPosition": 72,
+              "body": "```suggestion\r\ndomains or protocols. TLS Extensions such as TLS Server\r\nName Identification (SNI), discussed in {{TLS, Section 4.4.2.2}},\r\nand Application Layer Protocol Negotiation (ALPN), discussed in\r\n{{ALPN}}, provide a way for the application to indicate the desired\r\nidentifier and protocol to the server, which can be used to select\r\nthe most appropriate certificate.\r\n```",
+              "createdAt": "2021-10-05T14:43:02Z",
+              "updatedAt": "2021-10-05T15:49:23Z"
+            },
+            {
+              "originalPosition": 74,
+              "body": "Note: GitHub won't allow suggestion to unmodified text, so this is roughly replacing the entire paragraph.\r\n\r\n```markdown\r\nThis specification allows multiple DNS-IDs, SRV-IDs, or URI-IDs in a\r\ncertificate, which allows for a single application service to use the\r\nsame certificate for multiple identifiers. This enables a single certificate\r\nto be used across multiple hostnames, such as when a client does not\r\nsupport the TLS SNI extension, or across multiple protocols, such as\r\nSMTP and HTTP, on a single hostname. The use of a single certificate\r\nand public/private keypair in such environments MAY facilitate\r\ncross-protocol attacks, particularly when used in differing TLS\r\nconfigurations. See, for example, {{ALPCA}}, {{DROWN}}. Server\r\noperators SHOULD take steps to mitigate the risk of cross-protocol\r\nattacks, such as ensuring all TLS endpoints using a given certificate\r\nsupport exactly the same TLS version(s) and ciphersuite(s), and\r\nSHOULD make use of the TLS ALPN extension to ensure the correct\r\nprotocol is used.\r\n\r\n## Multiple Reference Identifiers\r\n\r\nThis specification describes how a client may construct multiple\r\nacceptable reference identifiers, and may match any of those reference\r\nidentifiers with the set of presented identifiers. {{PKIX, Section 4.2.1.10}}\r\ndescribes a mechanism to allow CA certificates to be constrained in the\r\nset of presented identifiers that they may include within server certificates.\r\nHowever, these constraints only apply to the explicitly enumerated name\r\nforms. For example, a CA that is only name constrained for DNS-IDs is not\r\nconstrained for SRV-IDs and URI-IDs, unless those name forms are also\r\nexplicitly included within the name constraints extension.\r\n\r\nA client that constructs multiple reference identifiers of different types,\r\nsuch as both DNS-ID and SRV-IDs, as described in\r\n{#verify-reference-rules}, SHOULD take care to ensure that CAs issuing\r\nsuch certificates are appropriately constrained. This MAY take the form of\r\nlocal policy through agreement with the issuing CA, or MAY be enforced by\r\nthe client requiring that if one form of presented identifier is constrained,\r\nsuch as a dNSName name constraint for DNS-IDs, then all other forms of\r\nacceptable reference identities are also constrained, such as requiring a\r\nuniformResourceIndicator name constraint for URI-IDs.\r\n```\r\n\r\nThis is a huge mouthful, and is really meant to be a rough draft for starting discussion, because it definitely reads awkwardly. However, it tries to get the concept out, but I'm not entirely sure on the usage of the 2119 language here either.",
+              "createdAt": "2021-10-05T15:37:16Z",
+              "updatedAt": "2021-10-05T15:49:23Z"
+            },
+            {
+              "originalPosition": 62,
+              "body": "```suggestion\r\n## Multiple Presented Identifiers {#security-multi}\r\n```",
+              "createdAt": "2021-10-05T15:38:28Z",
+              "updatedAt": "2021-10-05T15:49:23Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOFrdhtM4uEw8i",
+          "commit": {
+            "abbreviatedOid": "23645c0"
+          },
+          "author": "richsalz",
+          "authorAssociation": "OWNER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2021-10-06T16:59:40Z",
+          "updatedAt": "2021-10-06T16:59:41Z",
+          "comments": [
+            {
+              "originalPosition": 74,
+              "body": "I moved this into its own PR, #33.  I did a light editing pass and think the use of 2119 is fine.\r\n",
+              "createdAt": "2021-10-06T16:59:40Z",
+              "updatedAt": "2021-10-06T16:59:41Z"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "number": 30,
+      "id": "PR_kwDOFrdhtM4slKSS",
+      "title": "Wordsmith \"verification\" section",
+      "url": "https://github.com/richsalz/draft-ietf-uta-rfc6125bis/pull/30",
+      "state": "MERGED",
+      "author": "richsalz",
+      "authorAssociation": "OWNER",
+      "assignees": [
+        "richsalz"
+      ],
+      "labels": [],
+      "body": "This is based directly on main, not on other PR's.\r\n",
+      "createdAt": "2021-10-01T20:57:53Z",
+      "updatedAt": "2021-10-13T14:30:56Z",
+      "baseRepository": "richsalz/draft-ietf-uta-rfc6125bis",
+      "baseRefName": "main",
+      "baseRefOid": "dad9bc4c0e9b83a8eb960fa0358d587a4a5b9651",
+      "headRepository": "richsalz/draft-ietf-uta-rfc6125bis",
+      "headRefName": "edit-verify",
+      "headRefOid": "37a4deeac10a8fb3c71d927b81a438b44fa9dbb7",
+      "closedAt": "2021-10-13T14:30:52Z",
+      "mergedAt": "2021-10-13T14:30:52Z",
+      "mergedBy": "richsalz",
+      "mergeCommit": {
+        "oid": "765aa22dc81f7054fd375cbcbfa35203c0ba6f5f"
+      },
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 31,
+      "id": "PR_kwDOFrdhtM4sp3d0",
+      "title": "Remove the \"how to read\" section",
+      "url": "https://github.com/richsalz/draft-ietf-uta-rfc6125bis/pull/31",
+      "state": "MERGED",
+      "author": "richsalz",
+      "authorAssociation": "OWNER",
+      "assignees": [
+        "richsalz"
+      ],
+      "labels": [],
+      "body": "The document is much smaller now.\r\nAnd everyone shuld read it all anyway.\r\n\r\nVarious other editorial changes.\r\n",
+      "createdAt": "2021-10-04T18:00:06Z",
+      "updatedAt": "2021-10-13T14:25:25Z",
+      "baseRepository": "richsalz/draft-ietf-uta-rfc6125bis",
+      "baseRefName": "main",
+      "baseRefOid": "eda183681d47a8f708c535d0aa00a22f52e31bca",
+      "headRepository": "richsalz/draft-ietf-uta-rfc6125bis",
+      "headRefName": "rm-how-to-read",
+      "headRefOid": "31cdc36efee0414aa307ffb4962cdfe92f95eb99",
+      "closedAt": "2021-10-13T14:25:22Z",
+      "mergedAt": "2021-10-13T14:25:21Z",
+      "mergedBy": "richsalz",
+      "mergeCommit": {
+        "oid": "dad9bc4c0e9b83a8eb960fa0358d587a4a5b9651"
+      },
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 33,
+      "id": "PR_kwDOFrdhtM4s03v7",
+      "title": "Add Ryan's text about multiple identifiers",
+      "url": "https://github.com/richsalz/draft-ietf-uta-rfc6125bis/pull/33",
+      "state": "OPEN",
+      "author": "richsalz",
+      "authorAssociation": "OWNER",
+      "assignees": [],
+      "labels": [],
+      "body": "Taken from https://github.com/richsalz/draft-ietf-uta-rfc6125bis/pull/29#discussion_r722367686\r\nand made into its own PR.",
+      "createdAt": "2021-10-06T16:58:58Z",
+      "updatedAt": "2021-11-16T19:51:12Z",
+      "baseRepository": "richsalz/draft-ietf-uta-rfc6125bis",
+      "baseRefName": "main",
+      "baseRefOid": "9b8ec5bb6b739fb5375e72d66418af0253d63ade",
+      "headRepository": "richsalz/draft-ietf-uta-rfc6125bis",
+      "headRefName": "multiple-refs",
+      "headRefOid": "a7fa0a163000655c971178736c74e379dd905af3",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOFrdhtM4vNkwY",
+          "commit": {
+            "abbreviatedOid": "d3d04d0"
+          },
+          "author": "stpeter",
+          "authorAssociation": "NONE",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2021-10-28T16:10:10Z",
+          "updatedAt": "2021-10-28T16:10:11Z",
+          "comments": [
+            {
+              "originalPosition": 45,
+              "body": "```suggestion\r\nenvironments can make it easier to launch cross-protocol attacks, particularly when used in\r\n```",
+              "createdAt": "2021-10-28T16:10:10Z",
+              "updatedAt": "2021-10-28T16:10:11Z"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "number": 34,
+      "id": "PR_kwDOFrdhtM4tKn6T",
+      "title": "Various editorial tweaks.",
+      "url": "https://github.com/richsalz/draft-ietf-uta-rfc6125bis/pull/34",
+      "state": "MERGED",
+      "author": "richsalz",
+      "authorAssociation": "OWNER",
+      "assignees": [
+        "richsalz"
+      ],
+      "labels": [],
+      "body": "Fixes: #15",
+      "createdAt": "2021-10-13T20:46:15Z",
+      "updatedAt": "2021-11-16T19:17:37Z",
+      "baseRepository": "richsalz/draft-ietf-uta-rfc6125bis",
+      "baseRefName": "main",
+      "baseRefOid": "765aa22dc81f7054fd375cbcbfa35203c0ba6f5f",
+      "headRepository": "richsalz/draft-ietf-uta-rfc6125bis",
+      "headRefName": "language",
+      "headRefOid": "dce31e272513b16b874039e17971ac9469f0ee75",
+      "closedAt": "2021-11-16T19:17:34Z",
+      "mergedAt": "2021-11-16T19:17:34Z",
+      "mergedBy": "richsalz",
+      "mergeCommit": {
+        "oid": "9b8ec5bb6b739fb5375e72d66418af0253d63ade"
+      },
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOFrdhtM4uxloP",
+          "commit": {
+            "abbreviatedOid": "144be4b"
+          },
+          "author": "sleevi",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "Looks good to me",
+          "createdAt": "2021-10-20T16:47:09Z",
+          "updatedAt": "2021-10-20T17:34:05Z",
+          "comments": [
+            {
+              "originalPosition": 9,
+              "body": "Q: Isn't the usual editorial practice to expand the acronym fully on first use, and then use the acronym in subsequent usages?\r\n\r\nI suspect this may get flagged in the editorial queue; I fully agree with changing the subsequent uses, but perhaps keeping these two (and line 172) is sufficient?",
+              "createdAt": "2021-10-20T16:47:09Z",
+              "updatedAt": "2021-10-20T17:34:05Z"
+            },
+            {
+              "originalPosition": 21,
+              "body": "In thinking in terms of https://datatracker.ietf.org/doc/html/rfc5280#section-2.2 and https://datatracker.ietf.org/doc/html/rfc5280#section-2.3 , and in line with the editorial tweak, it _might_ make sense to\r\n\r\n```suggestion\r\nreference identity so it can deterministically and automatically authenticate the communication.\r\n```\r\n\r\nThat may be overkill though :) It is somewhat implicit in the \"Out of Scope\", but this just tries to tie it back as a positive scope expression rather than negative.",
+              "createdAt": "2021-10-20T16:49:33Z",
+              "updatedAt": "2021-10-20T17:34:05Z"
+            },
+            {
+              "originalPosition": 87,
+              "body": "Was \"relative domain name\" (line 297) meant to be \"Relative Distinguished Name\"? I wasn't sure, and the expression makes sense with either, but wanted to flag (since \"Naming of Application Services\" doesn't get into the relativity discussion)",
+              "createdAt": "2021-10-20T16:53:41Z",
+              "updatedAt": "2021-10-20T17:34:05Z"
+            },
+            {
+              "originalPosition": 312,
+              "body": "```suggestion\r\nclient's communication with the server. This removes\r\nDNS and DNS resolution from the attack surface.\r\n```\r\n\r\nIt's a suggestion. It feels a bit colloquial, but it could be entirely fine as-is, so feel free to reject :)",
+              "createdAt": "2021-10-20T17:25:43Z",
+              "updatedAt": "2021-10-20T17:34:05Z"
+            },
+            {
+              "originalPosition": 321,
+              "body": "Did you also want to update (new) lines 632/633?\r\n\r\nI was originally surprised by this edit, but with the overall simplifications for CN handling, and this definition is unambiguously present, I like this approach you're taking here. I could see an argument for 632/633 being similarly redundant, or I could see the argument for making sure to restate (during the high level) that these come from the certificate.\r\n\r\nJust wanted to flag",
+              "createdAt": "2021-10-20T17:32:25Z",
+              "updatedAt": "2021-10-20T17:34:05Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOFrdhtM4uzb8y",
+          "commit": {
+            "abbreviatedOid": "144be4b"
+          },
+          "author": "oej",
+          "authorAssociation": "NONE",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2021-10-21T05:54:31Z",
+          "updatedAt": "2021-10-21T05:54:31Z",
+          "comments": [
+            {
+              "originalPosition": 75,
+              "body": "\"as a service\" is today a buzzword-bingo term that may be misunderstood. You may want to delete those words.",
+              "createdAt": "2021-10-21T05:54:31Z",
+              "updatedAt": "2021-10-21T05:54:31Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOFrdhtM4uzcG3",
+          "commit": {
+            "abbreviatedOid": "144be4b"
+          },
+          "author": "oej",
+          "authorAssociation": "NONE",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2021-10-21T05:55:42Z",
+          "updatedAt": "2021-10-21T05:55:43Z",
+          "comments": [
+            {
+              "originalPosition": 108,
+              "body": "ALPN may belong here too.",
+              "createdAt": "2021-10-21T05:55:42Z",
+              "updatedAt": "2021-10-21T05:55:43Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOFrdhtM4u1LFE",
+          "commit": {
+            "abbreviatedOid": "144be4b"
+          },
+          "author": "richsalz",
+          "authorAssociation": "OWNER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2021-10-21T13:24:33Z",
+          "updatedAt": "2021-10-21T13:24:33Z",
+          "comments": [
+            {
+              "originalPosition": 75,
+              "body": "Good point, done.",
+              "createdAt": "2021-10-21T13:24:33Z",
+              "updatedAt": "2021-10-21T13:24:33Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOFrdhtM4u1LZp",
+          "commit": {
+            "abbreviatedOid": "144be4b"
+          },
+          "author": "richsalz",
+          "authorAssociation": "OWNER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2021-10-21T13:25:32Z",
+          "updatedAt": "2021-10-21T13:25:33Z",
+          "comments": [
+            {
+              "originalPosition": 108,
+              "body": "> ALPN may belong here too.\r\n\r\nNot sure what you mean.  Do you mean something like adding \", or as an ALPN {{ALPN}} identifier\" ?",
+              "createdAt": "2021-10-21T13:25:33Z",
+              "updatedAt": "2021-10-21T13:25:33Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOFrdhtM4u1MM3",
+          "commit": {
+            "abbreviatedOid": "fceeb97"
+          },
+          "author": "richsalz",
+          "authorAssociation": "OWNER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2021-10-21T13:27:46Z",
+          "updatedAt": "2021-10-21T13:27:46Z",
+          "comments": [
+            {
+              "originalPosition": 312,
+              "body": "it's good, merging.",
+              "createdAt": "2021-10-21T13:27:46Z",
+              "updatedAt": "2021-10-21T13:27:46Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOFrdhtM4u1NWR",
+          "commit": {
+            "abbreviatedOid": "1c07ba4"
+          },
+          "author": "richsalz",
+          "authorAssociation": "OWNER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2021-10-21T13:31:18Z",
+          "updatedAt": "2021-10-21T13:31:18Z",
+          "comments": [
+            {
+              "originalPosition": 87,
+              "body": "6125 says \"relative domain names\". To avoid the ambiguity I changed it to \"or other\".",
+              "createdAt": "2021-10-21T13:31:18Z",
+              "updatedAt": "2021-10-21T13:31:18Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOFrdhtM4u1Njs",
+          "commit": {
+            "abbreviatedOid": "1c07ba4"
+          },
+          "author": "richsalz",
+          "authorAssociation": "OWNER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2021-10-21T13:31:57Z",
+          "updatedAt": "2021-10-21T13:31:57Z",
+          "comments": [
+            {
+              "originalPosition": 21,
+              "body": "I like the emphasis; merging.\r\n",
+              "createdAt": "2021-10-21T13:31:57Z",
+              "updatedAt": "2021-10-21T13:31:57Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOFrdhtM4u1OFz",
+          "commit": {
+            "abbreviatedOid": "d7ab59d"
+          },
+          "author": "richsalz",
+          "authorAssociation": "OWNER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2021-10-21T13:33:17Z",
+          "updatedAt": "2021-10-21T13:33:17Z",
+          "comments": [
+            {
+              "originalPosition": 9,
+              "body": "I'll let the RFC Editor decide which terms are commonplace and which need expansion on first use, unless you feel strongly.",
+              "createdAt": "2021-10-21T13:33:17Z",
+              "updatedAt": "2021-10-21T13:33:17Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOFrdhtM4u1PRl",
+          "commit": {
+            "abbreviatedOid": "d7ab59d"
+          },
+          "author": "richsalz",
+          "authorAssociation": "OWNER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2021-10-21T13:36:40Z",
+          "updatedAt": "2021-10-21T13:36:41Z",
+          "comments": [
+            {
+              "originalPosition": 321,
+              "body": ">I could see the argument for making sure to restate (during the high level) that these come from the certificate.\r\n\r\nThat was my intent, because I think some folks will just cut/paste the steps into their internal docs :)\r\n",
+              "createdAt": "2021-10-21T13:36:40Z",
+              "updatedAt": "2021-10-21T13:36:41Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOFrdhtM4u2YJz",
+          "commit": {
+            "abbreviatedOid": "b3f59cc"
+          },
+          "author": "oej",
+          "authorAssociation": "NONE",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2021-10-21T17:30:30Z",
+          "updatedAt": "2021-10-21T17:30:30Z",
+          "comments": [
+            {
+              "originalPosition": 108,
+              "body": "In some scenarios ALPN is the \"formal identifier for an application protocol\".  I need to re-read the full text to see if this was just a stupid comment or something that makes sense. The \"may\" in my statement indicates that I was unsure. :-)",
+              "createdAt": "2021-10-21T17:30:30Z",
+              "updatedAt": "2021-10-21T17:30:30Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOFrdhtM4u2ZF9",
+          "commit": {
+            "abbreviatedOid": "b3f59cc"
+          },
+          "author": "oej",
+          "authorAssociation": "NONE",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2021-10-21T17:34:11Z",
+          "updatedAt": "2021-10-21T17:34:11Z",
+          "comments": [
+            {
+              "originalPosition": 108,
+              "body": "`a URI scheme {{URI}}, a DNS SRV Service {{DNS-SRV}} or an ALPN {{ALPN}} identifier.`\r\n\r\nI think that's a better definition.",
+              "createdAt": "2021-10-21T17:34:11Z",
+              "updatedAt": "2021-10-21T17:34:11Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOFrdhtM4u2jI8",
+          "commit": {
+            "abbreviatedOid": "dce31e2"
+          },
+          "author": "richsalz",
+          "authorAssociation": "OWNER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2021-10-21T18:17:11Z",
+          "updatedAt": "2021-10-21T18:17:11Z",
+          "comments": [
+            {
+              "originalPosition": 108,
+              "body": "Agreed, thanks!",
+              "createdAt": "2021-10-21T18:17:11Z",
+              "updatedAt": "2021-10-21T18:17:11Z"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "number": 36,
+      "id": "PR_kwDOFrdhtM4unGV-",
+      "title": "Change title, ack individuals",
+      "url": "https://github.com/richsalz/draft-ietf-uta-rfc6125bis/pull/36",
+      "state": "MERGED",
+      "author": "richsalz",
+      "authorAssociation": "OWNER",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2021-11-16T19:36:19Z",
+      "updatedAt": "2021-11-18T16:37:26Z",
+      "baseRepository": "richsalz/draft-ietf-uta-rfc6125bis",
+      "baseRefName": "main",
+      "baseRefOid": "9b8ec5bb6b739fb5375e72d66418af0253d63ade",
+      "headRepository": "richsalz/draft-ietf-uta-rfc6125bis",
+      "headRefName": "new-title",
+      "headRefOid": "f807804e33ce2a1144c883bb31c09f97058faea2",
+      "closedAt": "2021-11-18T16:37:22Z",
+      "mergedAt": "2021-11-18T16:37:22Z",
+      "mergedBy": "richsalz",
+      "mergeCommit": {
+        "oid": "88358dd0a11d81f558ea41a4f37e27941719873c"
+      },
+      "comments": [
+        {
+          "author": "stpeter",
+          "authorAssociation": "NONE",
+          "body": "I like the new title - short and sweet.",
+          "createdAt": "2021-11-16T20:12:32Z",
+          "updatedAt": "2021-11-16T20:12:32Z"
+        },
+        {
+          "author": "richsalz",
+          "authorAssociation": "OWNER",
+          "body": "I think it's also a nod to the older days when RFC's had titles like \"On holy wars...\" and such :)",
+          "createdAt": "2021-11-16T20:14:59Z",
+          "updatedAt": "2021-11-16T20:14:59Z"
+        }
+      ],
+      "reviews": [
+        {
+          "id": "PRR_kwDOFrdhtM4wKM5M",
+          "commit": {
+            "abbreviatedOid": "c9707a4"
+          },
+          "author": "martinthomson",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2021-11-16T23:53:09Z",
+          "updatedAt": "2021-11-16T23:53:09Z",
+          "comments": [
+            {
+              "originalPosition": 7,
+              "body": "Or\r\n```suggestion\r\ntitle: Service Names in TLS\r\n```",
+              "createdAt": "2021-11-16T23:53:09Z",
+              "updatedAt": "2021-11-16T23:53:09Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOFrdhtM4wOCgD",
+          "commit": {
+            "abbreviatedOid": "c9707a4"
+          },
+          "author": "stpeter",
+          "authorAssociation": "NONE",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2021-11-17T18:26:14Z",
+          "updatedAt": "2021-11-17T18:26:15Z",
+          "comments": [
+            {
+              "originalPosition": 7,
+              "body": "No strong preference here. Martin's might be slightly clearer.",
+              "createdAt": "2021-11-17T18:26:15Z",
+              "updatedAt": "2021-11-17T18:26:15Z"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "number": 37,
+      "id": "PR_kwDOFrdhtM4vIs8R",
+      "title": "Alexey's concerns on 9b8ec5b",
+      "url": "https://github.com/richsalz/draft-ietf-uta-rfc6125bis/pull/37",
+      "state": "MERGED",
+      "author": "richsalz",
+      "authorAssociation": "OWNER",
+      "assignees": [
+        "richsalz"
+      ],
+      "labels": [],
+      "body": "I was too over-eager on MUST language.",
+      "createdAt": "2021-11-29T15:43:05Z",
+      "updatedAt": "2021-11-29T15:56:38Z",
+      "baseRepository": "richsalz/draft-ietf-uta-rfc6125bis",
+      "baseRefName": "main",
+      "baseRefOid": "88358dd0a11d81f558ea41a4f37e27941719873c",
+      "headRepository": "richsalz/draft-ietf-uta-rfc6125bis",
+      "headRefName": "alexey-comments",
+      "headRefOid": "19b55a31f4cf30e6e0451388150785c45946aef7",
+      "closedAt": "2021-11-29T15:56:32Z",
+      "mergedAt": "2021-11-29T15:56:32Z",
+      "mergedBy": "richsalz",
+      "mergeCommit": {
+        "oid": "d3dd501ab0199bf2c7077f08d68e6ccb42543f27"
+      },
+      "comments": [],
+      "reviews": []
+    }
+  ]
+}
