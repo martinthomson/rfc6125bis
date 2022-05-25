@@ -41,6 +41,7 @@ normative:
   PKIX: RFC5280
   SRVNAME: RFC4985
   URI: RFC3986
+  RFC7525bis: I-D.ietf-uta-rfc7525bis
 informative:
   ABNF: RFC5234
   ACME: RFC8555
@@ -88,9 +89,6 @@ informative:
       name: Sebastian Schinzel
       org: Ruhr University Bochum
     date: 2021-9
-  DROWN:
-    target: https://drownattack.com
-    title: The DROWN Attack
   UTS-39:
     target: https://unicode.org/reports/tr39
     title: Unicode Security Mechanisms
@@ -910,13 +908,14 @@ This specification allows multiple DNS-IDs, SRV-IDs, or URI-IDs in a
 certificate.  As a result, an application service can use the same
 certificate for multiple hostnames, such as when a client does not support
 the TLS SNI extension, or for multiple protocols, such as SMTP and HTTP, on a
-single hostname. The use of a single certificate and its keypair in such
-environments can make it easier to launch cross-protocol attacks, particularly when used in
-inconsistent TLS configurations; see, for example, {{ALPACA}} and {{DROWN}}.
-Server operators SHOULD take steps to mitigate the risk of cross-protocol
-attacks, such as ensuring all TLS endpoints using a given certificate support
-exactly the same TLS version(s) and ciphersuite(s), and SHOULD use the TLS
-ALPN extension to ensure the correct protocol is used.
+single hostname.  Note that the set of names in a certificate is the set of
+names that could be affected by a compromise of any other server named in
+the set: the strength of any server in the set of names is determined by the
+weakest of those servers that offer the names.
+
+The way to mitigate this risk is to limit the number of names that
+any server can speak for, and to ensure that all servers in the set
+have a strong minimum configuration as described in {{RFC7525bis}}.
 
 ## Multiple Reference Identifiers
 
