@@ -681,7 +681,7 @@ SRV-IDs and DNS-IDs in its list of reference identifiers.
 
 ### Examples {#verify-reference-examples}
 
-The following examples are for illustrative purposes only and are not 
+The following examples are for illustrative purposes only and are not
 intended to be comprehensive.
 
 1. A web browser that is connecting via HTTPS to the website at `www.example.com`
@@ -710,14 +710,14 @@ SRV-ID of `_xmpp-client.im.example.org` (see {{XMPP}}), a DNS-ID of
 In all of these cases, presented identifiers that do not match the reference
 identifier(s) would be rejected; for instance:
 
-* With regard to the first example a DNS-ID of "web.example.com" would 
-  be rejected because the DNS domain name portion does not match 
+* With regard to the first example a DNS-ID of "web.example.com" would
+  be rejected because the DNS domain name portion does not match
   "www.example.com".
 
-* With regard to the third example, a URI-ID of "sip:www.example.edu" 
-  would be rejected because the DNS domain name portion does not match 
-  "voice.example.edu" and a DNS-ID of "voice.example.edu" would be 
-  rejected because it lacks the appropriate application service type 
+* With regard to the third example, a URI-ID of "sip:www.example.edu"
+  would be rejected because the DNS domain name portion does not match
+  "voice.example.edu" and a DNS-ID of "voice.example.edu" would be
+  rejected because it lacks the appropriate application service type
   portion (i.e., it does not specify a "sip:" URI).
 
 ## Preparing to Seek a Match {#verify-seek}
