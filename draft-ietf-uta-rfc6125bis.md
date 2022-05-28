@@ -22,10 +22,6 @@ author:
   name: Peter Saint-Andre
   country: US
   email: stpeter@stpeter.im
-- ins: J. Hodges
-  name: Jeff Hodges
-  country: US
-  email: netwerkeddude@gmail.com
 - ins: R. Salz
   name: Rich Salz
   org: Akamai Technologies
