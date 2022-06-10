@@ -17,26 +17,26 @@ procedures for representing and verifying the identity of application services
 in such interactions. 
        This document obsoletes RFC 6125. 
     " name="description">
-<meta content="xml2rfc 3.12.4" name="generator">
+<meta content="xml2rfc 3.12.10" name="generator">
 <meta content="Internet-Draft" name="keyword">
 <meta content="draft-ietf-uta-rfc6125bis-latest" name="ietf.draft">
 <!-- Generator version information:
-  xml2rfc 3.12.4
-    Python 3.9.7
+  xml2rfc 3.12.10
+    Python 3.10.4
     appdirs 1.4.4
-    ConfigArgParse 1.3
+    ConfigArgParse 1.5.3
     google-i18n-address 2.5.1
     html5lib 1.1
     intervaltree 3.1.0
     Jinja2 2.11.3
     kitchen 1.2.6
-    lxml 4.6.5
+    lxml 4.8.0
     MarkupSafe 2.0.1
     pycountry 20.7.3
-    pyflakes 2.3.1
-    PyYAML 5.4.1
-    requests 2.26.0
-    setuptools 52.0.0
+    pyflakes 2.4.0
+    PyYAML 6.0
+    requests 2.27.1
+    setuptools 59.4.0
     six 1.16.0
 -->
 <link href="draft-ietf-uta-rfc6125bis.xml" rel="alternate" type="application/rfc+xml">
@@ -161,6 +161,14 @@ in such interactions.
   font-weight: 700;
   font-display: swap;
   src: local('Lora Bold'), local('Lora-Bold'), url('https://martinthomson.github.io/rfc-css/fonts/lora-bold-latin.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: 'Lora';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: local('Lora SemiBold'), local('Lora-SemiBold'), url('https://martinthomson.github.io/rfc-css/fonts/lora-semibold-latin.woff2') format('woff2');
   unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
 }
 
@@ -344,7 +352,7 @@ ol, ul {
   padding: 0;
   margin: 0 0 0.5em 2em;
 }
-ol ol, ul ul, ol ul, ul ol {
+:is(ol, ul) :is(ol, ul) {
   margin-left: 1em;
 }
 li {
@@ -359,8 +367,7 @@ ul.empty, .ulEmpty {
 ul.empty li, .ulEmpty li {
   margin-top: 0.5em;
 }
-ul.compact, .ulCompact,
-ol.compact, .olCompact {
+:is(ul, ol).compact, .ulCompact, .olCompact {
   line-height: 100%;
   margin: 0 0 0 2em;
 }
@@ -376,7 +383,7 @@ dl > dd {
   margin-bottom: .8em;
   min-height: 1.3em;
 }
-dl.compact > dd, .dlCompact > dd {
+:is(dl.compact, .dlCompact) > dd {
   margin-bottom: 0em;
 }
 dl > dd > dl {
@@ -418,6 +425,9 @@ tt, code {
      remove leading to avoid altering the final height of lines */
   line-height: 0;
 }
+:is(h1, h2, h3, h4, h5, h6) :is(tt, code) {
+  font-size: 84%;
+}
 pre {
   border: 1px solid var(--line-color);
   font-size: 13.5px;
@@ -442,6 +452,19 @@ figcaption, caption {
   text-align: left;
 }
 @media screen {
+  /* Auto-collapse boilerplate. */
+  :is(#status-of-memo, #copyright) p {
+    margin: -2px 0;
+    max-height: 0;
+    transition: max-height 2s ease, margin 0.5s ease 0.5s;
+    overflow: hidden;
+  }
+  :is(#status-of-memo, #copyright):hover p,
+  :is(#status-of-memo, #copyright) h2:target ~ p {
+    margin: 0.5em 0;
+    max-height: 500px;
+    overflow: auto;
+  }
   pre, svg {
     display: inline-block;
     overflow-x: auto;
@@ -457,7 +480,7 @@ figcaption, caption {
     display: block;
     width: calc(100% - 25px);
   }
-  pre + .pilcrow, svg + .pilcrow {
+  :is(pre, svg) + .pilcrow {
     display: inline-block;
     vertical-align: text-bottom;
     padding-bottom: 8px;
@@ -506,17 +529,11 @@ th, td {
 th {
   background-color: var(--line-color);
 }
-tr:nth-child(2n) > td {
+:is(tr:nth-child(2n), thead+tbody > tr:nth-child(2n+1)) > td {
   background-color: var(--background-color);
 }
-tr:nth-child(2n+1) > td {
+:is(tr:nth-child(2n+1), thead+tbody > tr:nth-child(2n)) > td {
   background-color: var(--highlight-color);
-}
-thead+tbody > tr:nth-child(2n) > td {
-  background-color: var(--highlight-color);
-}
-thead+tbody > tr:nth-child(2n+1) > td {
-  background-color: var(--background-color);
 }
 table caption {
   margin: 0;
@@ -556,8 +573,9 @@ hr {
 }
 .bcp14 {
   font-variant: small-caps;
+  font-weight: 600;
+  font-size: 14.5px;
 }
-
 .role {
   font-variant: all-small-caps;
 }
@@ -796,7 +814,7 @@ hr.addr {
     margin: 0 0 0 4px;
     font-size: var(--small-font-size);
   }
-  #toc ul p, #toc ul li {
+  #toc ul :is(p, li) {
     margin: 2px 0;
     line-height: 22px;
   }
@@ -906,13 +924,13 @@ dl.dlNewline > dt {
 }
 
 /* Provide styling for table cell text alignment */
-table .text-left, table .text-left {
+table .text-left {
   text-align: left;
 }
-table .text-center, table .text-center {
+table .text-center {
   text-align: center;
 }
-table .text-right, table .text-right {
+table .text-right {
   text-align: right;
 }
 
@@ -979,12 +997,6 @@ address div.right {
   }
 
 }
-/* Tweak the bcp14 keyword presentation */
-.bcp14 {
-  font-variant: small-caps;
-  font-weight: bold;
-  font-size: 0.9em;
-}
 
 /* Dark mode. */
 @media (prefers-color-scheme: dark) {
@@ -999,19 +1011,20 @@ address div.right {
   --pilcrow-strong: #666;
   scrollbar-color: #777 #333;
 }
-/* Trick: a prefix match works because only black and white are allowed */
-svg [stroke="black"], svg [stroke^="#000"] {
+}
+
+/* SVG Trick: a prefix match works because only black and white are allowed */
+svg :is([stroke="black"], [stroke^="#000"]) {
   stroke: var(--text-color);
 }
-svg [stroke="white"], svg [stroke^="#fff"] {
+svg :is([stroke="white"], [stroke^="#fff"]) {
   stroke: var(--background-color);
 }
-svg [fill="black"], svg [fill^="#000"], svg :not([fill]) {
+svg :is([fill="black"], [fill^="#000"], :not([fill])) {
   fill: var(--text-color);
 }
-svg [stroke="fill"], svg [fill^="#fff"] {
+svg :is([stroke="fill"], [fill^="#fff"]) {
   fill: var(--background-color);
-}
 }
 </style>
 
@@ -1021,11 +1034,11 @@ svg [stroke="fill"], svg [fill^="#fff"] {
 <thead><tr>
 <td class="left">Internet-Draft</td>
 <td class="center">Service Identity</td>
-<td class="right">May 2022</td>
+<td class="right">June 2022</td>
 </tr></thead>
 <tfoot><tr>
 <td class="left">Saint-Andre, et al.</td>
-<td class="center">Expires 3 November 2022</td>
+<td class="center">Expires 12 December 2022</td>
 <td class="right">[Page]</td>
 </tr></tfoot>
 </table>
@@ -1041,12 +1054,12 @@ svg [stroke="fill"], svg [fill^="#fff"] {
 <a href="https://www.rfc-editor.org/rfc/rfc6125" class="eref">6125</a> (if approved)</dd>
 <dt class="label-published">Published:</dt>
 <dd class="published">
-<time datetime="2022-05-02" class="published">2 May 2022</time>
+<time datetime="2022-06-10" class="published">10 June 2022</time>
     </dd>
 <dt class="label-intended-status">Intended Status:</dt>
 <dd class="intended-status">Standards Track</dd>
 <dt class="label-expires">Expires:</dt>
-<dd class="expires"><time datetime="2022-11-03">3 November 2022</time></dd>
+<dd class="expires"><time datetime="2022-12-12">12 December 2022</time></dd>
 <dt class="label-authors">Authors:</dt>
 <dd class="authors">
 <div class="author">
@@ -1103,7 +1116,7 @@ in such interactions.<a href="#section-abstract-1" class="pilcrow">¶</a></p>
         time. It is inappropriate to use Internet-Drafts as reference
         material or to cite them other than as "work in progress."<a href="#section-boilerplate.1-3" class="pilcrow">¶</a></p>
 <p id="section-boilerplate.1-4">
-        This Internet-Draft will expire on 3 November 2022.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
+        This Internet-Draft will expire on 12 December 2022.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="copyright">
@@ -1265,7 +1278,8 @@ in such interactions.<a href="#section-abstract-1" class="pilcrow">¶</a></p>
 <p id="section-1.1-1">The visible face of the Internet largely consists of services that employ a
 client-server architecture in which a client
 communicates with an application service.  When a client communicates with an
-application service using <span>[<a href="#TLS" class="xref">TLS</a>]</span>, <span>[<a href="#DTLS" class="xref">DTLS</a>]</span>, or a protocol built on those,
+application service using <span>[<a href="#TLS" class="xref">TLS</a>]</span>, <span>[<a href="#DTLS" class="xref">DTLS</a>]</span>, or a protocol built on those
+(<span>[<a href="#QUIC" class="xref">QUIC</a>]</span> being a notable example),
 it has some notion of the server's
 identity (e.g., "the website at example.com") while attempting to establish
 secure communication.  Likewise, during TLS negotiation, the server presents
@@ -1281,11 +1295,6 @@ It therefore also defines requirements on other parties, such as
 the certificate authorities that issue certificates, the service administrators requesting
 them, and the protocol designers defining how things are named.<a href="#section-1.1-2" class="pilcrow">¶</a></p>
 <p id="section-1.1-3">This document obsoletes RFC 6125. Changes from RFC 6125 are described under <a href="#changes" class="xref">Appendix A</a>.<a href="#section-1.1-3" class="pilcrow">¶</a></p>
-<ul class="normal">
-<li class="normal" id="section-1.1-4.1">Additional text on multiple identifiers, and their security considerations,
-has been added.<a href="#section-1.1-4.1" class="pilcrow">¶</a>
-</li>
-        </ul>
 </section>
 </div>
 <div id="applicability">
@@ -1345,7 +1354,11 @@ in the subject's Common Name.<a href="#section-1.3-2.4" class="pilcrow">¶</a>
           </h4>
 <p id="section-1.4.1-1">This document applies only to service identities that meet these
 three characteristics: associated with fully-qualified domain names (FQDNs),
-used with TLS and DTLS, and are PKIX-based.<a href="#section-1.4.1-1" class="pilcrow">¶</a></p>
+used with TLS and DTLS, and are PKIX-based.
+At the time of this writing, other protocols such as <span>[<a href="#QUIC" class="xref">QUIC</a>]</span> and
+Network Time Security (<span>[<a href="#NTS" class="xref">NTS</a>]</span>) use DTLS or TLS to do the
+initial establishment of cryptographic key material.
+The rules specified here apply to such services, as well.<a href="#section-1.4.1-1" class="pilcrow">¶</a></p>
 <p id="section-1.4.1-2">TLS uses the words client and server, where the client is the entity
 that initiates the connection.  In many cases, this is consistent with common practice,
 such as a browser connecting to a Web origin.
@@ -1356,10 +1369,6 @@ However, these are TLS-layer roles, and the application protocol
 could support the TLS server making requests to the TLS client after the
 TLS handshake; these is no requirement that the roles at the application
 layer match the TLS layer.<a href="#section-1.4.1-2" class="pilcrow">¶</a></p>
-<p id="section-1.4.1-3">At the time of this writing, other protocols such as <span>[<a href="#QUIC" class="xref">QUIC</a>]</span> and
-Network Time Security (<span>[<a href="#NTS" class="xref">NTS</a>]</span>) use DTLS or TLS to do the
-initial establishment of cryptographic key material.
-The rules specified here apply to such services, as well.<a href="#section-1.4.1-3" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="out-of-scope">
@@ -1369,7 +1378,7 @@ The rules specified here apply to such services, as well.<a href="#section-1.4.1
           </h4>
 <p id="section-1.4.2-1">The following topics are out of scope for this specification:<a href="#section-1.4.2-1" class="pilcrow">¶</a></p>
 <ul class="normal">
-<li class="normal" id="section-1.4.2-2.1">Security protocols other than <span>[<a href="#TLS" class="xref">TLS</a>]</span> or <span>[<a href="#DTLS" class="xref">DTLS</a>]</span> except as
+<li class="normal" id="section-1.4.2-2.1">Security protocols other than those
 described above.<a href="#section-1.4.2-2.1" class="pilcrow">¶</a>
 </li>
             <li class="normal" id="section-1.4.2-2.2">Keys or certificates employed outside the context of PKIX-based systems.<a href="#section-1.4.2-2.2" class="pilcrow">¶</a>
@@ -1879,9 +1888,13 @@ SRV-IDs and DNS-IDs in its list of reference identifiers.<a href="#section-6.1.1
           <h4 id="name-examples-2">
 <a href="#section-6.1.2" class="section-number selfRef">6.1.2. </a><a href="#name-examples-2" class="section-name selfRef">Examples</a>
           </h4>
-<p id="section-6.1.2-1">A web browser that is connecting via HTTPS to the website at <code>www.example.com</code>
-would have a single reference identifier: a DNS-ID of <code>www.example.com</code>.<a href="#section-6.1.2-1" class="pilcrow">¶</a></p>
-<p id="section-6.1.2-2">A mail user agent that is connecting via IMAPS to the email service at
+<p id="section-6.1.2-1">The following examples are for illustrative purposes only and are not
+intended to be comprehensive.<a href="#section-6.1.2-1" class="pilcrow">¶</a></p>
+<ol start="1" type="1" class="normal type-1" id="section-6.1.2-2">
+<li id="section-6.1.2-2.1">A web browser that is connecting via HTTPS to the website at <code>www.example.com</code>
+would have a single reference identifier: a DNS-ID of <code>www.example.com</code>.<a href="#section-6.1.2-2.1" class="pilcrow">¶</a>
+</li>
+            <li id="section-6.1.2-2.2">A mail user agent that is connecting via IMAPS to the email service at
 <code>example.net</code> (resolved as <code>mail.example.net</code>) might have three reference
 identifiers: an SRV-ID of <code>_imaps.example.net</code> (see <span>[<a href="#EMAIL-SRV" class="xref">EMAIL-SRV</a>]</span>), and
 DNS-IDs of <code>example.net</code> and <code>mail.example.net</code>.  An email user agent that
@@ -1889,15 +1902,33 @@ does not support <span>[<a href="#EMAIL-SRV" class="xref">EMAIL-SRV</a>]</span> 
 connect to <code>mail.example.net</code>, whereas an SRV-aware user agent would derive
 <code>example.net</code> from an email address of the form <code>user@example.net</code> but might
 also accept <code>mail.example.net</code> as the DNS domain name portion of reference
-identifiers for the service.<a href="#section-6.1.2-2" class="pilcrow">¶</a></p>
-<p id="section-6.1.2-3">A voice-over-IP (VoIP) user agent that is connecting via SIP to the voice
+identifiers for the service.<a href="#section-6.1.2-2.2" class="pilcrow">¶</a>
+</li>
+            <li id="section-6.1.2-2.3">A voice-over-IP (VoIP) user agent that is connecting via SIP to the voice
 service at <code>voice.example.edu</code> might have only one reference identifier:
-a URI-ID of <code>sip:voice.example.edu</code> (see <span>[<a href="#SIP-CERTS" class="xref">SIP-CERTS</a>]</span>).<a href="#section-6.1.2-3" class="pilcrow">¶</a></p>
-<p id="section-6.1.2-4">An instant messaging (IM) client that is connecting via XMPP to the IM
+a URI-ID of <code>sip:voice.example.edu</code> (see <span>[<a href="#SIP-CERTS" class="xref">SIP-CERTS</a>]</span>).<a href="#section-6.1.2-2.3" class="pilcrow">¶</a>
+</li>
+            <li id="section-6.1.2-2.4">An instant messaging (IM) client that is connecting via XMPP to the IM
 service at <code>im.example.org</code> might have three reference identifiers: an
 SRV-ID of <code>_xmpp-client.im.example.org</code> (see <span>[<a href="#XMPP" class="xref">XMPP</a>]</span>), a DNS-ID of
 <code>im.example.org</code>, and an XMPP-specific <code>XmppAddr</code> of <code>im.example.org</code>
-(see <span>[<a href="#XMPP" class="xref">XMPP</a>]</span>).<a href="#section-6.1.2-4" class="pilcrow">¶</a></p>
+(see <span>[<a href="#XMPP" class="xref">XMPP</a>]</span>).<a href="#section-6.1.2-2.4" class="pilcrow">¶</a>
+</li>
+          </ol>
+<p id="section-6.1.2-3">In all of these cases, presented identifiers that do not match the reference
+identifier(s) would be rejected; for instance:<a href="#section-6.1.2-3" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="section-6.1.2-4.1">With regard to the first example a DNS-ID of "web.example.com" would
+be rejected because the DNS domain name portion does not match
+"www.example.com".<a href="#section-6.1.2-4.1" class="pilcrow">¶</a>
+</li>
+            <li class="normal" id="section-6.1.2-4.2">With regard to the third example, a URI-ID of "sip:www.example.edu"
+would be rejected because the DNS domain name portion does not match
+"voice.example.edu" and a DNS-ID of "voice.example.edu" would be
+rejected because it lacks the appropriate application service type
+portion (i.e., it does not specify a "sip:" URI).<a href="#section-6.1.2-4.2" class="pilcrow">¶</a>
+</li>
+          </ul>
 </section>
 </div>
 </section>
@@ -2111,13 +2142,13 @@ can then use to select the most appropriate certificate.<a href="#section-7.3-1"
 certificate.  As a result, an application service can use the same
 certificate for multiple hostnames, such as when a client does not support
 the TLS SNI extension, or for multiple protocols, such as SMTP and HTTP, on a
-single hostname. The use of a single certificate and its keypair in such
-environments can make it easier to launch cross-protocol attacks, particularly when used in
-inconsistent TLS configurations; see, for example, <span>[<a href="#ALPACA" class="xref">ALPACA</a>]</span> and <span>[<a href="#DROWN" class="xref">DROWN</a>]</span>.
-Server operators <span class="bcp14">SHOULD</span> take steps to mitigate the risk of cross-protocol
-attacks, such as ensuring all TLS endpoints using a given certificate support
-exactly the same TLS version(s) and ciphersuite(s), and <span class="bcp14">SHOULD</span> use the TLS
-ALPN extension to ensure the correct protocol is used.<a href="#section-7.3-2" class="pilcrow">¶</a></p>
+single hostname.  Note that the set of names in a certificate is the set of
+names that could be affected by a compromise of any other server named in
+the set: the strength of any server in the set of names is determined by the
+weakest of those servers that offer the names.<a href="#section-7.3-2" class="pilcrow">¶</a></p>
+<p id="section-7.3-3">The way to mitigate this risk is to limit the number of names that
+any server can speak for, and to ensure that all servers in the set
+have a strong minimum configuration as described in <span>[<a href="#RFC7525bis" class="xref">RFC7525bis</a>]</span>.<a href="#section-7.3-3" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="multiple-reference-identifiers">
@@ -2196,6 +2227,10 @@ name constraint for URI-IDs.<a href="#section-7.4-2" class="pilcrow">¶</a></p>
         <dd>
 <span class="refAuthor">Bradner, S.</span>, <span class="refTitle">"Key words for use in RFCs to Indicate Requirement Levels"</span>, <span class="seriesInfo">BCP 14</span>, <span class="seriesInfo">RFC 2119</span>, <span class="seriesInfo">DOI 10.17487/RFC2119</span>, <time datetime="1997-03" class="refDate">March 1997</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc2119">https://www.rfc-editor.org/rfc/rfc2119</a>&gt;</span>. </dd>
 <dd class="break"></dd>
+<dt id="RFC7525bis">[RFC7525bis]</dt>
+        <dd>
+<span class="refAuthor">Sheffer, Y.</span>, <span class="refAuthor">Saint-Andre, P.</span>, and <span class="refAuthor">T. Fossati</span>, <span class="refTitle">"Recommendations for Secure Use of Transport Layer Security (TLS) and Datagram Transport Layer Security (DTLS)"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-uta-rfc7525bis-07</span>, <time datetime="2022-05-26" class="refDate">26 May 2022</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-ietf-uta-rfc7525bis-07">https://datatracker.ietf.org/doc/html/draft-ietf-uta-rfc7525bis-07</a>&gt;</span>. </dd>
+<dd class="break"></dd>
 <dt id="RFC8174">[RFC8174]</dt>
         <dd>
 <span class="refAuthor">Leiba, B.</span>, <span class="refTitle">"Ambiguity of Uppercase vs Lowercase in RFC 2119 Key Words"</span>, <span class="seriesInfo">BCP 14</span>, <span class="seriesInfo">RFC 8174</span>, <span class="seriesInfo">DOI 10.17487/RFC8174</span>, <time datetime="2017-05" class="refDate">May 2017</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc8174">https://www.rfc-editor.org/rfc/rfc8174</a>&gt;</span>. </dd>
@@ -2242,10 +2277,6 @@ name constraint for URI-IDs.<a href="#section-7.4-2" class="pilcrow">¶</a></p>
 <dt id="DNSSEC">[DNSSEC]</dt>
         <dd>
 <span class="refAuthor">Arends, R.</span>, <span class="refAuthor">Austein, R.</span>, <span class="refAuthor">Larson, M.</span>, <span class="refAuthor">Massey, D.</span>, and <span class="refAuthor">S. Rose</span>, <span class="refTitle">"DNS Security Introduction and Requirements"</span>, <span class="seriesInfo">RFC 4033</span>, <span class="seriesInfo">DOI 10.17487/RFC4033</span>, <time datetime="2005-03" class="refDate">March 2005</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc4033">https://www.rfc-editor.org/rfc/rfc4033</a>&gt;</span>. </dd>
-<dd class="break"></dd>
-<dt id="DROWN">[DROWN]</dt>
-        <dd>
-<span class="refTitle">"The DROWN Attack"</span>, <span>n.d.</span>, <span>&lt;<a href="https://drownattack.com">https://drownattack.com</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="DTLS">[DTLS]</dt>
         <dd>
@@ -2327,7 +2358,7 @@ name constraint for URI-IDs.<a href="#section-7.4-2" class="pilcrow">¶</a></p>
 on the decade of experience and changes since it was published.
 The major changes, in no particular order, include:<a href="#appendix-A-1" class="pilcrow">¶</a></p>
 <ul class="normal">
-<li class="normal" id="appendix-A-2.1">The only legal place for a certificate wildcard name is as the complete left-most
+<li class="normal" id="appendix-A-2.1">The only legal place for a certificate wildcard is as the complete left-most
 component in a domain name.<a href="#appendix-A-2.1" class="pilcrow">¶</a>
 </li>
         <li class="normal" id="appendix-A-2.2">The server identity can only be expressed in the subjectAltNames
@@ -2347,6 +2378,9 @@ sample text in Appendix A have been removed.<a href="#appendix-A-2.5" class="pil
         <li class="normal" id="appendix-A-2.6">All references have been updated to the current latest version.<a href="#appendix-A-2.6" class="pilcrow">¶</a>
 </li>
         <li class="normal" id="appendix-A-2.7">The TLS SNI extension is no longer new, it is commonplace.<a href="#appendix-A-2.7" class="pilcrow">¶</a>
+</li>
+        <li class="normal" id="appendix-A-2.8">Additional text on multiple identifiers, and their security considerations,
+has been added.<a href="#appendix-A-2.8" class="pilcrow">¶</a>
 </li>
       </ul>
 </section>
