@@ -13,7 +13,7 @@ pi:
   toc: 'yes'
   tocdepth: '4'
   rfcedstyle: 'yes'
-title: Service Names in TLS
+title: Service Identity in TLS
 abbrev: Service Identity
 area: Applications
 kw: Internet-Draft
@@ -161,7 +161,8 @@ This document obsoletes RFC 6125.
 The visible face of the Internet largely consists of services that employ a
 client-server architecture in which a client
 communicates with an application service.  When a client communicates with an
-application service using {{TLS}}, {{DTLS}}, or a protocol built on those,
+application service using {{TLS}}, {{DTLS}}, or a protocol built on those
+({{QUIC}} being a notable example),
 it has some notion of the server's
 identity (e.g., "the website at example.com") while attempting to establish
 secure communication.  Likewise, during TLS negotiation, the server presents
@@ -223,6 +224,10 @@ The rules are brief:
 This document applies only to service identities that meet these
 three characteristics: associated with fully-qualified domain names (FQDNs),
 used with TLS and DTLS, and are PKIX-based.
+At the time of this writing, other protocols such as {{QUIC}} and
+Network Time Security ({{NTS}}) use DTLS or TLS to do the
+initial establishment of cryptographic key material.
+The rules specified here apply to such services, as well.
 
 TLS uses the words client and server, where the client is the entity
 that initiates the connection.  In many cases, this is consistent with common practice,
@@ -235,16 +240,11 @@ could support the TLS server making requests to the TLS client after the
 TLS handshake; these is no requirement that the roles at the application
 layer match the TLS layer.
 
-At the time of this writing, other protocols such as {{QUIC}} and
-Network Time Security ({{NTS}}) use DTLS or TLS to do the
-initial establishment of cryptographic key material.
-The rules specified here apply to such services, as well.
-
 ### Out of Scope {#out-of-scope}
 
 The following topics are out of scope for this specification:
 
-* Security protocols other than {{TLS}} or {{DTLS}} except as
+* Security protocols other than those
   described above.
 
 * Keys or certificates employed outside the context of PKIX-based systems.
