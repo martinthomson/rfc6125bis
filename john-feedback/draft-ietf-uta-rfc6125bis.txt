@@ -11,7 +11,7 @@ Expires: 12 December 2022                                        R. Salz
                                                             10 June 2022
 
 
-                          Service Names in TLS
+                        Service Identity in TLS
                     draft-ietf-uta-rfc6125bis-latest
 
 Abstract
