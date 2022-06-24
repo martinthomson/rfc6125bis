@@ -44,7 +44,7 @@ informative:
   ALPN: RFC7301
   DNS-CASE: RFC4343
   DNSSEC: RFC4033
-  DTLS: RFC6347
+  DTLS: RFC9147
   EMAIL-SRV: RFC6186
   NAPTR: RFC3403
   NTS: RFC8915
@@ -195,9 +195,10 @@ to verify the entire certification path as per {{PKIX}}.
 
 The previous version of this specification, {{VERIFY}}, surveyed the then-current
 practice from many IETF standards and tried to generalize best practices
-(see Appendix A {{VERIFY}} for details).
+(see Appendix A of {{VERIFY}} for details).
+
 This document takes the lessons learned since then and codifies them.
-The rules are brief:
+The rules defined here are brief:
 
 * Only check DNS domain names via the subjectAlternativeName
   extension designed for that purpose: dNSName.
