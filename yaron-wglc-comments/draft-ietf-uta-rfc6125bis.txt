@@ -4,14 +4,12 @@
 
 Network Working Group                                     P. Saint-Andre
 Internet-Draft                                                          
-Obsoletes: 6125 (if approved)                                  J. Hodges
-Intended status: Standards Track                                        
-Expires: 26 November 2022                                        R. Salz
-                                                     Akamai Technologies
-                                                             25 May 2022
+Obsoletes: 6125 (if approved)                                    R. Salz
+Intended status: Standards Track                     Akamai Technologies
+Expires: 26 December 2022                                   24 June 2022
 
 
-                          Service Names in TLS
+                        Service Identity in TLS
                     draft-ietf-uta-rfc6125bis-latest
 
 Abstract
@@ -50,7 +48,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 26 November 2022.
+   This Internet-Draft will expire on 26 December 2022.
 
 Copyright Notice
 
@@ -110,19 +108,19 @@ Table of Contents
    The visible face of the Internet largely consists of services that
    employ a client-server architecture in which a client communicates
    with an application service.  When a client communicates with an
-   application service using [TLS], [DTLS], or a protocol built on
-   those, it has some notion of the server's identity (e.g., "the
-   website at example.com") while attempting to establish secure
-   communication.  Likewise, during TLS negotiation, the server presents
-   its notion of the service's identity in the form of a public-key
-   certificate that was issued by a certificate authority (CA) in the
-   context of the Internet Public Key Infrastructure using X.509 [PKIX].
-   Informally, we can think of these identities as the client's
-   "reference identity" and the server's "presented identity"; more
-   formal definitions are given later.  A client needs to verify that
-   the server's presented identity matches its reference identity so it
-   can deterministically and automatically authenticate the
-   communication.
+   application service using [TLS], [DTLS], or a protocol built on those
+   ([QUIC] being a notable example), it has some notion of the server's
+   identity (e.g., "the website at example.com") while attempting to
+   establish secure communication.  Likewise, during TLS negotiation,
+   the server presents its notion of the service's identity in the form
+   of a public-key certificate that was issued by a certificate
+   authority (CA) in the context of the Internet Public Key
+   Infrastructure using X.509 [PKIX].  Informally, we can think of these
+   identities as the client's "reference identity" and the server's
+   "presented identity"; more formal definitions are given later.  A
+   client needs to verify that the server's presented identity matches
+   its reference identity so it can deterministically and automatically
+   authenticate the communication.
 
    This document defines procedures for how clients do this
    verification.  It therefore also defines requirements on other
@@ -152,9 +150,10 @@ Table of Contents
 
    The previous version of this specification, [VERIFY], surveyed the
    then-current practice from many IETF standards and tried to
-   generalize best practices (see Appendix A [VERIFY] for details).
+   generalize best practices (see Appendix A of [VERIFY] for details).
+
    This document takes the lessons learned since then and codifies them.
-   The rules are brief:
+   The rules defined here are brief:
 
    *  Only check DNS domain names via the subjectAlternativeName
       extension designed for that purpose: dNSName.
@@ -176,7 +175,11 @@ Table of Contents
 
    This document applies only to service identities that meet these
    three characteristics: associated with fully-qualified domain names
-   (FQDNs), used with TLS and DTLS, and are PKIX-based.
+   (FQDNs), used with TLS and DTLS, and are PKIX-based.  At the time of
+   this writing, other protocols such as [QUIC] and Network Time
+   Security ([NTS]) use DTLS or TLS to do the initial establishment of
+   cryptographic key material.  The rules specified here apply to such
+   services, as well.
 
    TLS uses the words client and server, where the client is the entity
    that initiates the connection.  In many cases, this is consistent
@@ -188,17 +191,11 @@ Table of Contents
    the TLS client after the TLS handshake; these is no requirement that
    the roles at the application layer match the TLS layer.
 
-   At the time of this writing, other protocols such as [QUIC] and
-   Network Time Security ([NTS]) use DTLS or TLS to do the initial
-   establishment of cryptographic key material.  The rules specified
-   here apply to such services, as well.
-
 1.4.2.  Out of Scope
 
    The following topics are out of scope for this specification:
 
-   *  Security protocols other than [TLS] or [DTLS] except as described
-      above.
+   *  Security protocols other than those described above.
 
    *  Keys or certificates employed outside the context of PKIX-based
       systems.
@@ -972,9 +969,9 @@ Table of Contents
               "Recommendations for Secure Use of Transport Layer
               Security (TLS) and Datagram Transport Layer Security
               (DTLS)", Work in Progress, Internet-Draft, draft-ietf-uta-
-              rfc7525bis-06, 24 March 2022,
+              rfc7525bis-07, 26 May 2022,
               <https://datatracker.ietf.org/doc/html/draft-ietf-uta-
-              rfc7525bis-06>.
+              rfc7525bis-07>.
 
    [RFC8174]  Leiba, B., "Ambiguity of Uppercase vs Lowercase in RFC
               2119 Key Words", BCP 14, RFC 8174, DOI 10.17487/RFC8174,
@@ -1030,9 +1027,10 @@ Table of Contents
               RFC 4033, DOI 10.17487/RFC4033, March 2005,
               <https://www.rfc-editor.org/rfc/rfc4033>.
 
-   [DTLS]     Rescorla, E. and N. Modadugu, "Datagram Transport Layer
-              Security Version 1.2", RFC 6347, DOI 10.17487/RFC6347,
-              January 2012, <https://www.rfc-editor.org/rfc/rfc6347>.
+   [DTLS]     Rescorla, E., Tschofenig, H., and N. Modadugu, "The
+              Datagram Transport Layer Security (DTLS) Protocol Version
+              1.3", RFC 9147, DOI 10.17487/RFC9147, April 2022,
+              <https://www.rfc-editor.org/rfc/rfc9147>.
 
    [EMAIL-SRV]
               Daboo, C., "Use of SRV Records for Locating Email
@@ -1156,11 +1154,6 @@ Authors' Addresses
    Peter Saint-Andre
    United States of America
    Email: stpeter@stpeter.im
-
-
-   Jeff Hodges
-   United States of America
-   Email: netwerkeddude@gmail.com
 
 
    Rich Salz
