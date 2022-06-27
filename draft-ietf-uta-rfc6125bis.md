@@ -219,9 +219,15 @@ length in the remainder of this document:
 
 ### In Scope {#in-scope}
 
-This document applies only to service identities that meet these
-three characteristics: associated with fully-qualified domain names (FQDNs),
-used with TLS and DTLS, and are PKIX-based.
+This document applies only to service identities that meet all 
+three of the following characteristics:
+
+1. Are associated with fully-qualified domain names (FQDNs) {{DNS-CONCEPTS}}.
+
+2. Are used with TLS and DTLS
+
+3. Are included in X.509 (PKIX) certificates.
+
 At the time of this writing, other protocols such as {{QUIC}} and
 Network Time Security ({{NTS}}) use DTLS or TLS to do the
 initial establishment of cryptographic key material.
