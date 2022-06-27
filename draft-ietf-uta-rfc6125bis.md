@@ -555,8 +555,7 @@ Consider an XMPP-compatible instant messaging (IM) server at the host
 discoverable via DNS SRV lookups on the `im.example.org` domain.  A
 certificate for this service might include SRV-IDs of
 `_xmpp-client.im.example.org` and `_xmpp-server.im.example.org` (see
-{{XMPP}}), a DNS-ID of `im.example.org`.  For backward compatibility, it may
-also have an XMPP-specific `XmppAddr` of `im.example.org` (see {{XMPP}}).
+{{XMPP}}), a DNS-ID of `im.example.org`.
 
 # Requesting Server Certificates {#request}
 
