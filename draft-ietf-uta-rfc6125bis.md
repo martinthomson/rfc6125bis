@@ -20,6 +20,7 @@ kw: Internet-Draft
 author:
 - ins: P. Saint-Andre
   name: Peter Saint-Andre
+  org: independent
   country: US
   email: stpeter@stpeter.im
 - ins: R. Salz
@@ -971,19 +972,25 @@ The major changes, in no particular order, include:
 - Additional text on multiple identifiers, and their security considerations,
   has been added.
 
+# Contributors
+
+Jeff Hodges co-authored the previous version of these recommendations, {{VERIFY}}. 
+The authors gratefully acknowledge his essential contributions to this work.
+
 # Acknowledgements {#acknowledgements}
 {: numbered='false'}
 
 We gratefully acknowledge everyone who contributed to the previous
-version of this document, {{VERIFY}}.
+version of these recommendations, {{VERIFY}}.
 Thanks also to Carsten Bormann for converting the previous document
 to Markdown so that we could more easily use Martin Thomson's `i-d-template`
 software.
 
 In addition to discussion on the mailing list, the following people
-contributed significant changes:
+provided especially helpful feedback:
 Viktor Dukhovni,
 Jim Fenton,
 Olle Johansson,
+Ryan Sleevi,
 and
-Ryan Sleevi.
+Martin Thomson.
