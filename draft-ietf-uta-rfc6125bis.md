@@ -453,15 +453,11 @@ services so that they do not share certificates.
 Protocol specifications MUST specify which identifiers are
 mandatory-to-implement and SHOULD provide operational guidance when necessary.
 
-The Common Name RDN MUST NOT be used to identify a service. Reasons
-for this include:
+The Common Name RDN MUST NOT be used to identify a service because
+it is not strongly typed (essentially free-form text) and therefore 
+suffers from ambiguities in interpretation.
 
-* It is not strongly typed and therefore suffers from ambiguities
-  in interpretation.
-
-* It can appear more than once in the subjectName.
-
-For similar reasons, other RDN's within the subjectName MUST NOT be used to
+For similar reasons, other RDNs within the subjectName MUST NOT be used to
 identify a service.
 
 # Designing Application Protocols {#design}
