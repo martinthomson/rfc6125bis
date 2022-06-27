@@ -198,7 +198,8 @@ practice from many IETF standards and tried to generalize best practices
 (see Appendix A of {{VERIFY}} for details).
 
 This document takes the lessons learned since then and codifies them.
-The rules defined here are brief:
+The following is a summary of the rules, which are described at greater
+length in the remainder of this document:
 
 * Only check DNS domain names via the subjectAlternativeName
   extension designed for that purpose: dNSName.
