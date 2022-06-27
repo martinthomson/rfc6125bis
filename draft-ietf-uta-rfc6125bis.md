@@ -206,7 +206,7 @@ This document addresses only name forms in the leaf "end entity" server
 certificate.  It does not address the name forms in the chain of certificates
 used to validate a cetrificate, let alone creating or checking the validity
 of such a chain.  In order to ensure proper authentication, applications need
-to verify the entire certification path as per {{PKIX}}.
+to verify the entire certification path.
 
 ## Overview of Recommendations {#overview}
 
