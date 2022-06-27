@@ -6,7 +6,7 @@ Network Working Group                                     P. Saint-Andre
 Internet-Draft                                                          
 Obsoletes: 6125 (if approved)                                    R. Salz
 Intended status: Standards Track                     Akamai Technologies
-Expires: 26 December 2022                                   24 June 2022
+Expires: 29 December 2022                                   27 June 2022
 
 
                         Service Identity in TLS
@@ -48,7 +48,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 26 December 2022.
+   This Internet-Draft will expire on 29 December 2022.
 
 Copyright Notice
 
@@ -153,7 +153,8 @@ Table of Contents
    generalize best practices (see Appendix A of [VERIFY] for details).
 
    This document takes the lessons learned since then and codifies them.
-   The rules defined here are brief:
+   The following is a summary of the rules, which are described at
+   greater length in the remainder of this document:
 
    *  Only check DNS domain names via the subjectAlternativeName
       extension designed for that purpose: dNSName.
@@ -969,9 +970,9 @@ Table of Contents
               "Recommendations for Secure Use of Transport Layer
               Security (TLS) and Datagram Transport Layer Security
               (DTLS)", Work in Progress, Internet-Draft, draft-ietf-uta-
-              rfc7525bis-07, 26 May 2022,
+              rfc7525bis-08, 25 June 2022,
               <https://datatracker.ietf.org/doc/html/draft-ietf-uta-
-              rfc7525bis-07>.
+              rfc7525bis-08>.
 
    [RFC8174]  Leiba, B., "Ambiguity of Uppercase vs Lowercase in RFC
               2119 Key Words", BCP 14, RFC 8174, DOI 10.17487/RFC8174,
