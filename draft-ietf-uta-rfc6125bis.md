@@ -241,7 +241,7 @@ specifications, we will continue
 to use the terms client and server in this document.
 However, these are TLS-layer roles, and the application protocol
 could support the TLS server making requests to the TLS client after the
-TLS handshake; these is no requirement that the roles at the application
+TLS handshake; there is no requirement that the roles at the application
 layer match the TLS layer.
 
 ### Out of Scope {#out-of-scope}
