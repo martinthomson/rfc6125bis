@@ -222,14 +222,14 @@ length in the remainder of this document:
 This document applies only to service identities that meet all 
 three of the following characteristics:
 
-1. Are associated with fully-qualified domain names (FQDNs) {{DNS-CONCEPTS}}.
+1. Are associated with fully-qualified domain names, a.k.a. FQDNs (informally described in {{DNS-CONCEPTS}}).
 
-2. Are used with TLS and DTLS
+2. Are used with TLS and DTLS.
 
 3. Are included in X.509 (PKIX) certificates.
 
 At the time of this writing, other protocols such as {{QUIC}} and
-Network Time Security ({{NTS}}) use DTLS or TLS to do the
+Network Time Security {{NTS}} use DTLS or TLS to perform the
 initial establishment of cryptographic key material.
 The rules specified here apply to such services, as well.
 
