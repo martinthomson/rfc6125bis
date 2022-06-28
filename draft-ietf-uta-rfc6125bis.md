@@ -233,16 +233,7 @@ Network Time Security {{NTS}} use DTLS or TLS to perform the
 initial establishment of cryptographic key material.
 The rules specified here apply to such services, as well.
 
-TLS uses the words client and server, where the client is the entity
-that initiates the connection.  In many cases, this is consistent with common practice,
-such as a browser connecting to a Web origin.
-For the sake of clarity, and to follow the usage in {{TLS}} and related
-specifications, we will continue
-to use the terms client and server in this document.
-However, these are TLS-layer roles, and the application protocol
-could support the TLS server making requests to the TLS client after the
-TLS handshake; there is no requirement that the roles at the application
-layer match the TLS layer.
+
 
 ### Out of Scope {#out-of-scope}
 
@@ -388,6 +379,17 @@ subjectAltName extension:
 subjectName:
 : The name of a PKIX certificate's subject, encoded in a certificate's
   subject field (see {{PKIX, Section 4.1.2.6}}).
+
+TLS uses the words client and server, where the client is the entity
+that initiates the connection.  In many cases, this is consistent with common practice,
+such as a browser connecting to a Web origin.
+For the sake of clarity, and to follow the usage in {{TLS}} and related
+specifications, we will continue
+to use the terms client and server in this document.
+However, these are TLS-layer roles, and the application protocol
+could support the TLS server making requests to the TLS client after the
+TLS handshake; there is no requirement that the roles at the application
+layer match the TLS layer.
 
 Security-related terms used in this document, but not defined here or in
 {{PKIX}} should be understood in the the sense defined in {{SECTERMS}}. Such
