@@ -254,7 +254,9 @@ at present the most prominent example is QUIC {{?RFC9000}}.  The
 rules specified here are intended to apply to all protocols in this 
 extended TLS "family".
 
-With regard to PKIX, technologies such as DNS-Based Authentication 
+With regard to PKIX certificates, the primary usage is in the 
+context of the public key infrastructure described in {{5280}}.
+In addition, technologies such as DNS-Based Authentication 
 of Named Entities (DANE) {{RFC6698}} sometimes use certificates based 
 on PKIX (more precisely, certificates structured via {{X.509}} or 
 specific encodings thereof such as {{X.690}}), at least in certain 
