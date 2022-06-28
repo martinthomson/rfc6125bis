@@ -255,7 +255,7 @@ rules specified here are intended to apply to all protocols in this
 extended TLS "family".
 
 With regard to PKIX certificates, the primary usage is in the 
-context of the public key infrastructure described in {{5280}}.
+context of the public key infrastructure described in {{PKIX}}.
 In addition, technologies such as DNS-Based Authentication 
 of Named Entities (DANE) {{RFC6698}} sometimes use certificates based 
 on PKIX (more precisely, certificates structured via {{X.509}} or 
