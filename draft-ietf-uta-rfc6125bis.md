@@ -42,6 +42,7 @@ informative:
   ABNF: RFC5234
   ACME: RFC8555
   ALPN: RFC7301
+  DANE: RFC6698
   DNS-CASE: RFC4343
   DNSSEC: RFC4033
   DTLS: RFC9147
@@ -54,6 +55,7 @@ informative:
   SIP-CERTS: RFC5922
   SIP-SIPS: RFC5630
   TLS: RFC8446
+  TLS-SUBCERTS: I-D.ietf-tls-subcerts
   VERIFY: RFC6125
   XMPP: RFC6120
   ALPACA:
@@ -127,6 +129,20 @@ informative:
     date: 1986
     seriesinfo:
       ANSI: X3.4
+  X.509:
+    title: Information Technology - Open Systems Interconnection - The Directory: Public-key and attribute certificate frameworks
+    author:
+    - org: International Telecommunications Union
+    date: 2005
+    seriesinfo:
+      ITU-T: X.509
+  X.690:
+    title: Information Technology - ASN.1 encoding rules: Specification of Basic Encoding Rules (BER), Canonical Encoding Rules (CER) and Distinguished Encoding Rules (DER)
+    author:
+    - org: International Telecommunications Union
+    date: 2008
+    seriesinfo:
+      ITU-T: X.690
   WSC-UI:
     target: https://www.w3.org/TR/2010/REC-wsc-ui-20100812/
     title: 'Web Security Context: User Interface Guidelines'
@@ -226,13 +242,28 @@ three of the following characteristics:
 
 2. Are used with TLS and DTLS.
 
-3. Are included in X.509 (PKIX) certificates.
+3. Are included in PKIX certificates.
 
-At the time of this writing, other protocols such as {{QUIC}} and
-Network Time Security {{NTS}} use DTLS or TLS to perform the
-initial establishment of cryptographic key material.
-The rules specified here apply to such services, as well.
+With regard to TLS and DTLS, these security protocols are used to 
+protect data exchanged over a wide variety of application protocols, 
+which use both the TLS or DTLS handshake protocol and the TLS or 
+DTLS record layer, either directly or through a profile as in Network 
+Time Security {{NTS}}.  The TLS handshake protocol can also be used 
+with different record layers to define secure transport protocols; 
+at present the most prominent example is QUIC {{?RFC9000}}.  The 
+rules specified here are intended to apply to all protocols in this 
+extended TLS "family".
 
+With regard to PKIX, technologies such as DNS-Based Authentication 
+of Named Entities (DANE) {{RFC6698}} sometimes use certificates based 
+on PKIX (more precisely, certificates structured via {{X.509}} or 
+specific encodings thereof such as {{X.690}}), at least in certain 
+modes.  Alternatively, a TLS peer could issue delegated credentials 
+that are based on a CA-issued certificate, as in {{TLS-SUBCERTS}}.  
+In both of these cases, a TLS client could learn of a service identity 
+through its inclusion in the relevant certificate.  The rules specified 
+here are intended to apply whenever service identities are included in
+X.509 certificates or credentials that are derived from such certificates.
 
 
 ### Out of Scope {#out-of-scope}
@@ -992,3 +1023,5 @@ Jim Fenton,
 Olle Johansson,
 and
 Ryan Sleevi.
+
+A few descriptive sentences were borrowed from {{RFC7525bis}}.
