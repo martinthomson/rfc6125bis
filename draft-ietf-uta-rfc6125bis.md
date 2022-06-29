@@ -131,14 +131,14 @@ informative:
     seriesinfo:
       ANSI: X3.4
   X.509:
-    title: Information Technology - Open Systems Interconnection - The Directory: Public-key and attribute certificate frameworks
+    title: "Information Technology - Open Systems Interconnection - The Directory: Public-key and attribute certificate frameworks"
     author:
     - org: International Telecommunications Union
     date: 2005
     seriesinfo:
       ITU-T: X.509
   X.690:
-    title: Information Technology - ASN.1 encoding rules: Specification of Basic Encoding Rules (BER), Canonical Encoding Rules (CER) and Distinguished Encoding Rules (DER)
+    title: "Information Technology - ASN.1 encoding rules: Specification of Basic Encoding Rules (BER), Canonical Encoding Rules (CER) and Distinguished Encoding Rules (DER)"
     author:
     - org: International Telecommunications Union
     date: 2008
@@ -236,7 +236,7 @@ length in the remainder of this document:
 
 ### In Scope {#in-scope}
 
-This document applies only to service identities that meet all 
+This document applies only to service identities that meet all
 three of the following characteristics:
 
 1. Are associated with fully-qualified domain names, a.k.a. FQDNs (informally described in {{DNS-CONCEPTS}}).
@@ -245,26 +245,26 @@ three of the following characteristics:
 
 3. Are included in PKIX certificates.
 
-With regard to TLS and DTLS, these security protocols are used to 
-protect data exchanged over a wide variety of application protocols, 
-which use both the TLS or DTLS handshake protocol and the TLS or 
-DTLS record layer, either directly or through a profile as in Network 
-Time Security {{NTS}}.  The TLS handshake protocol can also be used 
-with different record layers to define secure transport protocols; 
-at present the most prominent example is QUIC {{?RFC9000}}.  The 
-rules specified here are intended to apply to all protocols in this 
+With regard to TLS and DTLS, these security protocols are used to
+protect data exchanged over a wide variety of application protocols,
+which use both the TLS or DTLS handshake protocol and the TLS or
+DTLS record layer, either directly or through a profile as in Network
+Time Security {{NTS}}.  The TLS handshake protocol can also be used
+with different record layers to define secure transport protocols;
+at present the most prominent example is QUIC {{?RFC9000}}.  The
+rules specified here are intended to apply to all protocols in this
 extended TLS "family".
 
-With regard to PKIX certificates, the primary usage is in the 
+With regard to PKIX certificates, the primary usage is in the
 context of the public key infrastructure described in {{PKIX}}.
-In addition, technologies such as DNS-Based Authentication 
-of Named Entities (DANE) {{RFC6698}} sometimes use certificates based 
-on PKIX (more precisely, certificates structured via {{X.509}} or 
-specific encodings thereof such as {{X.690}}), at least in certain 
-modes.  Alternatively, a TLS peer could issue delegated credentials 
-that are based on a CA-issued certificate, as in {{TLS-SUBCERTS}}.  
-In both of these cases, a TLS client could learn of a service identity 
-through its inclusion in the relevant certificate.  The rules specified 
+In addition, technologies such as DNS-Based Authentication
+of Named Entities (DANE) {{DANE}} sometimes use certificates based
+on PKIX (more precisely, certificates structured via {{X.509}} or
+specific encodings thereof such as {{X.690}}), at least in certain
+modes.  Alternatively, a TLS peer could issue delegated credentials
+that are based on a CA-issued certificate, as in {{TLS-SUBCERTS}}.
+In both of these cases, a TLS client could learn of a service identity
+through its inclusion in the relevant certificate.  The rules specified
 here are intended to apply whenever service identities are included in
 X.509 certificates or credentials that are derived from such certificates.
 
@@ -490,7 +490,7 @@ Protocol specifications MUST specify which identifiers are
 mandatory-to-implement and SHOULD provide operational guidance when necessary.
 
 The Common Name RDN MUST NOT be used to identify a service because
-it is not strongly typed (essentially free-form text) and therefore 
+it is not strongly typed (essentially free-form text) and therefore
 suffers from ambiguities in interpretation.
 
 For similar reasons, other RDNs within the subjectName MUST NOT be used to
@@ -1012,7 +1012,7 @@ The major changes, in no particular order, include:
 
 # Contributors
 
-Jeff Hodges co-authored the previous version of these recommendations, {{VERIFY}}. 
+Jeff Hodges co-authored the previous version of these recommendations, {{VERIFY}}.
 The authors gratefully acknowledge his essential contributions to this work.
 
 # Acknowledgements {#acknowledgements}
