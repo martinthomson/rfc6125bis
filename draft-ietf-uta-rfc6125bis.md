@@ -131,14 +131,19 @@ informative:
     seriesinfo:
       ANSI: X3.4
   X.509:
-    title: "Information Technology - Open Systems Interconnection - The Directory: Public-key and attribute certificate frameworks"
+    title: >
+     Information Technology - Open Systems Interconnection -
+     The Directory: Public-key and attribute certificate frameworks
     author:
     - org: International Telecommunications Union
     date: 2005
     seriesinfo:
       ITU-T: X.509
   X.690:
-    title: "Information Technology - ASN.1 encoding rules: Specification of Basic Encoding Rules (BER), Canonical Encoding Rules (CER) and Distinguished Encoding Rules (DER)"
+    title: >
+      Information Technology - ASN.1 encoding rules:
+      Specification of Basic Encoding Rules (BER), Canonical Encoding Rules
+      (CER) and Distinguished Encoding Rules (DER)
     author:
     - org: International Telecommunications Union
     date: 2008
