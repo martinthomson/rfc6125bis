@@ -43,9 +43,10 @@ informative:
   ABNF: RFC5234
   ACME: RFC8555
   ALPN: RFC7301
+  DANE: RFC6698
   DNS-CASE: RFC4343
   DNSSEC: RFC4033
-  DTLS: RFC6347
+  DTLS: RFC9147
   EMAIL-SRV: RFC6186
   NAPTR: RFC3403
   NTS: RFC8915
@@ -55,6 +56,7 @@ informative:
   SIP-CERTS: RFC5922
   SIP-SIPS: RFC5630
   TLS: RFC8446
+  TLS-SUBCERTS: I-D.ietf-tls-subcerts
   VERIFY: RFC6125
   XMPP: RFC6120
   ALPACA:
@@ -128,6 +130,25 @@ informative:
     date: 1986
     seriesinfo:
       ANSI: X3.4
+  X.509:
+    title: >
+     Information Technology - Open Systems Interconnection -
+     The Directory: Public-key and attribute certificate frameworks
+    author:
+    - org: International Telecommunications Union
+    date: 2005
+    seriesinfo:
+      ITU-T: X.509
+  X.690:
+    title: >
+      Information Technology - ASN.1 encoding rules:
+      Specification of Basic Encoding Rules (BER), Canonical Encoding Rules
+      (CER) and Distinguished Encoding Rules (DER)
+    author:
+    - org: International Telecommunications Union
+    date: 2008
+    seriesinfo:
+      ITU-T: X.690
   WSC-UI:
     target: https://www.w3.org/TR/2010/REC-wsc-ui-20100812/
     title: 'Web Security Context: User Interface Guidelines'
@@ -190,15 +211,17 @@ This document addresses only name forms in the leaf "end entity" server
 certificate.  It does not address the name forms in the chain of certificates
 used to validate a cetrificate, let alone creating or checking the validity
 of such a chain.  In order to ensure proper authentication, applications need
-to verify the entire certification path as per {{PKIX}}.
+to verify the entire certification path.
 
 ## Overview of Recommendations {#overview}
 
 The previous version of this specification, {{VERIFY}}, surveyed the then-current
 practice from many IETF standards and tried to generalize best practices
-(see Appendix A {{VERIFY}} for details).
+(see Appendix A of {{VERIFY}} for details).
+
 This document takes the lessons learned since then and codifies them.
-The rules are brief:
+The following is a summary of the rules, which are described at greater
+length in the remainder of this document:
 
 * Only check DNS domain names via the subjectAlternativeName
   extension designed for that purpose: dNSName.
@@ -218,24 +241,38 @@ The rules are brief:
 
 ### In Scope {#in-scope}
 
-This document applies only to service identities that meet these
-three characteristics: associated with fully-qualified domain names (FQDNs),
-used with TLS and DTLS, and are PKIX-based.
-At the time of this writing, other protocols such as {{QUIC}} and
-Network Time Security ({{NTS}}) use DTLS or TLS to do the
-initial establishment of cryptographic key material.
-The rules specified here apply to such services, as well.
+This document applies only to service identities that meet all
+three of the following characteristics:
 
-TLS uses the words client and server, where the client is the entity
-that initiates the connection.  In many cases, this is consistent with common practice,
-such as a browser connecting to a Web origin.
-For the sake of clarity, and to follow the usage in {{TLS}} and related
-specifications, we will continue
-to use the terms client and server in this document.
-However, these are TLS-layer roles, and the application protocol
-could support the TLS server making requests to the TLS client after the
-TLS handshake; these is no requirement that the roles at the application
-layer match the TLS layer.
+1. Are associated with fully-qualified domain names, a.k.a. FQDNs (informally described in {{DNS-CONCEPTS}}).
+
+2. Are used with TLS and DTLS.
+
+3. Are included in PKIX certificates.
+
+With regard to TLS and DTLS, these security protocols are used to
+protect data exchanged over a wide variety of application protocols,
+which use both the TLS or DTLS handshake protocol and the TLS or
+DTLS record layer, either directly or through a profile as in Network
+Time Security {{NTS}}.  The TLS handshake protocol can also be used
+with different record layers to define secure transport protocols;
+at present the most prominent example is QUIC {{?RFC9000}}.  The
+rules specified here are intended to apply to all protocols in this
+extended TLS "family".
+
+With regard to PKIX certificates, the primary usage is in the
+context of the public key infrastructure described in {{PKIX}}.
+In addition, technologies such as DNS-Based Authentication
+of Named Entities (DANE) {{DANE}} sometimes use certificates based
+on PKIX (more precisely, certificates structured via {{X.509}} or
+specific encodings thereof such as {{X.690}}), at least in certain
+modes.  Alternatively, a TLS peer could issue delegated credentials
+that are based on a CA-issued certificate, as in {{TLS-SUBCERTS}}.
+In both of these cases, a TLS client could learn of a service identity
+through its inclusion in the relevant certificate.  The rules specified
+here are intended to apply whenever service identities are included in
+X.509 certificates or credentials that are derived from such certificates.
+
 
 ### Out of Scope {#out-of-scope}
 
@@ -382,6 +419,17 @@ subjectName:
 : The name of a PKIX certificate's subject, encoded in a certificate's
   subject field (see {{PKIX, Section 4.1.2.6}}).
 
+TLS uses the words client and server, where the client is the entity
+that initiates the connection.  In many cases, this is consistent with common practice,
+such as a browser connecting to a Web origin.
+For the sake of clarity, and to follow the usage in {{TLS}} and related
+specifications, we will continue
+to use the terms client and server in this document.
+However, these are TLS-layer roles, and the application protocol
+could support the TLS server making requests to the TLS client after the
+TLS handshake; there is no requirement that the roles at the application
+layer match the TLS layer.
+
 Security-related terms used in this document, but not defined here or in
 {{PKIX}} should be understood in the the sense defined in {{SECTERMS}}. Such
 terms include "attack", "authentication", "identity", "trust", "validate",
@@ -446,15 +494,11 @@ services so that they do not share certificates.
 Protocol specifications MUST specify which identifiers are
 mandatory-to-implement and SHOULD provide operational guidance when necessary.
 
-The Common Name RDN MUST NOT be used to identify a service. Reasons
-for this include:
+The Common Name RDN MUST NOT be used to identify a service because
+it is not strongly typed (essentially free-form text) and therefore
+suffers from ambiguities in interpretation.
 
-* It is not strongly typed and therefore suffers from ambiguities
-  in interpretation.
-
-* It can appear more than once in the subjectName.
-
-For similar reasons, other RDN's within the subjectName MUST NOT be used to
+For similar reasons, other RDNs within the subjectName MUST NOT be used to
 identify a service.
 
 # Designing Application Protocols {#design}
@@ -548,8 +592,7 @@ Consider an XMPP-compatible instant messaging (IM) server at the host
 discoverable via DNS SRV lookups on the `im.example.org` domain.  A
 certificate for this service might include SRV-IDs of
 `_xmpp-client.im.example.org` and `_xmpp-server.im.example.org` (see
-{{XMPP}}), a DNS-ID of `im.example.org`.  For backward compatibility, it may
-also have an XMPP-specific `XmppAddr` of `im.example.org` (see {{XMPP}}).
+{{XMPP}}), a DNS-ID of `im.example.org`.
 
 # Requesting Server Certificates {#request}
 
@@ -974,7 +1017,7 @@ The major changes, in no particular order, include:
 
 # Contributors
 
-Jeff Hodges co-authored the previous version of these recommendations, {{VERIFY}}. 
+Jeff Hodges co-authored the previous version of these recommendations, {{VERIFY}}.
 The authors gratefully acknowledge his essential contributions to this work.
 
 # Acknowledgements {#acknowledgements}
@@ -994,3 +1037,5 @@ Olle Johansson,
 Ryan Sleevi,
 and
 Martin Thomson.
+
+A few descriptive sentences were borrowed from {{RFC7525bis}}.
