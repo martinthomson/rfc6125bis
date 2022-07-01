@@ -535,7 +535,7 @@ example {{URI}}.  In this case, applications need to be aware that the textual
 representation of an IPv4 address can appear to be a valid DNS name.  The two
 types can be distinguished by first testing if the identifier is a valid IPv4
 address.  Note also that by policy, Top-Level Domains ({{DNS-TERMS}}) do not
-start with a digit {{citation-needed}}.
+start with a digit (TODO: citation needed).
 
 # Representing Server Identity {#represent}
 
@@ -798,16 +798,15 @@ which point the client SHOULD stop the search.
 
 Before applying the comparison rules provided in the following
 sections, the client might need to split the reference identifier into
-its DNS domain name portion and its application service type portion,
-as follows:
+components.
+Each reference identifier produces either a domain name or an IP address and
+optionally an application service type as follows:
 
 * A DNS-ID reference identifier MUST be used directly as the DNS domain
   name and there is no application service type.
 
 * An IP-ID reference identifier MUST be exactly equal to the value of a
-  iPAddress entry in subjectAltName.  The iPAddress type does not include the IP
-  version, so IPv4 addresses are distinguish from IPv6 addresses only by their
-  length (4 as opposed to 16 bytes).
+  iPAddress entry in subjectAltName. There is no application service type.
 
 * For an SRV-ID reference identifier, the DNS domain name portion is
   the Name and the application service type portion is the Service.  For
@@ -819,20 +818,23 @@ as follows:
 * For a reference identifier of type URI-ID, the DNS domain name
   portion is the "reg-name" part of the "host" component and the application
   service type portion is the scheme, as defined above.  Matching only the
-  "reg-name" rule from {{URI}} limits verification to DNS domain names,
-  thereby differentiating a URI-ID from a uniformResourceIdentifier entry
-  that contains an IP address or a mere host name, or that does not contain a
-  "host" component at all.  Furthermore, note that extraction of the
+  "reg-name" rule from {{URI}} limits the additional domain name validation
+  ({{verify-domain}}) to DNS domain names or non-IP hostnames.
+  A URI that contains an IP address might be matched against an IP-ID in place
+  of a URI-ID by some lenient clients.  This document does not describe how a
+  URI that contains no "host" component can be matched.  Note that extraction of the
   "reg-name" might necessitate normalization of the URI (as explained in
-  {{URI}}).  For example, a URI-ID of `sip:voice.example.edu` would be split
+  {{Section 6 of URI}}).  For example, a URI-ID of `sip:voice.example.edu` would be split
   into a DNS domain name portion of `voice.example.edu` and an application
   service type of `sip` (associated with an application protocol of SIP as
   explained in {{SIP-CERTS}}).
 
-If the reference identifier is an SRV-ID or URI-ID that contains a FQDN and not
-an IP address, the client MUST match the DNS name, and if an application service
-type is present it MUST also match the service type as well.  These are
-described below.
+If the reference identifier produces a domain name, the client MUST match the
+DNS name; see {{verify-domain}}.
+If the reference identifier produces an IP address, the client MUST match the IP
+address; see {{verify-ip}}.
+If an application service type is present it MUST also match the
+service type as well; see {{verify-app}}.
 
 ## Matching the DNS Domain Name Portion {#verify-domain}
 
@@ -881,6 +883,21 @@ sometimes more. See {{DNS-CONCEPTS, Section 4.3.3}} and {{DNS-WILDCARDS}}.
 
 For information regarding the security characteristics of wildcard
 certificates, see {{security-wildcards}}.
+
+## Matching an IP Address Portion {#verify-ip}
+
+An IP-ID matches based on comparing the bytes of the reference identity to the
+bytes contained in the iPAddress subjectAltName.
+The iPAddress field does not include the IP version, so IPv4 addresses are
+distinguish from IPv6 addresses only by their length (4 as opposed to 16 bytes).
+
+For an IP address that appears in a URI-ID, the "host" component of both the
+reference identity and the presented identifier.  These are parsed as either
+an "IP-literal" (following {{!IPv6}}) or an "IPv4address" (following {{!IPv4}}).
+If the resulting bytes are equal, the IP address matches.
+
+This document does not specify how an SRV-ID reference identity can include an
+IP address.
 
 ## Matching the Application Service Type Portion {#verify-app}
 
