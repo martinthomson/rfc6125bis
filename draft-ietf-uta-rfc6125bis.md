@@ -1,5 +1,5 @@
 ---
-v: 3 
+v: 3
 ipr: trust200902
 docname: draft-ietf-uta-rfc6125bis-latest
 obsoletes: 6125
