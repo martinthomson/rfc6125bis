@@ -4,7 +4,7 @@ ipr: trust200902
 docname: draft-ietf-uta-rfc6125bis-latest
 obsoletes: 6125
 cat: std
-submissiontype: IETF
+stream: IETF
 pi:
   compact: 'yes'
   subcompact: 'no'
