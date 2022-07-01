@@ -1,10 +1,10 @@
 ---
-stand_alone: true
 ipr: trust200902
 docname: draft-ietf-uta-rfc6125bis-latest
 obsoletes: 6125
 cat: std
-submissiontype: IETF
+stream: IETF
+v: 3 
 pi:
   compact: 'yes'
   subcompact: 'no'
