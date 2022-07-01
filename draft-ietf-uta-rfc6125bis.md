@@ -45,6 +45,7 @@ informative:
   ALPN: RFC7301
   DANE: RFC6698
   DNS-CASE: RFC4343
+  DNS-TERMS: RFC8499
   DNSSEC: RFC4033
   DTLS: RFC9147
   EMAIL-SRV: RFC6186
@@ -228,7 +229,7 @@ length in the remainder of this document:
 
 * Allow use of even more specific
   subjectAlternativeName extensions where appropriate such as
-  uniformResourceIdentifier and the otherName form SRVName.
+  uniformResourceIdentifier, iPAddress, and the otherName form SRVName.
 
 * Wildcard support is now the default.
   Constrain wildcard certificates so that the wildcard can only
@@ -241,14 +242,8 @@ length in the remainder of this document:
 
 ### In Scope {#in-scope}
 
-This document applies only to service identities that meet all
-three of the following characteristics:
-
-1. Are associated with fully-qualified domain names, a.k.a. FQDNs (informally described in {{DNS-CONCEPTS}}).
-
-2. Are used with TLS and DTLS.
-
-3. Are included in PKIX certificates.
+This document applies only to service identities that are used in TLS or DTLS
+and are included in PKIX certificates.
 
 With regard to TLS and DTLS, these security protocols are used to
 protect data exchanged over a wide variety of application protocols,
@@ -288,23 +283,19 @@ The following topics are out of scope for this specification:
   described above, such as rfc822Name, are beyond the scope
   of this document.
 
-* Identifiers other than FQDNs.
-  Identifiers such as IP address are not discussed. In addition, the focus of
-  this document is on application service identities, not specific resources
-  located at such services.  Therefore this document discusses Uniform
-  Resource Identifiers {{URI}} only as a way to communicate a DNS domain name
-  (via the URI "host" component or its equivalent), not other aspects of a
-  service such as a specific resource (via the URI "path" component) or
-  parameters (via the URI "query" component).
+* Identification beyond what the selected types of identities in the PKIX
+  certificate can express.
+  This document discusses Uniform Resource Identifiers {{URI}} only to the
+  extent that they are expressed in certificates.  Other aspects of a service
+  such as a specific resource (the URI "path" component) or parameters (the URI
+  "query" component) are the responsibility of specific protocols or URI
+  schemes.
 
 * Certification authority policies.
   This includes items such as the following:
 
   * How to certify or validate FQDNs and application
     service types (see {{ACME}} for some definition of this).
-
-  * Issuance of certificates with identifiers such as IP addresses
-    instead of or in addition to FQDNs.
 
   * Types or "classes" of certificates to issue and whether to apply different
     policies for them.
@@ -367,6 +358,8 @@ identifier type:
   interest:
 
   * DNS-ID: a subjectAltName entry of type dNSName as defined in {{PKIX}}.
+
+  * IP-ID: a subjectAltName entry of type iPAddress as defined in {{PKIX}}.
 
   * SRV-ID: a subjectAltName entry of type otherName whose name form is
     SRVName, as defined in {{SRVNAME}}.
@@ -437,12 +430,14 @@ and "verify".
 
 {::boilerplate bcp14-tagged}
 
-# Naming of Application Services {#names}
+# Identifying Application Services {#names}
 
-This document assumes that the name of an application service is
-based on a DNS domain name (e.g., `example.com`) -- supplemented in
-some circumstances by an application service type (e.g., "the IMAP
-server at example.net").
+This document assumes that an application service is identified by a DNS domain
+name (e.g., `example.com`), an IP address (IPv4 or IPv6), or is an identifier
+that contains additionally supplementary information.  Supplementary information
+is limited to the application service type as expressed in SRV (e.g., "the IMAP
+server at example.net") or a URI.
+
 The DNS name conforms to one of the following forms:
 
 1. A "traditional domain name", i.e., a FQDN (see {{DNS-CONCEPTS}}) all of
@@ -459,7 +454,11 @@ The DNS name conforms to one of the following forms:
   A-labels, or U-labels, as described in {{IDNA-DEFS}} and the associated
   documents.
 
-From the perspective of the application client or user, some names are
+An IP address is either a 4 byte IPv4 address {{!IPv4=RFC0791}} or a 16 byte
+IPv6 address {{!IPv6=RFC4291}}.  The identifer might need to be converted from a
+textual representation to obtain this value.
+
+From the perspective of the application client or user, some identifiers are
 *direct* because they are provided directly by a human user.  This includes
 runtime input, prior configuration, or explicit acceptance of a client
 communication attempt.  Other names are *indirect* because they are
@@ -468,10 +467,10 @@ target name resolved from a source name using DNS SRV or {{NAPTR}} records.
 The distinction matters most for certificate consumption, specifically
 verification as discussed in this document.
 
-From the perspective of the application service, some names are
+From the perspective of the application service, some identifiers are
 *unrestricted* because they can be used in any type of service, such as a
 single certificate being used for both the HTTP and IMAP services at the host
-example.com.  Other names are *restricted* because they can only be used for
+"example.com".  Other identifiers are *restricted* because they can only be used for
 one type of service, such as a special-purpose certificate that can only be
 used for an IMAP service.  This distinction matters most for certificate
 issuance.
@@ -479,6 +478,8 @@ issuance.
 We can categorize the three identifier types as follows:
 
 * A DNS-ID is direct and unrestricted.
+
+* An IP-ID is direct and unrestricted.
 
 * An SRV-ID is typically indirect but can be direct, and is restricted.
 
@@ -500,6 +501,9 @@ suffers from ambiguities in interpretation.
 
 For similar reasons, other RDNs within the subjectName MUST NOT be used to
 identify a service.
+
+An IP address that is the result of a DNS query is not direct. Use of IP-IDs
+that are not direct is out of scope for this document.
 
 # Designing Application Protocols {#design}
 
@@ -524,6 +528,14 @@ URIs in PKIX certificates by means of URI-IDs.
 A technology MAY disallow the use of the wildcard character in DNS names. If
 it does so, then the specification MUST state that wildcard certificates as
 defined in this document are not supported.
+
+A protocol can allow the use of an IP address in place of a DNS name.  This
+might use the same field without distinguishing the type of identifier, see for
+example {{URI}}.  In this case, applications need to be aware that the textual
+representation of an IPv4 address can appear to be a valid DNS name.  The two
+types can be distinguished by first testing if the identifier is a valid IPv4
+address.  Note also that by policy, Top-Level Domains ({{DNS-TERMS}}) do not
+start with a digit {{citation-needed}}.
 
 # Representing Server Identity {#represent}
 
@@ -559,7 +571,7 @@ document.
   certificates used for the application protocol (e.g., `sip` but not `sips`
   or `tel` for SIP as described in {{SIP-SIPS}}).
 
-4. The certificate MAY contain more than one DNS-ID, SRV-ID, or URI-ID
+4. The certificate MAY contain more than one DNS-ID, SRV-ID, URI-ID, or IP-ID
   as further explained under {{security-multi}}.
 
 5. The certificate MAY include other application-specific identifiers
@@ -572,6 +584,10 @@ Consider a simple website at `www.example.com`, which is not discoverable via
 DNS SRV lookups.  Because HTTP does not specify the use of URIs in server
 certificates, a certificate for this service might include only a DNS-ID of
 `www.example.com`.
+
+Consider the same website, which is reachable by a fixed IP address of
+`2001:db8::5c`.  The certificate might include this value in an IP-ID to allow
+clients to use the fixed IP address as a reference identity.
 
 Consider an IMAP-accessible email server at the host `mail.example.net`
 servicing email addresses of the form `user@example.net` and discoverable via
@@ -603,15 +619,19 @@ include all of the identifier types that are required or recommended for
 the application service type that will be secured using the certificate to
 be issued.
 
+A service provider SHOULD request certificates with as few identifiers as
+necessary to identify a single service; see {{security-multi}}.
+
 If the certificate will be used for only a single type of application
 service, the service provider SHOULD request a certificate that includes
-a DNS-ID and, if appropriate for the application service type, an SRV-ID or
-URI-ID that limits the deployment scope of the certificate to only the
+DNS-ID or IP-ID values that identify that service or,
+if appropriate for the application service type, SRV-ID or
+URI-ID values that limit the deployment scope of the certificate to only the
 defined application service type.
 
 If the certificate might be used for any type of application service, then
 the service provider SHOULD request a certificate that includes
-only a DNS-ID. Again, because of multi-protocol attacks this practice is
+only DNS-IDs or IP-IDs. Again, because of multi-protocol attacks this practice is
 discouraged; this can be mitigated by deploying only one service on
 a host.
 
@@ -669,7 +689,7 @@ that can yield a source domain and an application service type.
 The client might need to extract the source domain and application service
 type from the input(s) it has received.  The extracted data MUST include only
 information that can be securely parsed out of the inputs, such as parsing
-the FQDN out of the "host" component or deriving the application service type
+the FQDN or IP address out of the "host" component or deriving the application service type
 from the scheme of a URI.  Other possibilities include pulling the data from
 a delegated domain that is explicitly established via client or system
 configuration or resolving the data via {{DNSSEC}}.
@@ -683,31 +703,35 @@ For example, given an input URI of \<sip:alice@example.net>, a client
 would derive the application service type `sip` from the scheme
 and parse the domain name `example.net` from the host component.
 
-Each reference identifier in the list MUST be based on the source domain and
+Each reference identifier in the list MUST be based on the input material and
 MUST NOT be based on a derived domain such as a domain name discovered
-through DNS resolution of the source domain.  This rule is important because
+through DNS resolution of those inputs.  This rule is important because
 only a match between the user inputs and a presented identifier enables the
 client to be sure that the certificate can legitimately be used to secure the
 client's communication with the server. This removes
 DNS and DNS resolution from the attack surface.
 
-Using the combination of FQDN(s) and application service type, the client
+Using the combination of FQDN(s), IP address(es), and application service type, the client
 MUST construct its list of reference identifiers in accordance with the
 following rules:
 
-* The list SHOULD include a DNS-ID.
+* If a server for the application service type is typically associated
+  with a URI for security purposes (i.e., a formal protocol document
+  specifies the use of URIs in server certificates), then the reference identifier
+  SHOULD be a URI-ID.
+
+* If a server for the application service type is typically discovered
+  by means of DNS SRV records, then the reference identifier SHOULD be an SRV-ID.
+
+* If the reference identifier is an IP address, the reference identifier is an
+  IP-ID.
+
+* In the absence of more specific identifiers, the reference identifier is a DNS-ID.
   A reference identifier of type DNS-ID can be directly constructed from a
   FQDN that is (a) contained in or securely derived from the inputs, or
   (b) explicitly associated with the source domain by means of user
   configuration.
 
-* If a server for the application service type is typically discovered
-  by means of DNS SRV records, then the list SHOULD include an SRV-ID.
-
-* If a server for the application service type is typically associated
-  with a URI for security purposes (i.e., a formal protocol document
-  specifies the use of URIs in server certificates), then the list
-  SHOULD include a URI-ID.
 
 Which identifier types a client includes in its list of reference
 identifiers, and their priority, is a matter of local policy.  For example, a
@@ -715,17 +739,20 @@ client that is built to connect only to a particular kind of service might be
 configured to accept as valid only certificates that include an SRV-ID for
 that application service type.  By contrast, a more lenient client, even if
 built to connect only to a particular kind of service, might include both
-SRV-IDs and DNS-IDs in its list of reference identifiers.
+SRV-IDs, DNS-IDs, and IP-IDs in its list of reference identifiers.
 
 ### Examples {#verify-reference-examples}
 
 The following examples are for illustrative purposes only and are not
 intended to be comprehensive.
 
-1. A web browser that is connecting via HTTPS to the website at `www.example.com`
+1. A web browser that is connecting via HTTPS to the website at `https://www.example.com/`
 would have a single reference identifier: a DNS-ID of `www.example.com`.
 
-2. A mail user agent that is connecting via IMAPS to the email service at
+2. A web browser connecting to `https://192.0.2.107/` would have a single IP-ID
+reference identifier of `192.0.2.107`.
+
+3. A mail user agent that is connecting via IMAPS to the email service at
 `example.net` (resolved as `mail.example.net`) might have three reference
 identifiers: an SRV-ID of `_imaps.example.net` (see {{EMAIL-SRV}}), and
 DNS-IDs of `example.net` and `mail.example.net`.  An email user agent that
@@ -735,11 +762,11 @@ connect to `mail.example.net`, whereas an SRV-aware user agent would derive
 also accept `mail.example.net` as the DNS domain name portion of reference
 identifiers for the service.
 
-3. A voice-over-IP (VoIP) user agent that is connecting via SIP to the voice
+4. A voice-over-IP (VoIP) user agent that is connecting via SIP to the voice
 service at `voice.example.edu` might have only one reference identifier:
 a URI-ID of `sip:voice.example.edu` (see {{SIP-CERTS}}).
 
-4. An instant messaging (IM) client that is connecting via XMPP to the IM
+5. An instant messaging (IM) client that is connecting via XMPP to the IM
 service at `im.example.org` might have three reference identifiers: an
 SRV-ID of `_xmpp-client.im.example.org` (see {{XMPP}}), a DNS-ID of
 `im.example.org`, and an XMPP-specific `XmppAddr` of `im.example.org`
@@ -777,6 +804,11 @@ as follows:
 * A DNS-ID reference identifier MUST be used directly as the DNS domain
   name and there is no application service type.
 
+* An IP-ID reference identifier MUST be exactly equal to the value of a
+  iPAddress entry in subjectAltName.  The iPAddress type does not include the IP
+  version, so IPv4 addresses are distinguish from IPv6 addresses only by their
+  length (4 as opposed to 16 bytes).
+
 * For an SRV-ID reference identifier, the DNS domain name portion is
   the Name and the application service type portion is the Service.  For
   example, an SRV-ID of `_imaps.example.net` has a DNS domain name portion
@@ -797,9 +829,10 @@ as follows:
   service type of `sip` (associated with an application protocol of SIP as
   explained in {{SIP-CERTS}}).
 
-A client MUST match the DNS name, and if an application service type
-is present it MUST also match the service type as well.
-These are described below.
+If the reference identifier is an SRV-ID or URI-ID that contains a FQDN and not
+an IP address, the client MUST match the DNS name, and if an application service
+type is present it MUST also match the service type as well.  These are
+described below.
 
 ## Matching the DNS Domain Name Portion {#verify-domain}
 
@@ -934,6 +967,23 @@ characters, also referred to as "confusables", being included within
 certificates. For discussion, see for example {{IDNA-DEFS, Section 4.4}}
 and {{UTS-39}}.
 
+## IP Addresses
+
+The TLS Server Name Indication (SNI) extension only conveys domain names.
+Therefore, a client with an IP-ID reference identity cannot present any
+information about its reference identity when connecting to a server.  Servers
+that wish to present an IP-ID therefore need to present this identity when a
+connection is made without SNI.
+
+The textual representation of an IPv4 address might be misinterpreted as a valid
+FQDN in some contexts.  If this can result in different security treatment and
+different components of a system classify the value differently, this might lead
+to vulnerabilities. For example, one system component enforces a security rule
+that is conditional on the type of identifier.  This component misclassifies an
+IP address as an FQDN.  A different component correctly classifies the
+identifier, but might incorrectly assume that rules regarding IP addresses have
+been enforced.  Consistent classification of identifiers avoids this problem.
+
 ## Multiple Presented Identifiers {#security-multi}
 
 A given application service might be addressed by multiple DNS domain names
@@ -944,7 +994,7 @@ Negotiation (ALPN), discussed in {{ALPN}}, provide a way for the application
 to indicate the desired identifier and protocol to the server, which it
 can then use to select the most appropriate certificate.
 
-This specification allows multiple DNS-IDs, SRV-IDs, or URI-IDs in a
+This specification allows multiple DNS-IDs, IP-IDs, SRV-IDs, or URI-IDs in a
 certificate.  As a result, an application service can use the same
 certificate for multiple hostnames, such as when a client does not support
 the TLS SNI extension, or for multiple protocols, such as SMTP and HTTP, on a
@@ -1014,6 +1064,8 @@ The major changes, in no particular order, include:
 
 - Additional text on multiple identifiers, and their security considerations,
   has been added.
+
+- IP-ID reference identifiers are added.
 
 # Contributors
 
