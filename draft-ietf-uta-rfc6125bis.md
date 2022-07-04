@@ -48,6 +48,7 @@ informative:
   DNSSEC: RFC4033
   DTLS: RFC9147
   EMAIL-SRV: RFC6186
+  HTTP-SEMANTICS: RFC9110
   NAPTR: RFC3403
   NTS: RFC8915
   QUIC: RFC9001
@@ -289,7 +290,10 @@ The following topics are out of scope for this specification:
   of this document.
 
 * Identifiers other than FQDNs.
-  Identifiers such as IP address are not discussed. In addition, the focus of
+  Identifiers such as IP address are not discussed.
+  Protocols other than HTTP may want to consider
+  {{HTTP-SEMANTICS, Section 4.3.5}} as a validation model.
+  In addition, the focus of
   this document is on application service identities, not specific resources
   located at such services.  Therefore this document discusses Uniform
   Resource Identifiers {{URI}} only as a way to communicate a DNS domain name
