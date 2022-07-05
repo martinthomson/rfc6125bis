@@ -1039,7 +1039,11 @@ provided especially helpful feedback:
 Viktor Dukhovni,
 Jim Fenton,
 Olle Johansson,
+John Mattson,
+Alexey Melnikov,
+Yaron Sheffer,
 Ryan Sleevi,
+Brian Smith,
 and
 Martin Thomson.
 
