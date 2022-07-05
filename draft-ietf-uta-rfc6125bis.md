@@ -864,7 +864,8 @@ SRV-ID or URI-ID itself.  For example, if a client's list of reference
 identifiers includes an SRV-ID of `_xmpp-client.im.example.org` and a DNS-ID
 of `apps.example.net`, the client MUST check both the combination of an
 application service type of `xmpp-client` and a DNS domain name of
-`im.example.org` and a DNS domain name of `apps.example.net`.  However, the
+`im.example.org` and, separately,
+a DNS domain name of `apps.example.net`.  However, the
 client MUST NOT check the combination of an application service type of
 `xmpp-client` and a DNS domain name of `apps.example.net` because it does not
 have an SRV-ID of `_xmpp-client.apps.example.net` in its list of reference
