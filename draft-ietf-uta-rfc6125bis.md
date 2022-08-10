@@ -89,14 +89,6 @@ informative:
       name: Sebastian Schinzel
       org: Ruhr University Bochum
     date: 2021-9
-  UTS-39:
-    target: https://unicode.org/reports/tr39
-    title: Unicode Security Mechanisms
-    author:
-    - ins: M. Davis
-      name: Mark Davis
-    - ins: M. Suignard
-      name: Michel Suignard
   HTTPSbytes:
     target: https://media.blackhat.com/bh-ad-10/Hansen/Blackhat-AD-2010-Hansen-Sokol-HTTPS-Can-Byte-Me-slides.pdf
     title: HTTPS Can Byte Me
@@ -931,13 +923,6 @@ or buggy hosts. See for example {{Defeating-SSL}} (beginning at slide 91) and
 Protection against a wildcard that identifies a public suffix
 {{Public-Suffix}}, such as `*.co.uk` or `*.com`, is beyond the scope of this
 document.
-
-## Internationalized Domain Names {#security-idn}
-
-Allowing internationalized domain names can lead to visually similar
-characters, also referred to as "confusables", being included within
-certificates. For discussion, see for example {{IDNA-DEFS, Section 4.4}}
-and {{UTS-39}}.
 
 ## Multiple Presented Identifiers {#security-multi}
 
