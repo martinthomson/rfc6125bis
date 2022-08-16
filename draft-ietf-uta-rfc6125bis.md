@@ -783,10 +783,9 @@ as follows:
 * For a reference identifier of type URI-ID, the DNS domain name
   portion is the "reg-name" part of the "host" component and the application
   service type portion is the scheme, as defined above.  Matching only the
-  "reg-name" rule from {{URI}} limits verification to DNS domain names,
-  thereby differentiating a URI-ID from a uniformResourceIdentifier entry
-  that contains an IP address or a mere host name, or that does not contain a
-  "host" component at all.  Furthermore, note that extraction of the
+  "reg-name" rule from {{URI}} differentiates a URI-ID from a 
+  uniformResourceIdentifier entry that contains a host component matching 
+  the IP-literal rule or IPv4address rule.  Furthermore, note that extraction of the
   "reg-name" might necessitate normalization of the URI (as explained in
   {{URI}}).  For example, a URI-ID of `sip:voice.example.edu` would be split
   into a DNS domain name portion of `voice.example.edu` and an application
