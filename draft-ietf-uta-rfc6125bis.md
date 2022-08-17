@@ -886,7 +886,7 @@ certificates, see {{security-wildcards}}.
 
 ## Matching an IP Address Portion {#verify-ip}
 
-An IP-ID matches based on comparing the bytes of the reference identity to the
+An IP-ID matches based on an octet-for-octet comparison of the bytes of the reference identity with the
 bytes contained in the iPAddress subjectAltName.
 The iPAddress field does not include the IP version, so IPv4 addresses are
 distinguish from IPv6 addresses only by their length (4 as opposed to 16 bytes).
