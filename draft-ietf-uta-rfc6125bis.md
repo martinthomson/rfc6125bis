@@ -434,7 +434,7 @@ and "verify".
 
 This document assumes that an application service is identified by a DNS domain
 name (e.g., `example.com`), an IP address (IPv4 or IPv6), or is an identifier
-that contains additionally supplementary information.  Supplementary information
+that contains additional supplementary information.  Supplementary information
 is limited to the application service type as expressed in SRV (e.g., "the IMAP
 server at example.net") or a URI.
 
@@ -454,7 +454,7 @@ The DNS name conforms to one of the following forms:
   A-labels, or U-labels, as described in {{IDNA-DEFS}} and the associated
   documents.
 
-An IP address is either a 4 byte IPv4 address {{!IPv4=RFC0791}} or a 16 byte
+An IP address is either a 4-byte IPv4 address {{!IPv4=RFC0791}} or a 16-byte
 IPv6 address {{!IPv6=RFC4291}}.  The identifer might need to be converted from a
 textual representation to obtain this value.
 
@@ -711,7 +711,7 @@ client to be sure that the certificate can legitimately be used to secure the
 client's communication with the server. This removes
 DNS and DNS resolution from the attack surface.
 
-Using the combination of FQDN(s), IP address(es), and application service type, the client
+Using the combination of FQDN(s) or IP address(es) plus optionally an application service type, the client
 MUST construct its list of reference identifiers in accordance with the
 following rules:
 
