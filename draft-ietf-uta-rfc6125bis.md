@@ -994,7 +994,7 @@ connection is made without SNI.
 
 The textual representation of an IPv4 address might be misinterpreted as a valid
 FQDN in some contexts. This can result in different security treatment that might cause
-different components of a system classify the value differently, this might lead
+different components of a system to classify the value differently, which might lead
 to vulnerabilities. For example, one system component enforces a security rule
 that is conditional on the type of identifier.  This component misclassifies an
 IP address as an FQDN.  A different component correctly classifies the
