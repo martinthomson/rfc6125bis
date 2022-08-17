@@ -805,7 +805,7 @@ optionally an application service type as follows:
 * A DNS-ID reference identifier MUST be used directly as the DNS domain
   name and there is no application service type.
 
-* An IP-ID reference identifier MUST be exactly equal to the value of a
+* An IP-ID reference identifier MUST be exactly equal, octet for octet, to the value of a
   iPAddress entry in subjectAltName. There is no application service type.
 
 * For an SRV-ID reference identifier, the DNS domain name portion is
