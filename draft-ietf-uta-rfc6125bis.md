@@ -703,7 +703,7 @@ For example, given an input URI of \<sip:alice@example.net>, a client
 would derive the application service type `sip` from the scheme
 and parse the domain name `example.net` from the host component.
 
-Each reference identifier in the list MUST be based on the input material and
+Each reference identifier in the list MUST be based on the user inputs and
 MUST NOT be based on a derived domain such as a domain name discovered
 through DNS resolution of those inputs.  This rule is important because
 only a match between the user inputs and a presented identifier enables the
