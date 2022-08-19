@@ -1082,7 +1082,8 @@ The major changes, in no particular order, include:
 - Additional text on multiple identifiers, and their security considerations,
   has been added.
 
-- IP-ID reference identifiers are added.
+- IP-ID reference identifiers are added.  This builds on the definition in {{Section
+  4.3.5 of HTTP}}.
 
 # Contributors
 
