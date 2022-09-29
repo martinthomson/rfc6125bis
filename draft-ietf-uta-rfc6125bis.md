@@ -244,7 +244,7 @@ length in the remainder of this document:
 ### In Scope {#in-scope}
 
 This document applies only to service identities that are used in TLS or DTLS
-and are included in PKIX certificates.
+and that are included in PKIX certificates.
 
 With regard to TLS and DTLS, these security protocols are used to
 protect data exchanged over a wide variety of application protocols,
@@ -434,7 +434,7 @@ and "verify".
 # Identifying Application Services {#names}
 
 This document assumes that an application service is identified by a DNS domain
-name (e.g., `example.com`), an IP address (IPv4 or IPv6), or is an identifier
+name (e.g., `example.com`), an IP address (IPv4 or IPv6), or by an identifier
 that contains additional supplementary information.  Supplementary information
 is limited to the application service type as expressed in SRV (e.g., "the IMAP
 server at example.net") or a URI.
@@ -712,7 +712,7 @@ client to be sure that the certificate can legitimately be used to secure the
 client's communication with the server. This removes
 DNS and DNS resolution from the attack surface.
 
-Using the combination of FQDN(s) or IP address(es) plus optionally an application service type, the client
+Using the combination of FQDN(s) or IP address(es), plus optionally an application service type, the client
 MUST construct its list of reference identifiers in accordance with the
 following rules:
 
