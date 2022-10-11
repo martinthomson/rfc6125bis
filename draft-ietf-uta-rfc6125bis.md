@@ -1,10 +1,10 @@
 ---
-stand_alone: true
+v: 3
 ipr: trust200902
 docname: draft-ietf-uta-rfc6125bis-latest
 obsoletes: 6125
 cat: std
-submissiontype: IETF
+stream: IETF
 pi:
   compact: 'yes'
   subcompact: 'no'
@@ -90,14 +90,6 @@ informative:
       name: Sebastian Schinzel
       org: Ruhr University Bochum
     date: 2021-9
-  UTS-39:
-    target: https://unicode.org/reports/tr39
-    title: Unicode Security Mechanisms
-    author:
-    - ins: M. Davis
-      name: Mark Davis
-    - ins: M. Suignard
-      name: Michel Suignard
   HTTPSbytes:
     target: https://media.blackhat.com/bh-ad-10/Hansen/Blackhat-AD-2010-Hansen-Sokol-HTTPS-Can-Byte-Me-slides.pdf
     title: HTTPS Can Byte Me
@@ -910,7 +902,8 @@ SRV-ID or URI-ID itself.  For example, if a client's list of reference
 identifiers includes an SRV-ID of `_xmpp-client.im.example.org` and a DNS-ID
 of `apps.example.net`, the client MUST check both the combination of an
 application service type of `xmpp-client` and a DNS domain name of
-`im.example.org` and a DNS domain name of `apps.example.net`.  However, the
+`im.example.org` and, separately,
+a DNS domain name of `apps.example.net`.  However, the
 client MUST NOT check the combination of an application service type of
 `xmpp-client` and a DNS domain name of `apps.example.net` because it does not
 have an SRV-ID of `_xmpp-client.apps.example.net` in its list of reference
@@ -1104,7 +1097,11 @@ provided especially helpful feedback:
 Viktor Dukhovni,
 Jim Fenton,
 Olle Johansson,
+John Mattson,
+Alexey Melnikov,
+Yaron Sheffer,
 Ryan Sleevi,
+Brian Smith,
 and
 Martin Thomson.
 
