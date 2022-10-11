@@ -533,7 +533,7 @@ defined in this document are not supported.
 A protocol can allow the use of an IP address in place of a DNS name.  This
 might use the same field without distinguishing the type of identifier, see for
 example {{URI}}.  In this case, applications need to be aware that the textual
-representation of an IPv4 address can appear to be a valid DNS name.  The two
+representation of an IPv4 address can appear to be a valid DNS name, though it is not.  The two
 types can be distinguished by first testing if the identifier is a valid IPv4
 address.  Note also that by policy, Top-Level Domains ({{DNS-TERMS}}) do not
 start with a digit (TODO: citation needed).
