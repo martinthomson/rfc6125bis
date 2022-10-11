@@ -284,8 +284,7 @@ The following topics are out of scope for this specification:
   described above, such as rfc822Name, are beyond the scope
   of this document.
 
-* Identification beyond what the selected types of identities in the PKIX
-  certificate can express.
+* Identification of servers using other than a domain name, IP address, or SRV service name.
   This document discusses Uniform Resource Identifiers {{URI}} only to the
   extent that they are expressed in certificates.  Other aspects of a service
   such as a specific resource (the URI "path" component) or parameters (the URI
